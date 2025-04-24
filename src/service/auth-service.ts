@@ -11,8 +11,8 @@ const login = (payload: LoginI): Promise<ApiSuccessI | ApiErrorI> => {
   })
 }
 
-const userService = {
+const authService = {
   login
 }
 
-export default userService
+export default authService

@@ -2,11 +2,11 @@ import type { Action, ThunkAction } from '@reduxjs/toolkit'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import analyticsSlice from './slices/analyticsSlice'
 import announcementSlice from './slices/announcementSlice'
+import authSlice from './slices/authSlice'
 import errorSlice from './slices/errorSlice'
-import userSlice from './slices/userSlice'
 
 const appReducer = combineReducers({
-  user: userSlice,
+  auth: authSlice,
   error: errorSlice,
   analytics: analyticsSlice,
   announcement: announcementSlice

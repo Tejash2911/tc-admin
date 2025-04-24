@@ -4,13 +4,13 @@ import { FormEvent, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
+import { login } from '@/redux/slices/authSlice'
 import { errorActions } from '@/redux/slices/errorSlice'
-import { login } from '@/redux/slices/userSlice'
 
 const LoginV2 = () => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const { currentUser, loading } = useAppSelector(({ user }) => user)
+  const { currentUser, loading } = useAppSelector(({ auth }) => auth)
   const dispatch = useAppDispatch()
   const router = useRouter()
 

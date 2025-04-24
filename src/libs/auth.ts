@@ -1,9 +1,9 @@
 export default function getAccessToken() {
   if (typeof window !== 'undefined') {
     try {
-      const user = JSON.parse(localStorage.getItem('user') || '{}')
+      const auth = JSON.parse(localStorage.getItem('auth') || '{}')
 
-      return user.accessToken || null
+      return auth.accessToken || null
     } catch (error) {
       console.error('Error retrieving access token:', error)
 

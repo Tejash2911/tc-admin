@@ -1,11 +1,11 @@
-import userService from '@/service/user-service'
+import authService from '@/service/auth-service'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { LoginI } from '@/types/api-payload-types'
 import { createAppSlice } from '../createAppSlice'
 
-export const login = createAsyncThunk('user/login', async (payload: LoginI, { rejectWithValue }) => {
+export const login = createAsyncThunk('auth/login', async (payload: LoginI, { rejectWithValue }) => {
   try {
-    const { data } = await userService.login(payload)
+    const { data } = await authService.login(payload)
 
     return data
   } catch (error) {
@@ -13,31 +13,31 @@ export const login = createAsyncThunk('user/login', async (payload: LoginI, { re
   }
 })
 
-interface UserStateI {
+interface AuthStateI {
   currentUser: any
   address: any
   loading: boolean
 }
 
-const initialState: UserStateI = {
+const initialState: AuthStateI = {
   currentUser: null,
   address: null,
   loading: false
 }
 
 if (typeof window !== 'undefined') {
-  const storedUser = localStorage.getItem('user')
+  const storedUser = localStorage.getItem('auth')
 
   initialState.currentUser = storedUser ? JSON.parse(storedUser) : null
 }
 
-const userSlice = createAppSlice({
-  name: 'user',
+const authSlice = createAppSlice({
+  name: 'auth',
   initialState,
   reducers: {
     logoutUser: state => {
       state.currentUser = null
-      localStorage.removeItem('user')
+      localStorage.removeItem('auth')
       state.address = null
     },
     setLoading: (state, { payload }) => {
@@ -55,7 +55,7 @@ const userSlice = createAppSlice({
     builder.addCase(login.fulfilled, (state, { payload }) => {
       state.loading = false
       state.currentUser = payload
-      localStorage.setItem('user', JSON.stringify(payload))
+      localStorage.setItem('auth', JSON.stringify(payload))
     })
     builder.addCase(login.rejected, state => {
       state.loading = false
@@ -63,5 +63,5 @@ const userSlice = createAppSlice({
   }
 })
 
-export const userActions = userSlice.actions
-export default userSlice.reducer
+export const authActions = authSlice.actions
+export default authSlice.reducer

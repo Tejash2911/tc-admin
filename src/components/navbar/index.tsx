@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
-import { userActions } from '@/redux/slices/userSlice'
+import { authActions } from '@/redux/slices/authSlice'
 import { MdOutlineMenuOpen } from 'react-icons/md'
 
 interface IProps {
@@ -13,7 +13,7 @@ interface IProps {
 }
 
 const Navbar = ({ isOpen, setSideBar }: IProps) => {
-  const { currentUser } = useAppSelector(({ user }) => user)
+  const { currentUser } = useAppSelector(({ auth }) => auth)
   const dispatch = useAppDispatch()
 
   const [isMounted, setIsMounted] = useState(false)
@@ -24,7 +24,7 @@ const Navbar = ({ isOpen, setSideBar }: IProps) => {
 
   const handle = {
     onLogout: () => {
-      dispatch(userActions.logoutUser())
+      dispatch(authActions.logoutUser())
     }
   }
 
