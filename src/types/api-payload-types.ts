@@ -21,3 +21,21 @@ export interface CurrentUserI {
   isAdmin: boolean
   purchasedProducts: any[]
 }
+
+export interface GetAnnouncementsI {
+  _id: string
+  title: string
+  active: boolean
+  createdAt: number
+  updatedAt: number
+}
+
+export interface AddAnnouncementI {
+  title: string
+  active: boolean
+}
+
+export interface UpdateAnnouncementI {
+  id: string
+  payload: AddAnnouncementI
+}

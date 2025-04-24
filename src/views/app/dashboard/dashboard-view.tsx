@@ -1,4 +1,3 @@
-import React from 'react'
 import ChartsComponent from '@/components/charts'
 import Stats from '@/components/stats'
 

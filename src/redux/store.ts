@@ -1,13 +1,15 @@
 import type { Action, ThunkAction } from '@reduxjs/toolkit'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import analyticsSlice from './slices/analyticsSlice'
+import announcementSlice from './slices/announcementSlice'
 import errorSlice from './slices/errorSlice'
 import userSlice from './slices/userSlice'
 
 const appReducer = combineReducers({
   user: userSlice,
   error: errorSlice,
-  analytics: analyticsSlice
+  analytics: analyticsSlice,
+  announcement: announcementSlice
 })
 
 // Handle the reset on logout by returning undefined for the state
