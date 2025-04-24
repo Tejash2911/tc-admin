@@ -19,9 +19,8 @@ const errorSlice = createAppSlice({
       state.message = action.payload
       state.id = uuid()
     },
-    clearError: state => {
-      state.message = null
-      state.id = null
+    clearError: () => {
+      return { ...initialState }
     }
   }
 })

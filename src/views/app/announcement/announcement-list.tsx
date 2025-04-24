@@ -26,11 +26,11 @@ function AnnoucementListView({ announcements, getData }: IProps) {
       dispatch(deleteAnnouncement(selectedRow.id))
         .unwrap()
         .then(res => {
-          errorActions.setErrorMessage(res?.message)
+          dispatch(errorActions.setErrorMessage(res?.message))
           isDelete.onClose()
           getData()
         })
-        .catch(err => errorActions.setErrorMessage(err?.message))
+        .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
     }
   }
 
@@ -54,7 +54,7 @@ function AnnoucementListView({ announcements, getData }: IProps) {
                   <td className='p-3'>{a.title}</td>
                   <td className='p-3'>
                     <p
-                      className={`text-center font-medium rounded-full px-3 py-1 border text-sm ${
+                      className={`text-center font-medium rounded-full p-1 border text-sm ${
                         a.active
                           ? 'bg-lime-100 text-lime-600 border-lime-600'
                           : 'bg-red-100 text-red-500 border-red-500'

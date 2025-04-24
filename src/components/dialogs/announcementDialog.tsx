@@ -45,21 +45,21 @@ export default function AnnouncementDialog({ open, setOpen, data, getData }: IPr
         dispatch(updateAnnouncement({ payload: formData, id: data._id }))
           .unwrap()
           .then(res => {
-            errorActions.setErrorMessage(res?.message)
+            dispatch(errorActions.setErrorMessage(res?.message))
             handle.handleClose()
             getData()
           })
-          .catch(err => errorActions.setErrorMessage(err?.message))
+          .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
       } else {
         dispatch(addAnnouncement(formData))
           .unwrap()
           .then(res => {
-            errorActions.setErrorMessage(res?.message)
+            dispatch(errorActions.setErrorMessage(res?.message))
             handle.handleClose()
             getData()
           })
           .then(handle.handleClose)
-          .catch(err => errorActions.setErrorMessage(err?.message))
+          .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
       }
     },
     handleClose: () => {

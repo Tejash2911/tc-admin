@@ -22,25 +22,22 @@ function AnnouncementView() {
   const handle = {
     getAllAnnouncements: () => {
       dispatch(getAllAnnouncements({}))
-        .unwrap()
-        .then(res => errorActions.setErrorMessage(res?.message))
-        .catch(err => errorActions.setErrorMessage(err?.message))
     },
     disableAllAnnouncements: () => {
       dispatch(disableAnnoucements())
         .unwrap()
         .then(res => {
-          errorActions.setErrorMessage(res?.message)
+          dispatch(errorActions.setErrorMessage(res?.message))
           handle.getAllAnnouncements()
         })
-        .catch(err => errorActions.setErrorMessage(err?.message))
+        .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
     }
   }
 
   return (
     <div className='w-full min-h-screen flex justify-center bg-gray-100'>
       <div className='w-full max-w-6xl p-4'>
-        <h1 className='text-2xl font-bold text-gray-700 mb-4'>Announcements</h1>
+        <h1 className='text-2xl font-bold text-gray-700 mb-4 text-center'>Announcements</h1>
 
         <div className='bg-white p-4 rounded-lg shadow'>
           <div className='flex justify-between items-center text-gray-700 mb-4'>
