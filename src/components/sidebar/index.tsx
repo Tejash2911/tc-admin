@@ -54,7 +54,7 @@ const Sidebar = ({ isOpen }: IProps) => {
           <h3 className='text-xs text-[#bbb] font-semibold mb-2'>All Menu</h3>
           <ul className='space-y-1'>
             <li>
-              <Link href='/users' className='flex items-center space-x-2 rounded-lg p-2 hover:bg-[#f0f0ff]'>
+              <Link href='/user' className='flex items-center space-x-2 rounded-lg p-2 hover:bg-[#f0f0ff]'>
                 <MdPermIdentity className='text-base' />
                 <span className='text-sm'>Users</span>
               </Link>

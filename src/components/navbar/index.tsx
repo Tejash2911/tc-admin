@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
@@ -16,7 +16,7 @@ const Navbar = ({ isOpen, setSideBar }: IProps) => {
   const { currentUser } = useAppSelector(({ auth }) => auth)
   const dispatch = useAppDispatch()
 
-  const [isMounted, setIsMounted] = useState(false)
+  const [isMounted, setIsMounted] = useState<boolean>(false)
 
   useEffect(() => {
     setIsMounted(true)
