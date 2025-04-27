@@ -60,7 +60,7 @@ const initialState: UserStateI = {
   rowCount: 0
 }
 
-const UserSlice = createAppSlice({
+const userSlice = createAppSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -110,5 +110,5 @@ const UserSlice = createAppSlice({
   }
 })
 
-export const userActions = UserSlice.actions
-export default UserSlice.reducer
+export const userActions = userSlice.actions
+export default userSlice.reducer
