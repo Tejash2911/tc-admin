@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { getOrderAnalytics, getOrderPriceAnalytics } from '@/redux/slices/analyticsSlice'
 import { MdAccountBalance, MdAutorenew, MdCheck, MdLocalShipping, MdShoppingCart, MdToday } from 'react-icons/md'
 
-function Stats() {
+const Stats = () => {
   const { orderStats, orderPriceStats } = useAppSelector(({ analytics }) => analytics)
   const dispatch = useAppDispatch()
 

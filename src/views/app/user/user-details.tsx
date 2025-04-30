@@ -14,7 +14,7 @@ interface IProps {
   id: string
 }
 
-function UserDetailsPage({ id }: IProps) {
+const UserDetailsPage = ({ id }: IProps) => {
   const { user } = useAppSelector(({ user }) => user)
   const dispatch = useAppDispatch()
 
@@ -86,7 +86,7 @@ function UserDetailsPage({ id }: IProps) {
     <>
       {user && (
         <div className='w-full flex items-center justify-center'>
-          <div className='w-full max-w-6xl bg-[#f6fbfb] flex flex-col items-center m-5 p-4 rounded-xl shadow-md'>
+          <div className='w-full max-w-6xl bg-[#f6fbfb] flex flex-col items-center m-5 p-3 rounded-xl shadow-md'>
             {/* Top Section */}
             <div className='flex flex-col md:flex-row items-center justify-around w-full mb-6'>
               {user.avatar && (
@@ -114,7 +114,7 @@ function UserDetailsPage({ id }: IProps) {
                   value={formData.firstName}
                   onChange={handle.onInputChange}
                   placeholder='First Name'
-                  className='bg-[#d2e5e5] rounded-md p-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-500'
+                  className='bg-[#d2e5e5] rounded-md p-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-700'
                 />
               </div>
 
@@ -129,7 +129,7 @@ function UserDetailsPage({ id }: IProps) {
                   value={formData.lastName}
                   onChange={handle.onInputChange}
                   placeholder='Last Name'
-                  className='bg-[#d2e5e5] rounded-md p-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-500'
+                  className='bg-[#d2e5e5] rounded-md p-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-700'
                 />
               </div>
 
@@ -144,7 +144,7 @@ function UserDetailsPage({ id }: IProps) {
                   value={formData.email}
                   onChange={handle.onInputChange}
                   placeholder='Email'
-                  className='bg-[#d2e5e5] rounded-md p-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-500'
+                  className='bg-[#d2e5e5] rounded-md p-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-700'
                 />
               </div>
 
@@ -159,7 +159,7 @@ function UserDetailsPage({ id }: IProps) {
                   value={formData.number}
                   onChange={handle.onInputChange}
                   placeholder='Phone Number'
-                  className='bg-[#d2e5e5] rounded-md p-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-500'
+                  className='bg-[#d2e5e5] rounded-md p-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-700'
                 />
               </div>
 
@@ -185,7 +185,7 @@ function UserDetailsPage({ id }: IProps) {
               <div className='w-full flex justify-center gap-4 mt-6'>
                 <button
                   type='submit'
-                  className='bg-teal-600 text-white py-3 px-6 rounded-md hover:bg-teal-700 transition duration-300'
+                  className='bg-teal-700 text-white py-3 px-6 rounded-md hover:bg-teal-800 transition duration-300'
                 >
                   Update User
                 </button>

@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { getAllUsers } from '@/redux/slices/userSlice'
 import UserListView from './user-list'
 
-function UsersView() {
+const UsersView = () => {
   const { users } = useAppSelector(({ user }) => user)
   const dispatch = useAppDispatch()
 
@@ -36,11 +36,11 @@ function UsersView() {
             placeholder='Search by User by name/email/phone/id'
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className='flex-grow rounded-md border border-[#f4f5f7] bg-[#f4f5f7] px-4 py-2 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500'
+            className='flex-grow rounded-md border border-[#f4f5f7] bg-[#f4f5f7] px-4 py-2 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-700'
           />
           <button
             type='submit'
-            className='rounded-md bg-teal-600 text-white font-semibold px-5 py-2 hover:bg-[#02a8a8] transition'
+            className='rounded-md bg-teal-700 text-white font-semibold px-5 py-2 hover:bg-teal-800 transition'
           >
             Search
           </button>

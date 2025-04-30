@@ -1,7 +1,5 @@
 import DashboardView from '@/views/app/dashboard/dashboard-view'
 
-function Home() {
+export default function Page() {
   return <DashboardView />
 }
-
-export default Home

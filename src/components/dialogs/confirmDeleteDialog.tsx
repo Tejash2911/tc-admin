@@ -8,16 +8,16 @@ interface IProps {
   description?: string
 }
 
-export default function ConfirmDeleteDialog({
+const ConfirmDeleteDialog = ({
   open,
   onClose,
   onDelete,
   title = 'Confirm Deletion',
   description = 'Are you sure you want to delete this item? This action cannot be undone.'
-}: IProps) {
+}: IProps) => {
   return (
     <Modal open={open}>
-      <div className='flex flex-col gap-4 font-Urbanist text-sm sm:text-base'>
+      <div className='flex flex-col gap-4 text-sm sm:text-base'>
         <h2 className='text-lg font-semibold text-gray-800'>{title}</h2>
         <p className='text-gray-600'>{description}</p>
 
@@ -36,3 +36,5 @@ export default function ConfirmDeleteDialog({
     </Modal>
   )
 }
+
+export default ConfirmDeleteDialog

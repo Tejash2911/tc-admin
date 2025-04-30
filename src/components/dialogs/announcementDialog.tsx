@@ -12,7 +12,7 @@ interface IProps {
   getData: () => void
 }
 
-export default function AnnouncementDialog({ open, setOpen, data, getData }: IProps) {
+const AnnouncementDialog = ({ open, setOpen, data, getData }: IProps) => {
   const dispatch = useAppDispatch()
 
   const [formData, setFormData] = useState<AddAnnouncementI>({
@@ -30,7 +30,7 @@ export default function AnnouncementDialog({ open, setOpen, data, getData }: IPr
   }, [data])
 
   const handle = {
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target
 
       setFormData(prev => ({
@@ -69,17 +69,18 @@ export default function AnnouncementDialog({ open, setOpen, data, getData }: IPr
 
   return (
     <Modal open={open}>
-      <form onSubmit={handle.onSubmit} className='flex flex-col gap-2 font-Urbanist text-xs sm:text-sm'>
+      <form onSubmit={handle.onSubmit} className='flex flex-col gap-2 text-xs sm:text-sm'>
         <label htmlFor='title' className='block font-semibold'>
           Title:
         </label>
-        <input
-          type='text'
-          name='title'
+        <textarea
           id='title'
-          placeholder='Enter Announcement'
+          name='title'
           value={formData.title}
           onChange={handle.onChange}
+          rows={5}
+          cols={50}
+          placeholder='Enter Announcement'
           className='w-full rounded-xl border border-[#ccc] p-2 focus:border-[#555]'
           required
         />
@@ -97,7 +98,7 @@ export default function AnnouncementDialog({ open, setOpen, data, getData }: IPr
         </select>
         <div className='flex gap-3'>
           <button type='submit' className='rounded-xl border-none bg-black px-5 py-2 text-white hover:bg-[#777]'>
-            Submit
+            {data.isEdit ? 'Update Announcement' : 'Add Announcement'}
           </button>
           <button
             type='reset'
@@ -111,3 +112,5 @@ export default function AnnouncementDialog({ open, setOpen, data, getData }: IPr
     </Modal>
   )
 }
+
+export default AnnouncementDialog

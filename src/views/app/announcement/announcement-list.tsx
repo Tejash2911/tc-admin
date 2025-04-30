@@ -14,7 +14,7 @@ interface IProps {
   getData: () => void
 }
 
-function AnnoucementListView({ announcements, getData }: IProps) {
+const AnnoucementListView = ({ announcements, getData }: IProps) => {
   const dispatch = useAppDispatch()
 
   const announcementDialog = useModal()
@@ -39,7 +39,7 @@ function AnnoucementListView({ announcements, getData }: IProps) {
       {announcements && (
         <div className='mt-4 overflow-auto rounded-lg'>
           <table className='w-full border-collapse text-sm'>
-            <thead className='bg-teal-600 text-white text-left'>
+            <thead className='bg-teal-700 text-white text-left'>
               <tr>
                 <th className='p-3'>Title</th>
                 <th className='p-3'>Status</th>

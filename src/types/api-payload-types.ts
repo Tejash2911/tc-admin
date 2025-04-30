@@ -3,8 +3,8 @@ export interface GetDataI {
   offset?: number | string
   limit?: number | string
   search?: string
-  sort_column?: string
-  sort_order?: number | string
+  sort?: string
+  category?: number | string
 }
 
 export interface LoginI {
@@ -63,4 +63,41 @@ export interface AddUserI {
 export interface UpdateUserI {
   id: string
   payload: AddUserI
+}
+
+export interface GetProductI {
+  _id: string
+  title: string
+  productNo: string
+  desc: string
+  img: string
+  categories: string[]
+  size: string[]
+  color: string[]
+  price: number
+  quantity: number
+  purchasedCount: number
+  ratingsQuantity: number
+  ratingsAverage: number
+  brand: string
+  gender: string
+  is_in_inventory: boolean
+}
+
+export interface AddProductI {
+  title: string
+  productNo: string
+  desc: string
+  img: string
+  categories: string[]
+  size: string[]
+  color: string[]
+  price: number
+  quantity: number
+  brand: string
+}
+
+export interface UpdateProductI {
+  payload: AddProductI
+  id: string
 }

@@ -4,6 +4,7 @@ import analyticsSlice from './slices/analyticsSlice'
 import announcementSlice from './slices/announcementSlice'
 import authSlice from './slices/authSlice'
 import errorSlice from './slices/errorSlice'
+import productSlice from './slices/productSlice'
 import userSlice from './slices/userSlice'
 
 const appReducer = combineReducers({
@@ -11,7 +12,8 @@ const appReducer = combineReducers({
   error: errorSlice,
   analytics: analyticsSlice,
   announcement: announcementSlice,
-  user: userSlice
+  user: userSlice,
+  product: productSlice
 })
 
 // Handle the reset on logout by returning undefined for the state

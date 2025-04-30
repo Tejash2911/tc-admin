@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { errorActions } from '@/redux/slices/errorSlice'
 
-export default function Message() {
+const Message = () => {
   const dispatch = useAppDispatch()
   const { id, message } = useAppSelector(({ error }) => error)
   const [isShow, setIsShow] = useState<boolean>(false)
@@ -25,8 +25,8 @@ export default function Message() {
   return (
     <>
       {isShow && (
-        <div className='animate-fadeInOut fixed bottom-4 left-1/2 z-50 -translate-x-1/2 transform font-Urbanist'>
-          <div className='w-full max-w-sm rounded-xl p-3 shadow-md bg-teal-600'>
+        <div className='animate-fadeInOut fixed bottom-4 left-1/2 z-50 -translate-x-1/2 transform'>
+          <div className='w-full max-w-sm rounded-xl p-3 shadow-md bg-teal-700'>
             <span className='mx-2 capitalize'>{message}</span>
           </div>
         </div>
@@ -34,3 +34,5 @@ export default function Message() {
     </>
   )
 }
+
+export default Message

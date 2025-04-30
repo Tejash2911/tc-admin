@@ -9,7 +9,7 @@ import useModal from '@/hooks/use-modal'
 import AnnouncementDialog from '@/components/dialogs/announcementDialog'
 import AnnoucementListView from './announcement-list'
 
-function AnnouncementView() {
+const AnnouncementView = () => {
   const { announcements } = useAppSelector(({ announcement }) => announcement)
   const dispatch = useAppDispatch()
 
@@ -43,8 +43,8 @@ function AnnouncementView() {
           <div className='flex justify-between items-center text-gray-700 mb-4'>
             <div className='flex items-center gap-2 text-lg cursor-pointer'>
               <div
-                className='border-2 border-teal-500 rounded-full w-10 h-10 flex justify-center items-center transition-transform hover:scale-110 hover:bg-teal-500 hover:text-white'
-                onClick={() => announcementDialog.onOpen({})}
+                className='border-2 border-teal-700 rounded-full w-10 h-10 flex justify-center items-center transition-transform hover:scale-110 hover:bg-teal-700 hover:text-white'
+                onClick={() => announcementDialog.onOpen({ isEdit: false })}
               >
                 <MdAdd />
               </div>
@@ -52,7 +52,7 @@ function AnnouncementView() {
             </div>
 
             <div className='flex items-center gap-2 text-lg cursor-pointer' onClick={handle.disableAllAnnouncements}>
-              <div className='border-2 border-teal-500 rounded-full w-10 h-10 flex justify-center items-center transition-transform hover:scale-110 hover:bg-teal-500 hover:text-white'>
+              <div className='border-2 border-teal-700 rounded-full w-10 h-10 flex justify-center items-center transition-transform hover:scale-110 hover:bg-teal-700 hover:text-white'>
                 <MdDelete />
               </div>
               Deactivate All Announcements

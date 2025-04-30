@@ -7,7 +7,7 @@ import BarChart from './bar'
 import PieChart from './pie'
 import '@/utils/chartSetup'
 
-function ChartsComponent() {
+const ChartsComponent = () => {
   const { popularSizeColor, topCategories, topProducts } = useAppSelector(({ analytics }) => analytics)
 
   const dispatch = useAppDispatch()

@@ -23,6 +23,12 @@ const nextConfig: NextConfig = {
         hostname: 'w7.pngwing.com',
         port: '',
         pathname: '/pngs/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        port: '',
+        pathname: '/**'
       }
     ]
   }

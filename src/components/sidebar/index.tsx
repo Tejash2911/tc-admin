@@ -60,13 +60,13 @@ const Sidebar = ({ isOpen }: IProps) => {
               </Link>
             </li>
             <li>
-              <Link href='/products' className='flex items-center space-x-2 rounded-lg p-2 hover:bg-[#f0f0ff]'>
+              <Link href='/product' className='flex items-center space-x-2 rounded-lg p-2 hover:bg-[#f0f0ff]'>
                 <MdStorefront className='text-base' />
                 <span className='text-sm'>Products</span>
               </Link>
             </li>
             <li>
-              <Link href='/orders' className='flex items-center space-x-2 rounded-lg p-2 hover:bg-[#f0f0ff]'>
+              <Link href='/order' className='flex items-center space-x-2 rounded-lg p-2 hover:bg-[#f0f0ff]'>
                 <MdLocalAtm className='text-base' />
                 <span className='text-sm'>Orders</span>
               </Link>

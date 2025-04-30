@@ -49,7 +49,7 @@ const Navbar = ({ isOpen, setSideBar }: IProps) => {
                 width={100}
                 height={100}
                 alt='avatar'
-                className='w-10 h-10 rounded-full mx-2'
+                className='w-7 h-7 rounded-full mx-1'
               />
               <p className='mx-2 cursor-pointer' onClick={handle.onLogout}>
                 Logout

@@ -13,7 +13,7 @@ interface IProps {
   getData: () => void
 }
 
-function UserListView({ users, getData }: IProps) {
+const UserListView = ({ users, getData }: IProps) => {
   const dispatch = useAppDispatch()
   const router = useRouter()
 
@@ -37,7 +37,7 @@ function UserListView({ users, getData }: IProps) {
     <>
       <div className='mt-5 overflow-auto border border-gray-300 rounded-lg'>
         <table className='w-full min-w-[1000px] border-collapse'>
-          <thead className='bg-teal-600 text-white'>
+          <thead className='bg-teal-700 text-white'>
             <tr>
               <td className='p-3'>Id</td>
               <td className='p-3'>Joining Date</td>
