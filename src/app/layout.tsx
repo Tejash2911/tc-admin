@@ -1,7 +1,14 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { Urbanist } from 'next/font/google'
 import LayoutWrapper from '@/@layouts/LayoutWrapper'
 import ReduxProvider from '@/redux/ReduxProvider'
+
+const urbanist = Urbanist({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap'
+})
 
 export const metadata: Metadata = {
   title: 'Tejash Creation - Admin',
@@ -14,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en'>
+    <html lang='en' className={urbanist.className}>
       <body>
         <ReduxProvider>
           <LayoutWrapper>{children}</LayoutWrapper>
