@@ -1,13 +1,13 @@
 import { axiosInstance } from '@/libs/axios'
 import { getCommonParams } from '@/utils/get-params'
-import { AddAnnouncementI, GetDataI, UpdateAnnouncementI } from '@/types/api-payload-types'
+import type { GetDataI } from '@/types/api-payload-types'
 import { ApiErrorI, ApiSuccessI, handleApiErr, handleApiRes } from './handle-response'
 
 const getAll = (payload: GetDataI): Promise<ApiSuccessI | ApiErrorI> => {
   const nParams = getCommonParams(payload)
   return new Promise((resolve, reject) => {
     axiosInstance
-      .get('/announcement/all', { params: nParams })
+      .get('/order/all', { params: nParams })
       .then(res => resolve(handleApiRes(res)))
       .catch(err => reject(handleApiErr(err)))
   })
@@ -16,86 +16,68 @@ const getAll = (payload: GetDataI): Promise<ApiSuccessI | ApiErrorI> => {
 const getById = (id: string): Promise<ApiSuccessI | ApiErrorI> => {
   return new Promise((resolve, reject) => {
     axiosInstance
-      .get(`/announcement/${id}`)
+      .get(`/order/info/${id}`)
       .then(res => resolve(handleApiRes(res)))
       .catch(err => reject(handleApiErr(err)))
   })
 }
 
-const add = (payload: AddAnnouncementI): Promise<ApiSuccessI | ApiErrorI> => {
+const add = (payload: any): Promise<ApiSuccessI | ApiErrorI> => {
   return new Promise((resolve, reject) => {
     axiosInstance
-      .post('/announcement', payload)
+      .post('/order', payload)
       .then(res => resolve(handleApiRes(res)))
       .catch(err => reject(handleApiErr(err)))
   })
 }
 
-const update = (ORpayload: UpdateAnnouncementI): Promise<ApiSuccessI | ApiErrorI> => {
-  return new Promise((resolve, reject) => {
-    const { id, payload } = ORpayload
+const update = (ORpayload: any): Promise<ApiSuccessI | ApiErrorI> => {
+  const { id, payload } = ORpayload
 
-    axiosInstance
-      .put(`/announcement/${id}`, payload)
-      .then(res => resolve(handleApiRes(res)))
-      .catch(err => reject(handleApiErr(err)))
-  })
-}
-
-const deleteById = (id: string): Promise<ApiSuccessI | ApiErrorI> => {
   return new Promise((resolve, reject) => {
     axiosInstance
-      .delete(`/announcement/${id}`)
+      .put(`/order/${id}`, payload)
       .then(res => resolve(handleApiRes(res)))
       .catch(err => reject(handleApiErr(err)))
   })
 }
 
-const disableAll = (): Promise<ApiSuccessI | ApiErrorI> => {
+const deleteById = (id: string) => {
   return new Promise((resolve, reject) => {
     axiosInstance
-      .delete(`/announcement/active`)
+      .delete(`/order/${id}`)
       .then(res => resolve(handleApiRes(res)))
       .catch(err => reject(handleApiErr(err)))
   })
 }
 
-const bulkImport = (file: File): Promise<any> => {
-  // Create FormData object to handle file upload
-  const formData = new FormData()
-
-  formData.append('file', file)
-
+const getByUserId = (id: string): Promise<ApiSuccessI | ApiErrorI> => {
   return new Promise((resolve, reject) => {
-    if (!file) {
-      reject({
-        status: null,
-        data: reject({ status: null, data: {}, message: 'File is required' }),
-        message: 'File is required'
-      })
-
-      return
-    }
-
     axiosInstance
-      .post('/announcement/import', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
+      .get(`/order/find/${id}`)
       .then(res => resolve(handleApiRes(res)))
       .catch(err => reject(handleApiErr(err)))
   })
 }
 
-const announcementService = {
+const changeOrderStatus = (OrPayload: any): Promise<ApiSuccessI | ApiErrorI> => {
+  const { id, payload } = OrPayload
+  return new Promise((resolve, reject) => {
+    axiosInstance
+      .put(`/order/status/${id}`, payload)
+      .then(res => resolve(handleApiRes(res)))
+      .catch(err => reject(handleApiErr(err)))
+  })
+}
+
+const orderService = {
   getAll,
   getById,
   add,
   update,
   deleteById,
-  disableAll,
-  bulkImport
+  getByUserId,
+  changeOrderStatus
 }
 
-export default announcementService
+export default orderService

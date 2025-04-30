@@ -13,10 +13,11 @@ interface QueryI {
   search: string
   category: any
   sort: string
+  offset: number
 }
 
 const ProductView = () => {
-  const { products } = useAppSelector(({ product }) => product)
+  const { products, rowCount } = useAppSelector(({ product }) => product)
   const dispatch = useAppDispatch()
 
   const productDialog = useModal()
@@ -24,24 +25,26 @@ const ProductView = () => {
   const [query, setQuery] = useState<QueryI>({
     search: '',
     category: '',
-    sort: ''
+    sort: '',
+    offset: 1
   })
 
   const debouncedSearch = useDebounce(query.search, 500)
 
-  const handleS = async (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, { type }: { type: string }) => {
-    if (type === 'cat') setQuery((p: any) => ({ ...p, category: e.target.value }))
-    if (type === 'sort') setQuery((p: any) => ({ ...p, sort: e.target.value }))
-    if (type === 'search') setQuery((p: any) => ({ ...p, search: e.target.value }))
-  }
-
   useEffect(() => {
     handle.getAllProducts()
-  }, [debouncedSearch, query.sort, query.category])
+  }, [debouncedSearch, query.sort, query.category, query.offset])
 
   const handle = {
     getAllProducts: () => {
-      dispatch(getAllProducts({ search: query.search, sort: query.sort, category: query.category }))
+      dispatch(
+        getAllProducts({ search: query.search, sort: query.sort, category: query.category, offset: query.offset })
+      )
+    },
+    handleSearch: async (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, { type }: { type: string }) => {
+      if (type === 'cat') setQuery((p: any) => ({ ...p, category: e.target.value }))
+      if (type === 'sort') setQuery((p: any) => ({ ...p, sort: e.target.value }))
+      if (type === 'search') setQuery((p: any) => ({ ...p, search: e.target.value }))
     }
   }
 
@@ -56,12 +59,12 @@ const ProductView = () => {
             <input
               type='text'
               placeholder='Search by product name'
-              onChange={e => handleS(e, { type: 'search' })}
+              onChange={e => handle.handleSearch(e, { type: 'search' })}
               className='flex-2 p-3 bg-gray-100 rounded-lg w-full md:flex-2 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-700'
             />
 
             <select
-              onChange={e => handleS(e, { type: 'cat' })}
+              onChange={e => handle.handleSearch(e, { type: 'cat' })}
               className='flex-1 p-3 bg-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-700 w-full md:flex-1'
             >
               <option value='' defaultValue=''>
@@ -75,7 +78,7 @@ const ProductView = () => {
             </select>
 
             <select
-              onChange={e => handleS(e, { type: 'sort' })}
+              onChange={e => handle.handleSearch(e, { type: 'sort' })}
               className='flex-1 p-3 bg-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-700 w-full md:flex-1'
             >
               <option value='' defaultValue=''>
@@ -95,6 +98,28 @@ const ProductView = () => {
 
           {/* Product List */}
           <ProductListView products={products} getData={handle.getAllProducts} />
+          <div className='w-full flex items-center justify-between'>
+            <p
+              onClick={() => query.offset > 1 && setQuery(prev => ({ ...prev, offset: prev.offset - 1 }))}
+              className={`mt-4 w-max mx-3 ${
+                query.offset > 1
+                  ? 'text-gray-700 hover:text-teal-600 hover:underline cursor-pointer'
+                  : 'text-gray-400 pointer-events-none'
+              }`}
+            >
+              Previous
+            </p>
+            <p
+              onClick={() => products.length > 0 && setQuery(prev => ({ ...prev, offset: prev.offset + 1 }))}
+              className={`mt-4 w-max mx-3 ${
+                query.offset < Math.ceil(rowCount / 10)
+                  ? 'text-gray-700 hover:text-teal-600 hover:underline cursor-pointer'
+                  : 'text-gray-400 pointer-events-none'
+              }`}
+            >
+              Next
+            </p>
+          </div>
         </div>
       </div>
       {productDialog.isOpen && (

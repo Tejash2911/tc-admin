@@ -67,7 +67,7 @@ const ProductListView = ({ products, getData }: IProps) => {
                       alt='product'
                       height={100}
                       width={100}
-                      className='w-8 h-8 rounded-full object-cover'
+                      className='w-8 h-8 rounded-full object-center'
                     />
                     {p?.title?.length > 50 ? `${p.title.slice(0, 50)}...` : p?.title}
                   </div>

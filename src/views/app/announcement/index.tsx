@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { disableAnnoucements, getAllAnnouncements } from '@/redux/slices/announcementSlice'
 import { errorActions } from '@/redux/slices/errorSlice'
@@ -9,19 +9,29 @@ import useModal from '@/hooks/use-modal'
 import AnnouncementDialog from '@/components/dialogs/announcementDialog'
 import AnnoucementListView from './announcement-list'
 
+interface QueryI {
+  search: string
+  offset: number
+}
+
 const AnnouncementView = () => {
-  const { announcements } = useAppSelector(({ announcement }) => announcement)
+  const { announcements, rowCount } = useAppSelector(({ announcement }) => announcement)
   const dispatch = useAppDispatch()
 
   const announcementDialog = useModal()
 
+  const [query, setQuery] = useState<QueryI>({
+    search: '',
+    offset: 1
+  })
+
   useEffect(() => {
     handle.getAllAnnouncements()
-  }, [])
+  }, [query])
 
   const handle = {
     getAllAnnouncements: () => {
-      dispatch(getAllAnnouncements({}))
+      dispatch(getAllAnnouncements({ ...query }))
     },
     disableAllAnnouncements: () => {
       dispatch(disableAnnoucements())
@@ -59,7 +69,30 @@ const AnnouncementView = () => {
             </div>
           </div>
 
-          <AnnoucementListView announcements={announcements.data} getData={handle.getAllAnnouncements} />
+          <AnnoucementListView announcements={announcements} getData={handle.getAllAnnouncements} />
+
+          <div className='w-full flex items-center justify-between'>
+            <p
+              onClick={() => query.offset > 1 && setQuery(prev => ({ ...prev, offset: prev.offset - 1 }))}
+              className={`mt-4 w-max mx-3 ${
+                query.offset > 1
+                  ? 'text-gray-700 hover:text-teal-600 hover:underline cursor-pointer'
+                  : 'text-gray-400 pointer-events-none'
+              }`}
+            >
+              Previous
+            </p>
+            <p
+              onClick={() => announcements.length > 0 && setQuery(prev => ({ ...prev, offset: prev.offset + 1 }))}
+              className={`mt-4 w-max mx-3 ${
+                query.offset < Math.ceil(rowCount / 10)
+                  ? 'text-gray-700 hover:text-teal-600 hover:underline cursor-pointer'
+                  : 'text-gray-400 pointer-events-none'
+              }`}
+            >
+              Next
+            </p>
+          </div>
         </div>
       </div>
       {announcementDialog.isOpen && (

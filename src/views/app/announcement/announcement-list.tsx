@@ -38,7 +38,7 @@ const AnnoucementListView = ({ announcements, getData }: IProps) => {
     <>
       {announcements && (
         <div className='mt-4 overflow-auto rounded-lg'>
-          <table className='w-full border-collapse text-sm'>
+          <table className='w-full border-collapse'>
             <thead className='bg-teal-700 text-white text-left'>
               <tr>
                 <th className='p-3'>Title</th>

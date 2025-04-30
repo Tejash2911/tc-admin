@@ -9,7 +9,7 @@ export const getAllAnnouncements = createAsyncThunk(
     try {
       const { data } = await announcementService.getAll(payload)
 
-      return data
+      return { list: Array.isArray(data.data) ? data.data : [], rowCount: data.totalCount }
     } catch (error) {
       return rejectWithValue(error)
     }
@@ -109,9 +109,10 @@ const announcementSlice = createAppSlice({
     builder.addCase(getAllAnnouncements.pending, state => {
       state.loading = true
     })
-    builder.addCase(getAllAnnouncements.fulfilled, (state, { payload }) => {
+    builder.addCase(getAllAnnouncements.fulfilled, (state, { payload: { list, rowCount } }) => {
       state.loading = false
-      state.announcements = payload
+      state.announcements = list
+      state.rowCount = rowCount
     })
     builder.addCase(getAllAnnouncements.rejected, state => {
       state.loading = false

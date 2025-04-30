@@ -5,6 +5,7 @@ export interface GetDataI {
   search?: string
   sort?: string
   category?: number | string
+  status?: string
 }
 
 export interface LoginI {
@@ -100,4 +101,25 @@ export interface AddProductI {
 export interface UpdateProductI {
   payload: AddProductI
   id: string
+}
+
+export type OrderStatusType = 'pending' | 'processing' | 'delivered'
+
+export interface GetOrderI {
+  _id: string
+  createdAt: string
+  orderStatus: OrderStatusType
+  price: number
+  userInfo: {
+    name: string
+    email: string
+    address: {
+      city: string
+      country: string
+      mobile: number
+      state: string
+      street: string
+      zip: string
+    }
+  }
 }
