@@ -36,9 +36,9 @@ axiosInstance.interceptors.response.use(
 
     if (response && (response.status === 401 || response.status === 403)) {
       if (typeof window !== 'undefined') {
-        window.location.href = '/login' // Client-side redirection
+        window.location.href = '/logout' // Client-side redirection
       } else {
-        redirect('/login') // Server-side redirection
+        redirect('/logout') // Server-side redirection
       }
     }
 
