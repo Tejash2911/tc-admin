@@ -61,8 +61,11 @@ const AnnouncementView = () => {
               Add Announcement
             </div>
 
-            <div className='flex items-center gap-2 text-lg cursor-pointer' onClick={handle.disableAllAnnouncements}>
-              <div className='border-2 border-teal-700 rounded-full w-10 h-10 flex justify-center items-center transition-transform hover:scale-110 hover:bg-teal-700 hover:text-white'>
+            <div className='flex items-center gap-2 text-lg cursor-pointer'>
+              <div
+                className='border-2 border-teal-700 rounded-full w-10 h-10 flex justify-center items-center transition-transform hover:scale-110 hover:bg-teal-700 hover:text-white'
+                onClick={handle.disableAllAnnouncements}
+              >
                 <MdDelete />
               </div>
               Deactivate All Announcements

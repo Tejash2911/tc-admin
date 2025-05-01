@@ -1,6 +1,6 @@
 import Invoice from '@/views/app/order/invoice'
-import { PagePropsI } from '@/types/page-props'
 
-export default function Page({ params }: PagePropsI) {
-  return <Invoice id={params.id} />
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  return <Invoice id={id} />
 }
