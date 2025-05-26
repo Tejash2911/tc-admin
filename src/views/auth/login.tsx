@@ -24,7 +24,7 @@ const LoginV2 = () => {
       dispatch(login({ email, password }))
         .unwrap()
         .then(res => dispatch(errorActions.setErrorMessage(res?.message)))
-        .catch(error => dispatch(errorActions.setErrorMessage(error?.message)))
+        .catch(error => dispatch(errorActions.setErrorMessage(error?.data?.message)))
     }
   }
 
