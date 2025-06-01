@@ -62,13 +62,17 @@ export const deleteProduct = createAsyncThunk('product/deleteProduct', async (id
 interface ProductStateI {
   loading: boolean
   products: any[]
+  product: any
   rowCount: number
+  productNotFound: boolean
 }
 
 const initialState: ProductStateI = {
   loading: false,
   products: [],
-  rowCount: 0
+  product: {},
+  rowCount: 0,
+  productNotFound: false
 }
 
 const productSlice = createAppSlice({
@@ -80,6 +84,9 @@ const productSlice = createAppSlice({
     },
     resetState: () => {
       return { ...initialState }
+    },
+    resetProduct: state => {
+      state.product = {}
     }
   },
   extraReducers: builder => {
@@ -111,11 +118,14 @@ const productSlice = createAppSlice({
     builder.addCase(getProductById.pending, state => {
       state.loading = true
     })
-    builder.addCase(getProductById.fulfilled, state => {
+    builder.addCase(getProductById.fulfilled, (state, { payload }) => {
       state.loading = false
+      state.product = payload
+      state.productNotFound = false
     })
     builder.addCase(getProductById.rejected, state => {
       state.loading = false
+      state.productNotFound = true
     })
 
     // update product
@@ -142,5 +152,5 @@ const productSlice = createAppSlice({
   }
 })
 
-export const userActions = productSlice.actions
+export const productActions = productSlice.actions
 export default productSlice.reducer
