@@ -84,13 +84,15 @@ interface OrderStateI {
   order: any
   loading: boolean
   rowCount: number
+  orderNotFound: boolean
 }
 
 const initialState: OrderStateI = {
   orders: [],
   order: {},
   loading: false,
-  rowCount: 0
+  rowCount: 0,
+  orderNotFound: false
 }
 
 const orderSlice = createAppSlice({
@@ -137,9 +139,11 @@ const orderSlice = createAppSlice({
     builder.addCase(getOrderById.fulfilled, (state, { payload }) => {
       state.loading = false
       state.order = payload
+      state.orderNotFound = false
     })
     builder.addCase(getOrderById.rejected, state => {
       state.loading = false
+      state.orderNotFound = true
     })
     // update order
     builder.addCase(updateOrder.pending, state => {

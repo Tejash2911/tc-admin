@@ -4,12 +4,13 @@ import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { getOrderById, orderActions } from '@/redux/slices/orderSlice'
 import { MdLocalPrintshop } from 'react-icons/md'
+import NotFound from '@/components/not-found'
 
 interface IProps {
   id: string
 }
 const Invoice = ({ id }: IProps) => {
-  const { order } = useAppSelector(({ order }) => order)
+  const { order, orderNotFound } = useAppSelector(({ order }) => order)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -42,6 +43,10 @@ const Invoice = ({ id }: IProps) => {
     pending: 'bg-yellow-100 text-yellow-700',
     processing: 'bg-green-100 text-green-700',
     delivered: 'bg-blue-100 text-blue-700'
+  }
+
+  if (orderNotFound) {
+    return <NotFound message='Order Not Found' description='The order you are looking for does not exist.' />
   }
 
   return (
