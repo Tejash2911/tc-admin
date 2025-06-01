@@ -9,13 +9,14 @@ import { deleteUser, getUserById, updateUserById, userActions } from '@/redux/sl
 import { AddUserI } from '@/types/api-payload-types'
 import useModal from '@/hooks/use-modal'
 import ConfirmDeleteDialog from '@/components/dialogs/confirmDeleteDialog'
+import NotFound from '@/components/not-found'
 
 interface IProps {
   id: string
 }
 
 const UserDetailsPage = ({ id }: IProps) => {
-  const { user } = useAppSelector(({ user }) => user)
+  const { user, userNotFound } = useAppSelector(({ user }) => user)
   const dispatch = useAppDispatch()
 
   const isDelete = useModal()
@@ -80,6 +81,10 @@ const UserDetailsPage = ({ id }: IProps) => {
         })
         .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
     }
+  }
+
+  if (userNotFound) {
+    return <NotFound message='User Not Found' description='The user you are looking for does not exist.' />
   }
 
   return (

@@ -51,13 +51,15 @@ interface UserStateI {
   user: any
   loading: boolean
   rowCount: number
+  userNotFound: boolean
 }
 
 const initialState: UserStateI = {
   users: [],
   user: {},
   loading: false,
-  rowCount: 0
+  rowCount: 0,
+  userNotFound: false
 }
 
 const userSlice = createAppSlice({
@@ -93,9 +95,11 @@ const userSlice = createAppSlice({
     builder.addCase(getUserById.fulfilled, (state, { payload }) => {
       state.user = payload
       state.loading = false
+      state.userNotFound = false
     })
     builder.addCase(getUserById.rejected, state => {
       state.loading = false
+      state.userNotFound = true
     })
     // deleteUserById
     builder.addCase(deleteUser.pending, state => {
