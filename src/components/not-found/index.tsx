@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect, useState } from 'react'
 
 interface NotFoundProps {
@@ -22,10 +20,10 @@ const NotFound = ({
   }
 
   return (
-    <div className='flex flex-col items-center justify-center min-h-[400px] p-8'>
+    <div className='flex flex-col items-center justify-center min-h-[calc(100vh-50px)] p-8'>
       <div className='text-center'>
         <div className='mb-4'>
-          <div className='w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto'>
+          <div className='w-20 h-20 rounded-full flex items-center justify-center mx-auto'>
             <svg className='w-12 h-12 text-gray-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
               <path
                 strokeLinecap='round'

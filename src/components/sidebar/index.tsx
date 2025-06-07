@@ -1,18 +1,30 @@
-'use client'
-
 import React from 'react'
 import Link from 'next/link'
-import {
-  MdCampaign,
-  MdDrafts,
-  MdFeedback,
-  MdForum,
-  MdLineStyle,
-  MdLocalAtm,
-  MdPermIdentity,
-  MdStorefront,
-  MdTrendingUp
-} from 'react-icons/md'
+import { usePathname } from 'next/navigation'
+import { Icon } from '@iconify/react'
+
+interface INavItem {
+  href: string
+  icon: React.ReactNode
+  label: string
+}
+
+const NavItem = ({ href, icon, label }: INavItem) => {
+  const pathname = usePathname()
+  const isActive = pathname === href
+
+  return (
+    <Link
+      href={href}
+      className={`flex items-center space-x-2 rounded-lg p-2 transition-colors duration-200 ${
+        isActive ? 'bg-[#f0f0ff]' : 'hover:bg-[#f0f0ff]'
+      }`}
+    >
+      {icon}
+      <span className='text-sm'>{label}</span>
+    </Link>
+  )
+}
 
 interface IProps {
   isOpen: boolean
@@ -21,7 +33,7 @@ interface IProps {
 const Sidebar = ({ isOpen }: IProps) => {
   return (
     <div
-      className={`fixed top-[50px] bottom-0 bg-[#fbfbff] transition-all duration-300 ease-in-out h-[calc(100vh-50px)] w-max z-50 ${
+      className={`fixed top-[50px] bottom-0 bg-white transition-all duration-300 ease-in-out h-[calc(100vh-50px)] w-max z-50 shadow-md ${
         isOpen ? 'left-0' : '-left-full'
       }`}
     >
@@ -31,20 +43,13 @@ const Sidebar = ({ isOpen }: IProps) => {
           <h3 className='text-xs text-[#bbb] font-semibold mb-2'>Dashboard</h3>
           <ul className='space-y-1'>
             <li>
-              <Link href='/' className='flex items-center space-x-2 rounded-lg p-2 hover:bg-[#f0f0ff]'>
-                <MdLineStyle className='text-base' />
-                <span className='text-sm'>Home</span>
-              </Link>
+              <NavItem href='/' icon={<Icon icon='ri:home-line' />} label='Home' />
             </li>
             <li>
-              <Link href='/announcement' className='flex items-center space-x-2 rounded-lg p-2 hover:bg-[#f0f0ff]'>
-                <MdCampaign className='text-base' />
-                <span className='text-sm'>Announcement</span>
-              </Link>
+              <NavItem href='/announcement' icon={<Icon icon='ri:notification-line' />} label='Announcement' />
             </li>
-            <li className='flex items-center space-x-2 rounded-lg p-2 hover:bg-[#f0f0ff] cursor-pointer'>
-              <MdTrendingUp className='text-base' />
-              <span className='text-sm'>Sales</span>
+            <li>
+              <NavItem href='#' icon={<Icon icon='ri:align-item-bottom-line' />} label='Sales' />
             </li>
           </ul>
         </div>
@@ -54,22 +59,13 @@ const Sidebar = ({ isOpen }: IProps) => {
           <h3 className='text-xs text-[#bbb] font-semibold mb-2'>All Menu</h3>
           <ul className='space-y-1'>
             <li>
-              <Link href='/user' className='flex items-center space-x-2 rounded-lg p-2 hover:bg-[#f0f0ff]'>
-                <MdPermIdentity className='text-base' />
-                <span className='text-sm'>Users</span>
-              </Link>
+              <NavItem href='/user' icon={<Icon icon='ri:user-line' />} label='Users' />
             </li>
             <li>
-              <Link href='/product' className='flex items-center space-x-2 rounded-lg p-2 hover:bg-[#f0f0ff]'>
-                <MdStorefront className='text-base' />
-                <span className='text-sm'>Products</span>
-              </Link>
+              <NavItem href='/product' icon={<Icon icon='ri:store-line' />} label='Products' />
             </li>
             <li>
-              <Link href='/order' className='flex items-center space-x-2 rounded-lg p-2 hover:bg-[#f0f0ff]'>
-                <MdLocalAtm className='text-base' />
-                <span className='text-sm'>Orders</span>
-              </Link>
+              <NavItem href='/order' icon={<Icon icon='ri:shopping-bag-line' />} label='Orders' />
             </li>
           </ul>
         </div>
@@ -78,17 +74,14 @@ const Sidebar = ({ isOpen }: IProps) => {
         <div>
           <h3 className='text-xs text-[#bbb] font-semibold mb-2'>Connect</h3>
           <ul className='space-y-1'>
-            <li className='flex items-center space-x-2 rounded-lg p-2 hover:bg-[#f0f0ff] cursor-pointer'>
-              <MdDrafts className='text-base' />
-              <span className='text-sm'>Mail</span>
+            <li>
+              <NavItem href='#' icon={<Icon icon='ri:mail-line' />} label='Mail' />
             </li>
-            <li className='flex items-center space-x-2 rounded-lg p-2 hover:bg-[#f0f0ff] cursor-pointer'>
-              <MdFeedback className='text-base' />
-              <span className='text-sm'>Feedback</span>
+            <li>
+              <NavItem href='#' icon={<Icon icon='ri:feedback-line' />} label='Feedback' />
             </li>
-            <li className='flex items-center space-x-2 rounded-lg p-2 hover:bg-[#f0f0ff] cursor-pointer'>
-              <MdForum className='text-base' />
-              <span className='text-sm'>Messages</span>
+            <li>
+              <NavItem href='#' icon={<Icon icon='ri:message-line' />} label='Messages' />
             </li>
           </ul>
         </div>

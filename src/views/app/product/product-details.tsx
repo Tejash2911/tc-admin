@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { getProductById, productActions } from '@/redux/slices/productSlice'
 import ContentLayout from '@/components/content-layout'
 import NotFound from '@/components/not-found'
-import PageTitle from '@/components/page-title'
 
 interface IProps {
   id: string
@@ -33,9 +32,8 @@ const ProductDetails = ({ id }: IProps) => {
   }
 
   return (
-    <ContentLayout>
-      <PageTitle title='Product Details' />
-      <div className='w-full max-w-6xl bg-white rounded-2xl shadow-md p-6 grid grid-cols-1 md:grid-cols-2 gap-6 mt-6'>
+    <ContentLayout title='Product Details'>
+      <div className='border border-gray-300 bg-white rounded-lg p-6 grid grid-cols-1 md:grid-cols-2 mt-6'>
         {/* Image Section */}
         {product?.img && (
           <div className='flex justify-center items-center'>
@@ -44,57 +42,73 @@ const ProductDetails = ({ id }: IProps) => {
               alt={product?.title}
               width={300}
               height={300}
-              className='rounded-xl object-contain max-h-80'
+              priority
+              className='rounded-lg object-contain max-h-80'
             />
           </div>
         )}
 
         {/* Info Section */}
-        <div className='space-y-4'>
-          <h3 className='text-xl font-semibold'>{product?.title}</h3>
-          <p className='text-gray-600'>{product?.desc}</p>
+        <div className='space-y-6'>
+          <h3 className='text-lg font-bold text-gray-900'>{product?.title}</h3>
+          <p className='text-gray-600 text-base'>{product?.desc}</p>
 
-          <div className='grid grid-cols-2 gap-2 text-sm text-gray-700'>
-            <div>
-              <span className='font-medium'>Product No:</span> {product?.productNo}
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 text-gray-700 bg-gray-50 p-4 rounded-lg border border-gray-300'>
+            <div className='flex items-center gap-2'>
+              <span className='font-medium'>Product No:</span>
+              <span className='font-medium text-gray-900'>{product?.productNo}</span>
             </div>
-            <div>
-              <span className='font-medium'>Brand:</span> {product?.brand}
+            <div className='flex items-center gap-2'>
+              <span className='font-medium'>Brand:</span>
+              <span className='font-medium text-gray-900'>{product?.brand}</span>
             </div>
-            <div>
-              <span className='font-medium'>Category:</span> {product?.categories?.join(', ')}
+            <div className='flex items-center gap-2'>
+              <span className='font-medium'>Category:</span>
+              <span className='font-medium text-gray-900'>{product?.categories?.join(', ')}</span>
             </div>
-            <div>
-              <span className='font-medium'>Color:</span> {product?.color?.join(', ')}
+            <div className='flex items-center gap-2'>
+              <span className='font-medium'>Color:</span>
+              <span className='font-medium text-gray-900'>{product?.color?.join(', ')}</span>
             </div>
-            <div>
-              <span className='font-medium'>Size:</span> {product?.size?.join(', ')}
+            <div className='flex items-center gap-2'>
+              <span className='font-medium'>Size:</span>
+              <span className='font-medium text-gray-900'>{product?.size?.join(', ')}</span>
             </div>
-            <div>
-              <span className='font-medium'>Gender:</span> {product?.gender}
+            <div className='flex items-center gap-2'>
+              <span className='font-medium'>Gender:</span>
+              <span className='font-medium text-gray-900'>{product?.gender}</span>
             </div>
-            <div>
-              <span className='font-medium'>In Inventory:</span>{' '}
-              <span className={product?.is_in_inventory ? 'text-green-600' : 'text-red-600'}>
+            <div className='flex items-center gap-2'>
+              <span className='font-medium'>In Inventory:</span>
+              <span
+                className={`px-2 py-1 rounded-full font-medium ${
+                  product?.is_in_inventory ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                }`}
+              >
                 {product?.is_in_inventory ? 'Yes' : 'No'}
               </span>
             </div>
           </div>
 
-          <div className='border-t pt-4'>
-            <p className='text-lg'>
-              <span className='font-semibold'>Price:</span> ${product?.price?.toFixed(2)}
-            </p>
-            <p>
-              <span className='font-semibold'>Available Quantity:</span> {product?.quantity}
-            </p>
-            <p>
-              <span className='font-semibold'>Purchased:</span> {product?.purchasedCount} times
-            </p>
-            <p>
-              <span className='font-semibold'>Ratings:</span> {product?.ratingsAverage} ⭐ ({product?.ratingsQuantity}{' '}
-              reviews)
-            </p>
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 text-gray-700 bg-gray-50 p-4 rounded-lg border border-gray-300'>
+            <div className='flex items-center gap-2'>
+              <span className='font-medium'>Price:</span>
+              <span className='font-medium text-gray-900'>₹ {product?.price?.toFixed(2)}</span>
+            </div>
+            <div className='flex items-center gap-2'>
+              <span className='font-medium'>Purchased:</span>
+              <span className='font-medium text-gray-900'>{product?.purchasedCount} times</span>
+            </div>
+            <div className='flex items-center gap-2'>
+              <span className='font-medium'>Available Quantity:</span>
+              <span className='font-medium text-gray-900'>{product?.quantity}</span>
+            </div>
+            <div className='flex items-center gap-2'>
+              <span className='font-medium'>Ratings:</span>
+              <span className='font-medium text-gray-900'>
+                {product?.ratingsAverage} ⭐ ({product?.ratingsQuantity} reviews)
+              </span>
+            </div>
           </div>
         </div>
       </div>

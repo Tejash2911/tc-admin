@@ -8,7 +8,10 @@ import { errorActions } from '@/redux/slices/errorSlice'
 import { deleteUser, getUserById, updateUserById, userActions } from '@/redux/slices/userSlice'
 import { AddUserI } from '@/types/api-payload-types'
 import useModal from '@/hooks/use-modal'
+import { Button } from '@/components/button'
+import ContentLayout from '@/components/content-layout'
 import ConfirmDeleteDialog from '@/components/dialogs/confirmDeleteDialog'
+import { Input, Select } from '@/components/input'
 import NotFound from '@/components/not-found'
 
 interface IProps {
@@ -88,119 +91,85 @@ const UserDetailsPage = ({ id }: IProps) => {
   }
 
   return (
-    <>
+    <ContentLayout title='User Details'>
       {user && (
-        <div className='w-full flex items-center justify-center'>
-          <div className='w-full max-w-6xl bg-[#f6fbfb] flex flex-col items-center m-5 p-3 rounded-xl shadow-md'>
+        <div className='w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+          <div className='bg-white rounded-lg p-8 border border-gray-300'>
             {/* Top Section */}
-            <div className='flex flex-col md:flex-row items-center justify-around w-full mb-6'>
-              {user.avatar && (
-                <Image
-                  src={user.avatar}
-                  height={100}
-                  width={100}
-                  alt='avatar'
-                  className='w-48 h-48 rounded-full object-cover'
-                />
-              )}
-              <h2 className='text-gray-800 text-xl font-semibold mt-4 md:mt-0'>UserID: {user._id}</h2>
+            <div className='flex items-center justify-between mb-8'>
+              <div className='flex items-center gap-4'>
+                {user.avatar && (
+                  <Image
+                    src={user.avatar}
+                    height={50}
+                    width={50}
+                    alt='avatar'
+                    className='w-12 h-12 rounded-full object-cover'
+                  />
+                )}
+                <h2 className='text-gray-900'>UserID: {user._id}</h2>
+              </div>
             </div>
 
             {/* Form Section */}
-            <form onSubmit={handle.onSubmit} className='w-full flex flex-wrap justify-center gap-6 mt-4'>
+            <form onSubmit={handle.onSubmit} className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
               {/* First Name */}
-              <div className='flex flex-col flex-[1_0_30%]'>
-                <label htmlFor='firstName' className='mb-2 text-gray-700 font-medium'>
-                  First Name
-                </label>
-                <input
-                  id='firstName'
-                  name='firstName'
-                  value={formData.firstName}
-                  onChange={handle.onInputChange}
-                  placeholder='First Name'
-                  className='bg-[#d2e5e5] rounded-md p-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-700'
-                />
-              </div>
+              <Input
+                name='firstName'
+                label='First Name'
+                placeholder='First Name'
+                value={formData.firstName}
+                onChange={handle.onInputChange}
+              />
 
               {/* Last Name */}
-              <div className='flex flex-col flex-[1_0_30%]'>
-                <label htmlFor='lastName' className='mb-2 text-gray-700 font-medium'>
-                  Last Name
-                </label>
-                <input
-                  id='lastName'
-                  name='lastName'
-                  value={formData.lastName}
-                  onChange={handle.onInputChange}
-                  placeholder='Last Name'
-                  className='bg-[#d2e5e5] rounded-md p-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-700'
-                />
-              </div>
+              <Input
+                name='lastName'
+                label='Last Name'
+                placeholder='Last Name'
+                value={formData.lastName}
+                onChange={handle.onInputChange}
+              />
 
               {/* Email */}
-              <div className='flex flex-col flex-[1_0_30%]'>
-                <label htmlFor='email' className='mb-2 text-gray-700 font-medium'>
-                  Email
-                </label>
-                <input
-                  id='email'
-                  name='email'
-                  value={formData.email}
-                  onChange={handle.onInputChange}
-                  placeholder='Email'
-                  className='bg-[#d2e5e5] rounded-md p-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-700'
-                />
-              </div>
+              <Input
+                name='email'
+                label='Email'
+                placeholder='Email'
+                value={formData.email}
+                onChange={handle.onInputChange}
+                readOnly
+              />
 
               {/* Number */}
-              <div className='flex flex-col flex-[1_0_30%]'>
-                <label htmlFor='number' className='mb-2 text-gray-700 font-medium'>
-                  Phone Number
-                </label>
-                <input
-                  id='number'
-                  name='number'
-                  value={formData.number}
-                  onChange={handle.onInputChange}
-                  placeholder='Phone Number'
-                  className='bg-[#d2e5e5] rounded-md p-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-700'
-                />
-              </div>
+              <Input
+                name='number'
+                label='Phone Number'
+                placeholder='Phone Number'
+                value={formData.number}
+                onChange={handle.onInputChange}
+              />
 
               {/* isAdmin */}
-              <div className='flex flex-col flex-[1_0_30%]'>
-                <label htmlFor='isAdmin' className='mb-2 text-gray-700 font-medium'>
-                  Is Admin?
-                </label>
-                <select
-                  id='isAdmin'
-                  name='isAdmin'
-                  value={formData.isAdmin.toString()}
-                  onChange={handle.onInputChange}
-                  className='bg-[#d2e5e5] rounded-md p-3 text-base'
-                >
-                  <option value='false'>No</option>
-                  <option value='true'>Yes</option>
-                </select>
-              </div>
+              <Select
+                name='isAdmin'
+                label='Is Admin?'
+                value={formData.isAdmin.toString()}
+                onChange={handle.onInputChange}
+                options={[
+                  { label: 'No', value: 'false' },
+                  { label: 'Yes', value: 'true' }
+                ]}
+              />
 
-              {/* Submit */}
-              {/* Submit */}
-              <div className='w-full flex justify-center gap-4 mt-6'>
-                <button
-                  type='submit'
-                  className='bg-teal-700 text-white py-3 px-6 rounded-md hover:bg-teal-800 transition duration-300'
-                >
+              {/* Submit Buttons */}
+              <div className='col-span-full flex justify-end gap-4'>
+                <Button type='submit' icon='save'>
                   Update User
-                </button>
-                <button
-                  type='button'
-                  onClick={() => isDelete.onOpen({ id })}
-                  className='bg-red-600 text-white py-3 px-6 rounded-md hover:bg-red-700 transition duration-300'
-                >
+                </Button>
+                <Button type='button' icon='delete' variant='delete' onClick={() => isDelete.onOpen({ id })}>
                   Delete User
-                </button>
+                </Button>
               </div>
             </form>
           </div>
@@ -209,7 +178,7 @@ const UserDetailsPage = ({ id }: IProps) => {
       {isDelete.isOpen && (
         <ConfirmDeleteDialog open={isDelete.isOpen} onClose={isDelete.onClose} onDelete={handle.confirmDelete} />
       )}
-    </>
+    </ContentLayout>
   )
 }
 

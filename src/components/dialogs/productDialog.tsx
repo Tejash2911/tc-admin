@@ -3,7 +3,9 @@ import { useAppDispatch } from '@/redux/redux-hooks'
 import { errorActions } from '@/redux/slices/errorSlice'
 import { addProduct, updateProduct } from '@/redux/slices/productSlice'
 import { AddProductI } from '@/types/api-payload-types'
+import { Button } from '../button'
 import ImageUpload from '../image-upload'
+import { Input, Textarea } from '../input'
 import Modal from '../modal'
 
 interface IProps {
@@ -97,166 +99,111 @@ const ProductDialog = ({ open, setOpen, data, getData }: IProps) => {
   }
 
   return (
-    <Modal open={open}>
-      <form onSubmit={handle.onSubmit} className='flex flex-col gap-4 text-xs sm:text-sm w-full max-w-4xl mx-auto'>
+    <Modal open={open} size='xl'>
+      <form onSubmit={handle.onSubmit} className='flex flex-col gap-4 mx-auto'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           {/* Left Column */}
           <div className='flex flex-col gap-2'>
-            {/* Title */}
-            <label className='font-semibold' htmlFor='title'>
-              Title:
-            </label>
-            <input
+            <Input
               type='text'
-              id='title'
               name='title'
+              label='Title'
               value={formData.title}
               onChange={handle.onChange}
               placeholder='Product title'
-              className='w-full rounded-xl border border-[#ccc] p-2 focus:border-[#555]'
               required
             />
-
-            {/* Product No */}
-            <label className='font-semibold' htmlFor='productNo'>
-              Product No:
-            </label>
-            <input
+            <Input
               type='text'
-              id='productNo'
               name='productNo'
+              label='Product No'
               value={formData.productNo}
               onChange={handle.onChange}
               placeholder='Product number'
-              className='w-full rounded-xl border border-[#ccc] p-2 focus:border-[#555]'
               required
             />
-
-            {/* Description */}
-            <label className='font-semibold' htmlFor='desc'>
-              Description:
-            </label>
-            <textarea
-              id='desc'
+            <Textarea
               name='desc'
+              label='Description'
               value={formData.desc}
               onChange={handle.onChange}
-              rows={5}
-              cols={50}
+              rows={8}
               placeholder='Product description'
-              className='w-full rounded-xl border border-[#ccc] p-2 focus:border-[#555]'
               required
             />
-
-            {/* Categories */}
-            <label className='font-semibold' htmlFor='categories'>
-              Categories (comma separated):
-            </label>
-            <input
+            <Input
               type='text'
-              id='categories'
               name='categories'
+              label='Categories (comma separated)'
               value={formData.categories.join(', ')}
               onChange={handle.onChange}
               placeholder='e.g. clothing, accessories'
-              className='w-full rounded-xl border border-[#ccc] p-2 focus:border-[#555]'
               required
             />
-
-            {/* Sizes */}
-            <label className='font-semibold' htmlFor='size'>
-              Sizes (comma separated):
-            </label>
-            <input
+            <Input
               type='text'
-              id='size'
               name='size'
+              label='Sizes (comma separated)'
               value={formData.size.join(', ')}
               onChange={handle.onChange}
               placeholder='e.g. S, M, L, XL'
-              className='w-full rounded-xl border border-[#ccc] p-2 focus:border-[#555]'
             />
           </div>
-
           {/* Right Column */}
           <div className='flex flex-col gap-2'>
-            {/* Colors */}
-            <label className='font-semibold' htmlFor='color'>
-              Colors (comma separated):
-            </label>
-            <input
+            <Input
               type='text'
-              id='color'
               name='color'
+              label='Colors (comma separated)'
               value={formData.color.join(', ')}
               onChange={handle.onChange}
               placeholder='e.g. red, blue, green'
-              className='w-full rounded-xl border border-[#ccc] p-2 focus:border-[#555]'
             />
-
-            {/* Price */}
-            <label className='font-semibold' htmlFor='price'>
-              Price:
-            </label>
-            <input
+            <Input
               type='number'
-              id='price'
               name='price'
+              label='Price'
               value={formData.price}
               onChange={handle.onChange}
               placeholder='Price'
-              className='w-full rounded-xl border border-[#ccc] p-2 focus:border-[#555]'
               required
             />
-
-            {/* Quantity */}
-            <label className='font-semibold' htmlFor='quantity'>
-              Quantity:
-            </label>
-            <input
+            <Input
               type='number'
-              id='quantity'
               name='quantity'
+              label='Quantity'
               value={formData.quantity}
               onChange={handle.onChange}
               placeholder='Quantity'
-              className='w-full rounded-xl border border-[#ccc] p-2 focus:border-[#555]'
               required
             />
-
-            {/* Brand */}
-            <label className='font-semibold' htmlFor='brand'>
-              Brand:
-            </label>
-            <input
+            <Input
               type='text'
-              id='brand'
               name='brand'
+              label='Brand'
               value={formData.brand}
               onChange={handle.onChange}
               placeholder='Brand name'
-              className='w-full rounded-xl border border-[#ccc] p-2 focus:border-[#555]'
               required
             />
-
-            {/* Image Upload */}
-            <label className='font-semibold'>Product Image:</label>
-            <ImageUpload value={formData.img} onChange={base64 => setFormData(prev => ({ ...prev, img: base64 }))} />
+            <div className='flex flex-col gap-2'>
+              <label className='font-semibold'>Product Image</label>
+              <div className='w-full rounded-lg border border-[#ccc] bg-gray-100 p-2 focus:border-[#555]'>
+                <ImageUpload
+                  value={formData.img}
+                  onChange={base64 => setFormData(prev => ({ ...prev, img: base64 }))}
+                />
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Buttons */}
-        <div className='flex gap-3 justify-end mt-6'>
-          <button type='submit' className='rounded-xl border-none bg-black px-5 py-2 text-white hover:bg-[#777]'>
-            {data.isEdit ? 'Update Product' : 'Add Product'}
-          </button>
-          <button
-            type='button'
-            onClick={handle.handleClose}
-            className='rounded-xl border-none bg-gray-700 px-5 py-2 text-white hover:bg-gray-600'
-          >
+        <div className='flex gap-3 justify-end mt-2'>
+          <Button type='submit' icon={data.isEdit ? 'save' : 'add'} variant='primary'>
+            {data.isEdit ? 'Save' : 'Add'}
+          </Button>
+          <Button type='button' onClick={handle.handleClose} variant='outline'>
             Cancel
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>

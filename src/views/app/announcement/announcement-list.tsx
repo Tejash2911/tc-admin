@@ -1,20 +1,20 @@
-'use client'
-
 import { useAppDispatch } from '@/redux/redux-hooks'
 import { deleteAnnouncement } from '@/redux/slices/announcementSlice'
 import { errorActions } from '@/redux/slices/errorSlice'
-import { MdDelete, MdEdit } from 'react-icons/md'
 import { GetAnnouncementsI } from '@/types/api-payload-types'
+import { ColumnI } from '@/types/table-props'
 import useModal from '@/hooks/use-modal'
 import AnnouncementDialog from '@/components/dialogs/announcementDialog'
 import ConfirmDeleteDialog from '@/components/dialogs/confirmDeleteDialog'
+import { Table } from '@/components/table'
 
 interface IProps {
   announcements: GetAnnouncementsI[]
   getData: () => void
+  loading?: boolean
 }
 
-const AnnoucementListView = ({ announcements, getData }: IProps) => {
+const AnnoucementListView = ({ announcements, getData, loading = false }: IProps) => {
   const dispatch = useAppDispatch()
 
   const announcementDialog = useModal()
@@ -34,52 +34,49 @@ const AnnoucementListView = ({ announcements, getData }: IProps) => {
     }
   }
 
+  const columns: ColumnI[] = [
+    {
+      key: '_id',
+      label: '#',
+      type: 'copy'
+    },
+    {
+      key: 'title',
+      label: 'Title',
+      type: 'text'
+    },
+    {
+      key: 'active',
+      label: 'Status',
+      type: 'status'
+    },
+    {
+      key: 'createdAt',
+      label: 'Date Added',
+      type: 'date'
+    },
+    {
+      key: 'updatedAt',
+      label: 'Last Updated',
+      type: 'date'
+    },
+    {
+      key: 'actions',
+      label: 'Actions',
+      type: 'action'
+    }
+  ]
+
   return (
     <>
       {announcements && (
-        <div className='mt-4 overflow-auto rounded-lg'>
-          <table className='w-full border-collapse'>
-            <thead className='bg-teal-700 text-white text-left'>
-              <tr>
-                <th className='p-3'>Title</th>
-                <th className='p-3'>Status</th>
-                <th className='p-3'>Date Added</th>
-                <th className='p-3'>Last Updated</th>
-                <th className='p-3'>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {announcements.map(a => (
-                <tr key={a._id} className='border border-gray-200'>
-                  <td className='p-3'>{a.title}</td>
-                  <td className='p-3'>
-                    <p
-                      className={`text-center font-medium rounded-full p-1 border text-sm ${
-                        a.active
-                          ? 'bg-lime-100 text-lime-600 border-lime-600'
-                          : 'bg-red-100 text-red-500 border-red-500'
-                      }`}
-                    >
-                      {a.active ? 'Activated' : 'Deactivated'}
-                    </p>
-                  </td>
-                  <td className='p-3'>{new Date(a.createdAt).toLocaleDateString()}</td>
-                  <td className='p-3'>{new Date(a.updatedAt).toLocaleDateString()}</td>
-                  <td className='p-3 flex gap-2 items-center'>
-                    <MdEdit
-                      className='text-gray-400 hover:text-gray-600 text-xl cursor-pointer'
-                      onClick={() => announcementDialog.onOpen({ ...a, isEdit: true })}
-                    />
-                    <MdDelete
-                      className='text-gray-400 hover:text-gray-600 text-xl cursor-pointer'
-                      onClick={() => isDelete.onOpen({ id: a._id })}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Table
+          data={announcements}
+          columns={columns}
+          onEdit={item => announcementDialog.onOpen({ ...item, isEdit: true })}
+          onDelete={item => isDelete.onOpen({ id: item._id })}
+          loading={loading}
+        />
       )}
       {announcementDialog.isOpen && (
         <AnnouncementDialog

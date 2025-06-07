@@ -26,7 +26,7 @@ const Message = () => {
     <>
       {isShow && (
         <div className='animate-fadeInOut fixed bottom-4 left-1/2 z-50 -translate-x-1/2 transform'>
-          <div className='w-full max-w-sm rounded-xl p-3 shadow-md bg-teal-700'>
+          <div className='w-full max-w-sm rounded-lg p-2 shadow-md bg-teal-700'>
             <span className='mx-2 capitalize'>{message}</span>
           </div>
         </div>

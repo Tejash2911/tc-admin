@@ -7,7 +7,7 @@ export const getAllUsers = createAsyncThunk('user/getAllUsers', async (payload: 
   try {
     const { data } = await userService.getAll(payload)
 
-    return data
+    return { users: data.data, rowCount: data.totalCount }
   } catch (error) {
     return rejectWithValue(error)
   }
@@ -83,7 +83,8 @@ const userSlice = createAppSlice({
     })
     builder.addCase(getAllUsers.fulfilled, (state, { payload }) => {
       state.loading = false
-      state.users = payload
+      state.users = payload.users
+      state.rowCount = payload.rowCount
     })
     builder.addCase(getAllUsers.rejected, state => {
       state.loading = false

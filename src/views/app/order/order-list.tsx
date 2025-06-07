@@ -2,17 +2,18 @@ import { useRouter } from 'next/navigation'
 import { useAppDispatch } from '@/redux/redux-hooks'
 import { errorActions } from '@/redux/slices/errorSlice'
 import { changeOrderStatus } from '@/redux/slices/orderSlice'
-import { MdContentCopy, MdRemoveRedEye } from 'react-icons/md'
 import { GetOrderI } from '@/types/api-payload-types'
+import { ColumnI } from '@/types/table-props'
+import { Table } from '@/components/table'
 
 interface IProps {
   orders: GetOrderI[]
   getData: () => void
+  loading?: boolean
 }
 
-const OrderListView = ({ orders, getData }: IProps) => {
+const OrderListView = ({ orders, getData, loading = false }: IProps) => {
   const dispatch = useAppDispatch()
-
   const router = useRouter()
 
   const handle = {
@@ -29,70 +30,72 @@ const OrderListView = ({ orders, getData }: IProps) => {
     }
   }
 
-  const statusColors = {
-    pending: { background: 'bg-yellow-100', text: 'text-orange-700' },
-    processing: { background: 'bg-green-100', text: 'text-green-700' },
-    delivered: { background: 'bg-blue-100', text: 'text-blue-700' }
-  }
+  // Convert orders to flattened format
+  const flattenedOrders = orders.map(order => ({
+    ...order,
+    address: `${order.userInfo.address?.city}, ${order.userInfo.address?.state}`,
+    phone: order.userInfo.address?.mobile,
+    status: order.orderStatus.charAt(0).toUpperCase() + order.orderStatus.slice(1)
+  }))
+
+  const columns: ColumnI[] = [
+    {
+      key: '_id',
+      label: '#',
+      type: 'copy'
+    },
+    {
+      key: 'createdAt',
+      label: 'Order Date',
+      type: 'date'
+    },
+    {
+      key: 'address',
+      label: 'Shipping Address',
+      type: 'text'
+    },
+    {
+      key: 'phone',
+      label: 'Phone',
+      type: 'text'
+    },
+    {
+      key: 'price',
+      label: 'Amount',
+      type: 'text'
+    },
+    {
+      key: 'status',
+      label: 'Status',
+      type: 'text'
+    },
+    {
+      key: 'orderStatus',
+      label: 'Change Status',
+      type: 'select',
+      options: [
+        { label: 'Pending', value: 'pending' },
+        { label: 'Processing', value: 'processing' },
+        { label: 'Delivered', value: 'delivered' }
+      ]
+    },
+    {
+      key: 'invoice',
+      label: 'Invoice',
+      type: 'action'
+    }
+  ]
 
   return (
-    <div className='mt-5 overflow-auto border border-gray-300 rounded-md'>
-      <table className='w-full min-w-[1000px] border-collapse'>
-        <thead className='bg-teal-700 text-white'>
-          <tr>
-            <th className='p-3 text-left'>Order Id</th>
-            <th className='p-3 text-left'>Order Date</th>
-            <th className='p-3 text-left'>Shipping Address</th>
-            <th className='p-3 text-left'>Phone</th>
-            <th className='p-3 text-left'>Amount</th>
-            <th className='p-3 text-left'>Status</th>
-            <th className='p-3 text-left'>Action</th>
-            <th className='p-3 text-left'>Invoice</th>
-          </tr>
-        </thead>
-
-        <tbody className='bg-white'>
-          {orders?.map(o => (
-            <tr key={o._id} className='border-b border-gray-300'>
-              <td className='p-3'>
-                <MdContentCopy
-                  className='text-gray-400 cursor-pointer hover:text-gray-600'
-                  onClick={() => navigator.clipboard.writeText(o._id)}
-                />
-              </td>
-              <td className='p-3'>{new Date(o.createdAt).toDateString()}</td>
-              <td className='p-3'>{`${o.userInfo.address?.city}, ${o.userInfo.address?.state}`}</td>
-              <td className='p-3'>{o.userInfo.address?.mobile}</td>
-              <td className='p-3'>{o.price}</td>
-              <td className='p-3'>
-                <p
-                  className={`font-medium text-center rounded-full ${statusColors[o.orderStatus]?.background} ${statusColors[o.orderStatus]?.text}`}
-                >
-                  {o.orderStatus.charAt(0).toUpperCase() + o.orderStatus.slice(1)}
-                </p>
-              </td>
-              <td className='p-3'>
-                <select
-                  value={o.orderStatus}
-                  onChange={e => handle.onStatusChange(o._id, e)}
-                  className='h-8 rounded-md border border-gray-300 bg-gray-100 p-1 outline-none'
-                >
-                  <option value='pending'>Pending</option>
-                  <option value='processing'>Processing</option>
-                  <option value='delivered'>Delivered</option>
-                </select>
-              </td>
-              <td className='p-3'>
-                <MdRemoveRedEye
-                  onClick={() => router.push(`/order/${o._id}`)}
-                  className='text-gray-400 cursor-pointer hover:text-gray-600'
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Table
+      data={flattenedOrders}
+      columns={columns}
+      onView={(item: GetOrderI) => router.push(`/order/${item._id}`)}
+      loading={loading}
+      onChange={(item: GetOrderI, newValue: string) => {
+        handle.onStatusChange(item._id, { target: { value: newValue } } as React.ChangeEvent<HTMLInputElement>)
+      }}
+    />
   )
 }
 

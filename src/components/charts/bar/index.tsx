@@ -43,7 +43,7 @@ const BarChart = ({ data, color, title }: Iprops) => {
   }
 
   return (
-    <div className='box-border flex-1 bg-white border border-gray-200 rounded-[10px] p-4'>
+    <div className='border border-gray-300 bg-white rounded-lg p-4'>
       <h2 className='text-base font-medium mb-2'>{title}</h2>
       <div className='h-64'>
         <Bar data={chartData} options={options} />

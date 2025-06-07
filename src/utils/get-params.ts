@@ -31,8 +31,8 @@ export const getCommonParams = (nParams: any = {}): GetDataI => {
     }
 
     return params
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
+    console.error(error)
     return {
       isPagination: nParams?.isPagination ?? true
     }

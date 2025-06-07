@@ -3,52 +3,61 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { getAllUsers } from '@/redux/slices/userSlice'
+import useDebounce from '@/hooks/use-debounce'
+import ContentLayout from '@/components/content-layout'
+import { Input } from '@/components/input'
+import Pagination from '@/components/pagination/Pagination'
 import UserListView from './user-list'
 
+interface QueryI {
+  search: string
+  offset: number
+  limit: number
+}
+
 const UsersView = () => {
-  const { users } = useAppSelector(({ user }) => user)
+  const { users, rowCount, loading } = useAppSelector(({ user }) => user)
   const dispatch = useAppDispatch()
 
-  const [search, setSearch] = useState<string>('')
+  const [query, setQuery] = useState<QueryI>({
+    search: '',
+    offset: 1,
+    limit: 10
+  })
+
+  const debouncedSearch = useDebounce(query.search, 1000)
 
   useEffect(() => {
     handle.getAllUsers()
-  }, [])
+  }, [debouncedSearch, query.offset, query.limit])
 
   const handle = {
     getAllUsers: () => {
-      dispatch(getAllUsers({}))
-    },
-    onSubmit: (e: React.FormEvent) => {
-      e.preventDefault()
-      dispatch(getAllUsers({ search }))
+      dispatch(getAllUsers(query))
     }
   }
 
   return (
-    <div className='w-full min-h-screen flex flex-col items-center bg-[#f4f5f7] p-4'>
-      <h1 className='text-xl font-semibold mb-4'>Users</h1>
-
-      <div className='w-full max-w-6xl'>
-        <form className='w-full flex flex-wrap gap-2 bg-white rounded-lg p-4 mb-4' onSubmit={handle.onSubmit}>
-          <input
-            type='text'
-            placeholder='Search by User by name/email/phone/id'
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            className='flex-grow rounded-md border border-[#f4f5f7] bg-[#f4f5f7] px-4 py-2 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-700'
-          />
-          <button
-            type='submit'
-            className='rounded-md bg-teal-700 text-white font-semibold px-5 py-2 hover:bg-teal-800 transition'
-          >
-            Search
-          </button>
-        </form>
-
-        <UserListView users={users.data} getData={handle.getAllUsers} />
+    <ContentLayout title='Users'>
+      <div className='bg-white rounded-lg p-4 mb-4 border border-gray-300'>
+        <Input
+          type='text'
+          placeholder='Search user by name/email/phone/id'
+          value={query.search}
+          onChange={e => setQuery(prev => ({ ...prev, search: e.target.value }))}
+        />
       </div>
-    </div>
+      <UserListView users={users} getData={handle.getAllUsers} loading={loading} />
+      <Pagination
+        currentPage={query.offset}
+        totalPages={Math.ceil(rowCount / query.limit)}
+        itemsPerPage={query.limit}
+        totalItems={rowCount}
+        onPageChange={page => setQuery(prev => ({ ...prev, offset: page }))}
+        hasNextPage={query.offset < Math.ceil(rowCount / query.limit)}
+        hasPreviousPage={query.offset > 1}
+      />
+    </ContentLayout>
   )
 }
 

@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { getPopularSizeColor, getTopCategories, getTopProducts } from '@/redux/slices/analyticsSlice'
@@ -13,22 +11,24 @@ const ChartsComponent = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(getTopCategories())
-    dispatch(getPopularSizeColor())
-    dispatch(getTopProducts({ for: 'chart' }))
+    Promise.all([
+      dispatch(getTopCategories()),
+      dispatch(getPopularSizeColor()),
+      dispatch(getTopProducts({ for: 'chart' }))
+    ])
   }, [])
 
   return (
     <>
       {popularSizeColor && (
-        <div className='box-border flex gap-4 my-8 flex-col md:flex-row'>
+        <div className='box-border grid grid-cols-1 sm:grid-cols-2 gap-4 my-4 sm:my-8'>
           <BarChart data={popularSizeColor?.sizes} color={false} title='Top Size' />
           <BarChart data={popularSizeColor?.colors} color={true} title='Top Color' />
         </div>
       )}
 
       {popularSizeColor && topCategories && (
-        <div className='box-border flex gap-4 my-8 flex-col md:flex-row'>
+        <div className='box-border grid grid-cols-1 sm:grid-cols-2 gap-4 my-4 sm:my-8'>
           <PieChart data={topProducts} title='Top Products' />
           <PieChart data={topCategories} title='Top categories' />
         </div>

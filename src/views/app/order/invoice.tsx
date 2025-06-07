@@ -3,7 +3,8 @@
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { getOrderById, orderActions } from '@/redux/slices/orderSlice'
-import { MdLocalPrintshop } from 'react-icons/md'
+import { Button } from '@/components/button'
+import ContentLayout from '@/components/content-layout'
 import NotFound from '@/components/not-found'
 
 interface IProps {
@@ -14,7 +15,9 @@ const Invoice = ({ id }: IProps) => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    handle.getOrderDetails()
+    if (id) {
+      dispatch(getOrderById(id))
+    }
   }, [id])
 
   useEffect(() => {
@@ -24,9 +27,6 @@ const Invoice = ({ id }: IProps) => {
   }, [])
 
   const handle = {
-    getOrderDetails: () => {
-      dispatch(getOrderById(id))
-    },
     handlePrint: () => {
       const printContents = document.getElementById('invoice-container')?.innerHTML
       const originalContents = document.body.innerHTML
@@ -50,20 +50,19 @@ const Invoice = ({ id }: IProps) => {
   }
 
   return (
-    <div className='bg-gray-100 min-h-screen pb-8 flex justify-center'>
+    <ContentLayout title='Invoice'>
       {order && (
-        <div className='w-[1200px] max-w-[90%]'>
-          <h2 className='text-2xl font-semibold mt-6 mb-4'>Invoice</h2>
+        <>
           <div id='invoice-container'>
-            <div className='bg-white p-8 rounded-2xl flex flex-col gap-8'>
+            <div className='bg-white p-8 rounded-lg flex flex-col gap-8 border border-gray-300'>
               {/* First Section */}
               <div className='flex justify-between flex-wrap'>
                 <div>
-                  <h1 className='text-xl font-bold mb-2'>INVOICE</h1>
-                  <div className='text-sm font-semibold text-gray-600'>
-                    STATUS:{' '}
+                  <h1 className='text-xl font-bold mb-2'>Invoice</h1>
+                  <div className='text-gray-600'>
+                    Status:{' '}
                     <span
-                      className={`px-3 py-1 rounded-full text-sm font-medium ${
+                      className={`px-3 py-1 rounded-full font-medium ${
                         statusColors[order.orderStatus as OrderStatus] || ''
                       }`}
                     >
@@ -72,8 +71,8 @@ const Invoice = ({ id }: IProps) => {
                   </div>
                 </div>
                 <div className='text-right mt-4 md:mt-0'>
-                  <h2 className='text-lg font-semibold mb-2'>{process.env.NEXT_PUBLIC_COMPANY_NAME}</h2>
-                  <p className='text-sm'>
+                  <h2 className='text-lg mb-2'>{process.env.NEXT_PUBLIC_COMPANY_NAME}</h2>
+                  <p>
                     {process.env.NEXT_PUBLIC_COMPANY_ADDRESS}
                     <br />
                     {process.env.NEXT_PUBLIC_COMPANY_ADDRESS_COUNTRY}
@@ -84,15 +83,15 @@ const Invoice = ({ id }: IProps) => {
               {/* Second Section */}
               <div className='flex justify-between flex-wrap gap-4'>
                 <div className='text-left'>
-                  <p className='text-base font-semibold mb-1'>DATE</p>
+                  <p className='mb-1'>Date</p>
                   <p className='text-gray-600'>{new Date(order?.createdAt).toLocaleString()}</p>
                 </div>
                 <div className='text-left'>
-                  <p className='text-base font-semibold mb-1'>ORDER ID</p>
+                  <p className='mb-1'>Order ID</p>
                   <p className='text-gray-600'>{order?.paymentInfo?.razorpay_order_id}</p>
                 </div>
                 <div className='text-right md:text-left'>
-                  <p className='text-base font-semibold mb-1'>INVOICE TO.</p>
+                  <p className='mb-1'>Invoice To.</p>
                   <p className='text-gray-600'>{order?.userInfo?.name}</p>
                   <p className='text-gray-600'>{order?.userInfo?.address.mobile}</p>
                   <p className='text-gray-600'>
@@ -103,14 +102,14 @@ const Invoice = ({ id }: IProps) => {
 
               {/* Third Section: Table */}
               <div className='mt-6 overflow-x-auto border border-gray-300 rounded-lg'>
-                <table className='w-full min-w-[500px] border-collapse'>
+                <table className='w-full border-collapse'>
                   <thead className='bg-teal-700 text-white'>
                     <tr>
-                      <th className='py-3 px-4 text-left'>SR.</th>
-                      <th className='py-3 px-4 text-left'>PRODUCT NAME</th>
-                      <th className='py-3 px-4 text-left'>QUANTITY</th>
-                      <th className='py-3 px-4 text-left'>ITEM PRICE</th>
-                      <th className='py-3 px-4 text-left'>TOTAL</th>
+                      <td className='py-3 px-4 text-left'>#</td>
+                      <td className='py-3 px-4 text-left'>Product Name</td>
+                      <td className='py-3 px-4 text-left'>Quantity</td>
+                      <td className='py-3 px-4 text-left'>Item Price</td>
+                      <td className='py-3 px-4 text-left'>Total</td>
                     </tr>
                   </thead>
                   <tbody>
@@ -119,9 +118,9 @@ const Invoice = ({ id }: IProps) => {
                         <tr key={index}>
                           <td className='py-3 px-4'>{index + 1}</td>
                           <td className='py-3 px-4'>{o?.title}</td>
-                          <td className='py-3 px-4 font-bold'>{o?.quantity}</td>
-                          <td className='py-3 px-4 font-bold'>{o?.price}</td>
-                          <td className='py-3 px-4 font-bold text-red-600'>{o?.price * o?.quantity}</td>
+                          <td className='py-3 px-4'>{o?.quantity}</td>
+                          <td className='py-3 px-4'>{o?.price}</td>
+                          <td className='py-3 px-4 text-red-600'>{o?.price * o?.quantity}</td>
                         </tr>
                       ))}
                   </tbody>
@@ -129,21 +128,21 @@ const Invoice = ({ id }: IProps) => {
               </div>
 
               {/* Fourth Section */}
-              <div className='flex flex-wrap gap-4 justify-between bg-gray-100 p-6 rounded-2xl'>
+              <div className='flex flex-wrap gap-4 justify-between bg-gray-100 p-6 rounded-lg'>
                 <div className='flex flex-col gap-1'>
-                  <p className='text-base font-semibold'>ORDER TYPE</p>
+                  <p>Order Type</p>
                   <span className='text-gray-700'>{order?.type}</span>
                 </div>
                 <div className='flex flex-col gap-1'>
-                  <p className='text-base font-semibold'>TRANSACTION COST</p>
+                  <p>Transaction Cost</p>
                   <span className='text-gray-700'>{order.price ? (order.price * 0.02).toFixed(2) : '0.00'}</span>
                 </div>
                 <div className='flex flex-col gap-1'>
-                  <p className='text-base font-semibold'>DISCOUNT</p>
+                  <p>Discount</p>
                   <span className='text-gray-700'>0</span>
                 </div>
                 <div className='flex flex-col gap-1'>
-                  <p className='text-base font-semibold'>TOTAL AMOUNT</p>
+                  <p>Total Amount</p>
                   <span className='text-gray-700'>
                     {order.price ? Math.ceil(order.price + order.price * 0.02) : '0'}
                   </span>
@@ -153,15 +152,14 @@ const Invoice = ({ id }: IProps) => {
           </div>
 
           {/* Print Button */}
-          <button
-            onClick={handle.handlePrint}
-            className='flex items-center gap-2 bg-teal-700 hover:bg-teal-800 text-white px-6 py-3 rounded-xl mt-4 ml-auto font-semibold'
-          >
-            Print Invoice <MdLocalPrintshop />
-          </button>
-        </div>
+          <div className='flex justify-end mt-4'>
+            <Button onClick={handle.handlePrint} icon='print'>
+              Print Invoice
+            </Button>
+          </div>
+        </>
       )}
-    </div>
+    </ContentLayout>
   )
 }
 

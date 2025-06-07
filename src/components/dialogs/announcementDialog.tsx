@@ -3,6 +3,8 @@ import { useAppDispatch } from '@/redux/redux-hooks'
 import { addAnnouncement, updateAnnouncement } from '@/redux/slices/announcementSlice'
 import { errorActions } from '@/redux/slices/errorSlice'
 import { AddAnnouncementI } from '@/types/api-payload-types'
+import { Button } from '../button'
+import { Select, Textarea } from '../input'
 import Modal from '../modal'
 
 interface IProps {
@@ -69,44 +71,33 @@ const AnnouncementDialog = ({ open, setOpen, data, getData }: IProps) => {
 
   return (
     <Modal open={open}>
-      <form onSubmit={handle.onSubmit} className='flex flex-col gap-2 text-xs sm:text-sm'>
-        <label htmlFor='title' className='block font-semibold'>
-          Title:
-        </label>
-        <textarea
-          id='title'
+      <form onSubmit={handle.onSubmit} className='flex flex-col gap-2'>
+        <Textarea
           name='title'
+          label='Title'
           value={formData.title}
           onChange={handle.onChange}
           rows={5}
-          cols={50}
           placeholder='Enter Announcement'
-          className='w-full rounded-xl border border-[#ccc] p-2 focus:border-[#555]'
           required
         />
-        <label htmlFor='active' className='block font-semibold'>
-          Active:
-        </label>
-        <select
+        <Select
           name='active'
           value={String(formData.active)}
           onChange={handle.onChange}
-          className='w-full rounded-xl border border-gray-300 p-2 focus:border-gray-500 focus:outline-none'
-        >
-          <option value='false'>No</option>
-          <option value='true'>Yes</option>
-        </select>
-        <div className='flex gap-3'>
-          <button type='submit' className='rounded-xl border-none bg-black px-5 py-2 text-white hover:bg-[#777]'>
-            {data.isEdit ? 'Update Announcement' : 'Add Announcement'}
-          </button>
-          <button
-            type='reset'
-            onClick={handle.handleClose}
-            className='rounded-xl border-none bg-black px-5 py-2 text-white hover:bg-[#777]'
-          >
+          label='Active'
+          options={[
+            { label: 'No', value: 'false' },
+            { label: 'Yes', value: 'true' }
+          ]}
+        />
+        <div className='flex gap-3 justify-end mt-2'>
+          <Button type='submit' icon={data.isEdit ? 'save' : 'add'} variant='primary'>
+            {data.isEdit ? 'Save' : 'Add'}
+          </Button>
+          <Button type='reset' onClick={handle.handleClose} variant='outline'>
             Cancel
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>

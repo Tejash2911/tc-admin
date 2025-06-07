@@ -14,9 +14,8 @@ const LogoutView = () => {
       dispatch(authActions.logoutUser())
       dispatch({ type: 'USER_LOGOUT' })
       router.push('/login')
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      //
+      console.error(error)
     }
   }
 

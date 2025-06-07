@@ -1,10 +1,9 @@
-'use client'
-
 import { useEffect, useRef, useState } from 'react'
+import { Icon } from '@iconify/react/dist/iconify.js'
 
 interface Props {
   value: string
-  onChange: (base64Image: string) => void
+  onChange: (base64: string) => void
 }
 
 const ImageUpload = ({ value, onChange }: Props) => {
@@ -57,13 +56,13 @@ const ImageUpload = ({ value, onChange }: Props) => {
     <div
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      className='relative w-full flex flex-col items-center justify-center p-9 border-2 border-dashed rounded-xl cursor-pointer'
+      className={`relative w-full h-40 flex flex-col items-center justify-center p-2 border-2 border-dashed rounded-lg cursor-pointer`}
       onClick={() => fileInputRef.current?.click()}
     >
       {preview ? (
         <>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={preview} alt='preview' className='h-full object-contain p-2' />
+          <img src={preview} alt='preview' className='w-full h-full object-contain rounded-lg' />
           <button
             type='button'
             onClick={e => {
@@ -72,7 +71,7 @@ const ImageUpload = ({ value, onChange }: Props) => {
             }}
             className='absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600'
           >
-            ✕
+            <Icon icon='mdi:close' />
           </button>
         </>
       ) : (
