@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
-import './globals.css'
 import { Urbanist } from 'next/font/google'
-import LayoutWrapper from '@/@layouts/LayoutWrapper'
 import ReduxProvider from '@/redux/ReduxProvider'
+import './globals.css'
 
 const urbanist = Urbanist({
   weight: '400',
@@ -21,11 +20,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en' className={urbanist.className}>
-      <body>
-        <ReduxProvider>
-          <LayoutWrapper>{children}</LayoutWrapper>
-        </ReduxProvider>
+    <html lang='en'>
+      <body className={urbanist.className}>
+        <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
   )
