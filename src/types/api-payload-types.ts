@@ -123,3 +123,11 @@ export interface GetOrderI {
     }
   }
 }
+
+export interface AddReviewI {
+  payload: {
+    review: string
+    rating: number
+  }
+  id: string
+}

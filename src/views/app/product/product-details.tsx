@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { getProductById, productActions } from '@/redux/slices/productSlice'
 import ContentLayout from '@/components/content-layout'
 import NotFound from '@/components/not-found'
+import ReviewComponent from '@/components/review'
 
 interface IProps {
   id: string
@@ -49,7 +50,7 @@ const ProductDetails = ({ id }: IProps) => {
         )}
 
         {/* Info Section */}
-        <div className='space-y-6'>
+        <div className='space-y-4'>
           <h3 className='text-lg font-bold text-gray-900'>{product?.title}</h3>
           <p className='text-gray-600 text-base'>{product?.desc}</p>
 
@@ -111,6 +112,9 @@ const ProductDetails = ({ id }: IProps) => {
             </div>
           </div>
         </div>
+      </div>
+      <div className='border border-gray-300 bg-white rounded-lg p-6 mt-6'>
+        <ReviewComponent productId={id} />
       </div>
     </ContentLayout>
   )
