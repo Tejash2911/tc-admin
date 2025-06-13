@@ -17,10 +17,10 @@ const OrderListView = ({ orders, getData, loading = false }: IProps) => {
   const router = useRouter()
 
   const handle = {
-    onStatusChange: (id: string, e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      const payload = { status: e.target.value }
+    onStatusChange: (item: GetOrderI, newValue: string) => {
+      const payload = { status: newValue }
 
-      dispatch(changeOrderStatus({ id, payload }))
+      dispatch(changeOrderStatus({ id: item._id, payload }))
         .unwrap()
         .then((res: any) => {
           dispatch(errorActions.setErrorMessage(res?.message))
@@ -90,11 +90,9 @@ const OrderListView = ({ orders, getData, loading = false }: IProps) => {
     <Table
       data={flattenedOrders}
       columns={columns}
-      onView={(item: GetOrderI) => router.push(`/order/${item._id}`)}
+      onView={item => router.push(`/order/${item._id}`)}
+      onChange={handle.onStatusChange}
       loading={loading}
-      onChange={(item: GetOrderI, newValue: string) => {
-        handle.onStatusChange(item._id, { target: { value: newValue } } as React.ChangeEvent<HTMLInputElement>)
-      }}
     />
   )
 }
