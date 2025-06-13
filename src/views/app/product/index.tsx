@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { getAllProducts } from '@/redux/slices/productSlice'
 import useDebounce from '@/hooks/use-debounce'
 import useModal from '@/hooks/use-modal'
+import { useQuery } from '@/hooks/useQuery'
 import { Button } from '@/components/button'
 import ContentLayout from '@/components/content-layout'
 import ProductDialog from '@/components/dialogs/productDialog'
@@ -12,28 +13,11 @@ import { Input, Select } from '@/components/input'
 import Pagination from '@/components/pagination/Pagination'
 import ProductListView from './product-list'
 
-interface QueryI {
-  search: string
-  category: any
-  sort: string
-  offset: number
-  limit: number
-}
-
 const ProductView = () => {
   const { products, rowCount, loading } = useAppSelector(({ product }) => product)
   const dispatch = useAppDispatch()
-
   const productDialog = useModal()
-
-  const [query, setQuery] = useState<QueryI>({
-    search: '',
-    category: '',
-    sort: '',
-    offset: 1,
-    limit: 10
-  })
-
+  const { query, updateQuery } = useQuery({})
   const debouncedSearch = useDebounce(query.search, 1000)
 
   useEffect(() => {
@@ -45,9 +29,9 @@ const ProductView = () => {
       dispatch(getAllProducts(query))
     },
     handleSearch: async (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, { type }: { type: string }) => {
-      if (type === 'cat') setQuery((p: any) => ({ ...p, category: e.target.value }))
-      if (type === 'sort') setQuery((p: any) => ({ ...p, sort: e.target.value }))
-      if (type === 'search') setQuery((p: any) => ({ ...p, search: e.target.value }))
+      if (type === 'cat') updateQuery({ category: e.target.value })
+      if (type === 'sort') updateQuery({ sort: e.target.value })
+      if (type === 'search') updateQuery({ search: e.target.value })
     }
   }
 
@@ -90,7 +74,7 @@ const ProductView = () => {
         totalPages={Math.ceil(rowCount / query.limit)}
         itemsPerPage={query.limit}
         totalItems={rowCount}
-        onPageChange={page => setQuery(prev => ({ ...prev, offset: page }))}
+        onPageChange={page => updateQuery({ offset: page })}
         hasNextPage={query.offset < Math.ceil(rowCount / query.limit)}
         hasPreviousPage={query.offset > 1}
       />

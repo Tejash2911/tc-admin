@@ -1,33 +1,22 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { disableAnnoucements, getAllAnnouncements } from '@/redux/slices/announcementSlice'
 import { errorActions } from '@/redux/slices/errorSlice'
 import { Icon } from '@iconify/react'
 import useModal from '@/hooks/use-modal'
+import { useQuery } from '@/hooks/useQuery'
 import ContentLayout from '@/components/content-layout'
 import AnnouncementDialog from '@/components/dialogs/announcementDialog'
 import Pagination from '@/components/pagination/Pagination'
 import AnnoucementListView from './announcement-list'
 
-interface QueryI {
-  search: string
-  offset: number
-  limit: number
-}
-
 const AnnouncementView = () => {
   const { announcements, rowCount, loading } = useAppSelector(({ announcement }) => announcement)
   const dispatch = useAppDispatch()
-
   const announcementDialog = useModal()
-
-  const [query, setQuery] = useState<QueryI>({
-    search: '',
-    offset: 1,
-    limit: 10
-  })
+  const { query, updateQuery } = useQuery({})
 
   useEffect(() => {
     handle.getAllAnnouncements()
@@ -76,7 +65,7 @@ const AnnouncementView = () => {
         totalPages={Math.ceil(rowCount / query.limit)}
         itemsPerPage={query.limit}
         totalItems={rowCount}
-        onPageChange={page => setQuery(prev => ({ ...prev, offset: page }))}
+        onPageChange={page => updateQuery({ offset: page })}
         hasNextPage={query.offset < Math.ceil(rowCount / query.limit)}
         hasPreviousPage={query.offset > 1}
       />

@@ -1,33 +1,19 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { getAllOrders } from '@/redux/slices/orderSlice'
+import { useQuery } from '@/hooks/useQuery'
 import { Button } from '@/components/button'
 import ContentLayout from '@/components/content-layout'
 import { Input, Select } from '@/components/input'
 import Pagination from '@/components/pagination/Pagination'
 import OrderListView from './order-list'
 
-interface QueryI {
-  search: string
-  sort: any
-  status: string
-  offset: number
-  limit: number
-}
-
 const OrderView = () => {
   const { orders, rowCount, loading } = useAppSelector(({ order }) => order)
   const dispatch = useAppDispatch()
-
-  const [query, setQuery] = useState<QueryI>({
-    search: '',
-    sort: '',
-    status: '',
-    offset: 1,
-    limit: 10
-  })
+  const { query, updateQuery } = useQuery({})
 
   useEffect(() => {
     handle.getAllOrders()
@@ -38,7 +24,7 @@ const OrderView = () => {
       dispatch(getAllOrders(query))
     },
     handleSearch: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, { type }: { type: string }) => {
-      setQuery(prev => ({ ...prev, [type]: e.target.value }))
+      updateQuery({ [type]: e.target.value })
     },
     onSearch: (e: React.FormEvent) => {
       e.preventDefault()
@@ -85,7 +71,7 @@ const OrderView = () => {
         totalPages={Math.ceil(rowCount / query.limit)}
         itemsPerPage={query.limit}
         totalItems={rowCount}
-        onPageChange={page => setQuery(prev => ({ ...prev, offset: page }))}
+        onPageChange={page => updateQuery({ offset: page })}
         hasNextPage={query.offset < Math.ceil(rowCount / query.limit)}
         hasPreviousPage={query.offset > 1}
       />

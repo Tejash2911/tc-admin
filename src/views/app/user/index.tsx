@@ -1,30 +1,19 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { getAllUsers } from '@/redux/slices/userSlice'
 import useDebounce from '@/hooks/use-debounce'
+import { useQuery } from '@/hooks/useQuery'
 import ContentLayout from '@/components/content-layout'
 import { Input } from '@/components/input'
 import Pagination from '@/components/pagination/Pagination'
 import UserListView from './user-list'
 
-interface QueryI {
-  search: string
-  offset: number
-  limit: number
-}
-
 const UsersView = () => {
   const { users, rowCount, loading } = useAppSelector(({ user }) => user)
   const dispatch = useAppDispatch()
-
-  const [query, setQuery] = useState<QueryI>({
-    search: '',
-    offset: 1,
-    limit: 10
-  })
-
+  const { query, updateQuery } = useQuery({})
   const debouncedSearch = useDebounce(query.search, 1000)
 
   useEffect(() => {
@@ -44,7 +33,7 @@ const UsersView = () => {
           type='text'
           placeholder='Search user by name/email/phone/id'
           value={query.search}
-          onChange={e => setQuery(prev => ({ ...prev, search: e.target.value }))}
+          onChange={e => updateQuery({ search: e.target.value })}
         />
       </div>
       <UserListView users={users} getData={handle.getAllUsers} loading={loading} />
@@ -53,7 +42,7 @@ const UsersView = () => {
         totalPages={Math.ceil(rowCount / query.limit)}
         itemsPerPage={query.limit}
         totalItems={rowCount}
-        onPageChange={page => setQuery(prev => ({ ...prev, offset: page }))}
+        onPageChange={page => updateQuery({ offset: page })}
         hasNextPage={query.offset < Math.ceil(rowCount / query.limit)}
         hasPreviousPage={query.offset > 1}
       />
