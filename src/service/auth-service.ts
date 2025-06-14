@@ -11,8 +11,18 @@ const login = (payload: LoginI): Promise<ApiSuccessI | ApiErrorI> => {
   })
 }
 
+const logout = (): Promise<ApiSuccessI | ApiErrorI> => {
+  return new Promise((resolve, reject) => {
+    axiosInstance
+      .post('/auth/logout')
+      .then(res => resolve(handleApiRes(res)))
+      .catch(err => reject(handleApiErr(err)))
+  })
+}
+
 const authService = {
-  login
+  login,
+  logout
 }
 
 export default authService

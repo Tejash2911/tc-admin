@@ -13,6 +13,16 @@ export const login = createAsyncThunk('auth/login', async (payload: LoginI, { re
   }
 })
 
+export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await authService.logout()
+
+    return data
+  } catch (error) {
+    return rejectWithValue(error)
+  }
+})
+
 interface AuthStateI {
   currentUser: any
   address: any
@@ -35,11 +45,6 @@ const authSlice = createAppSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logoutUser: state => {
-      state.currentUser = null
-      localStorage.removeItem('auth')
-      state.address = null
-    },
     setLoading: (state, { payload }) => {
       state.loading = payload
     },
@@ -58,6 +63,19 @@ const authSlice = createAppSlice({
       localStorage.setItem('auth', JSON.stringify(payload))
     })
     builder.addCase(login.rejected, state => {
+      state.loading = false
+    })
+    // logout
+    builder.addCase(logout.pending, state => {
+      state.loading = true
+    })
+    builder.addCase(logout.fulfilled, state => {
+      state.loading = false
+      state.currentUser = null
+      localStorage.removeItem('auth')
+      state.address = null
+    })
+    builder.addCase(logout.rejected, state => {
       state.loading = false
     })
   }

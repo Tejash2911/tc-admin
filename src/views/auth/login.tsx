@@ -15,7 +15,7 @@ const LoginV2 = () => {
   const router = useRouter()
 
   useEffect(() => {
-    if (currentUser) router.push('/')
+    if (currentUser) router.push('/home')
   }, [currentUser])
 
   const handle = {

@@ -31,11 +31,11 @@ const Navbar = ({ isOpen, setSideBar }: IProps) => {
         <div className='flex items-center gap-4'>
           <button
             onClick={() => setSideBar(!isOpen)}
-            className={`transition-transform duration-100 cursor-pointer ${isOpen ? 'rotate-y-0' : 'rotate-y-180'}`}
+            className={`transition-transform duration-100 ${isOpen ? 'rotate-y-0' : 'rotate-y-180'}`}
           >
             <Icon icon='ri:menu-unfold-4-line' />
           </button>
-          <Link href='/' className='flex items-center gap-2'>
+          <Link href='/home' className='flex items-center gap-2'>
             <span className='font-bold text-xl text-gray-900'>TejashCreation</span>
           </Link>
         </div>
