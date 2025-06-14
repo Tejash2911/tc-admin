@@ -20,13 +20,10 @@ const ProductDetails = ({ id }: IProps) => {
     if (id) {
       dispatch(getProductById(id))
     }
-  }, [id])
-
-  useEffect(() => {
     return () => {
       dispatch(productActions.resetProduct())
     }
-  }, [])
+  }, [id])
 
   if (productNotFound) {
     return <NotFound message='Product Not Found' description='The product you are looking for does not exist.' />

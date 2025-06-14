@@ -18,13 +18,10 @@ const Invoice = ({ id }: IProps) => {
     if (id) {
       dispatch(getOrderById(id))
     }
-  }, [id])
-
-  useEffect(() => {
     return () => {
       dispatch(orderActions.resetOrder())
     }
-  }, [])
+  }, [id])
 
   const handle = {
     handlePrint: () => {

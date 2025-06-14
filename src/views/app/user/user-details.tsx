@@ -21,9 +21,7 @@ interface IProps {
 const UserDetailsPage = ({ id }: IProps) => {
   const { user, userNotFound } = useAppSelector(({ user }) => user)
   const dispatch = useAppDispatch()
-
   const isDelete = useModal()
-
   const router = useRouter()
 
   const [formData, setFormData] = useState<AddUserI>({
@@ -35,7 +33,12 @@ const UserDetailsPage = ({ id }: IProps) => {
   })
 
   useEffect(() => {
-    dispatch(getUserById(id))
+    if (id) {
+      dispatch(getUserById(id))
+    }
+    return () => {
+      dispatch(userActions.resetUser())
+    }
   }, [id])
 
   useEffect(() => {
@@ -49,12 +52,6 @@ const UserDetailsPage = ({ id }: IProps) => {
       })
     }
   }, [user])
-
-  useEffect(() => {
-    return () => {
-      dispatch(userActions.resetUser())
-    }
-  }, [])
 
   const handle = {
     onInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
