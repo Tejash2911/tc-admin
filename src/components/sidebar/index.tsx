@@ -43,7 +43,7 @@ const Sidebar = ({ isOpen }: IProps) => {
           <h3 className='text-xs text-[#bbb] font-semibold mb-2'>Dashboard</h3>
           <ul className='space-y-1'>
             <li>
-              <NavItem href='/' icon={<Icon icon='ri:home-line' />} label='Home' />
+              <NavItem href='/home' icon={<Icon icon='ri:home-line' />} label='Home' />
             </li>
             <li>
               <NavItem href='/announcement' icon={<Icon icon='ri:notification-line' />} label='Announcement' />
@@ -75,7 +75,7 @@ const Sidebar = ({ isOpen }: IProps) => {
           <h3 className='text-xs text-[#bbb] font-semibold mb-2'>Connect</h3>
           <ul className='space-y-1'>
             <li>
-              <NavItem href='#' icon={<Icon icon='ri:mail-line' />} label='Mail' />
+              <NavItem href='mailto:tcpatel2911@gmail.com' icon={<Icon icon='ri:mail-line' />} label='Mail' />
             </li>
             <li>
               <NavItem href='#' icon={<Icon icon='ri:feedback-line' />} label='Feedback' />
@@ -85,6 +85,30 @@ const Sidebar = ({ isOpen }: IProps) => {
             </li>
           </ul>
         </div>
+
+        {/* Contact */}
+        {/* <div>
+          <h3 className='text-xs text-[#bbb] font-semibold mb-2'>Contact</h3>
+          <ul className='space-y-1'>
+            <li>
+              <NavItem href='https://github.com/tejash2911' icon={<Icon icon='ri:github-fill' />} label='GitHub' />
+            </li>
+            <li>
+              <NavItem
+                href='https://linkedin.com/in/tejash2911'
+                icon={<Icon icon='ri:linkedin-box-fill' />}
+                label='LinkedIn'
+              />
+            </li>
+            <li>
+              <NavItem
+                href='https://instagram.com/___tejas2911'
+                icon={<Icon icon='ri:instagram-line' />}
+                label='Instagram'
+              />
+            </li>
+          </ul>
+        </div> */}
       </div>
     </div>
   )

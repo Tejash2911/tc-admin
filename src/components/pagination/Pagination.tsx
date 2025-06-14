@@ -24,9 +24,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => hasPreviousPage && onPageChange(currentPage - 1)}
         className={`w-max mx-1 ${
-          hasPreviousPage
-            ? 'text-gray-700 hover:text-teal-600 hover:underline cursor-pointer'
-            : 'text-gray-400 pointer-events-none'
+          hasPreviousPage ? 'text-gray-700 hover:text-teal-600 hover:underline' : 'text-gray-400 pointer-events-none'
         }`}
       >
         Previous
@@ -43,9 +41,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => hasNextPage && onPageChange(currentPage + 1)}
         className={`w-max mx-1 ${
-          hasNextPage
-            ? 'text-gray-700 hover:text-teal-600 hover:underline cursor-pointer'
-            : 'text-gray-400 pointer-events-none'
+          hasNextPage ? 'text-gray-700 hover:text-teal-600 hover:underline' : 'text-gray-400 pointer-events-none'
         }`}
       >
         Next
