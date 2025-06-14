@@ -41,29 +41,35 @@ const getCell = (
       <td key={col.key} className='p-3 flex items-center gap-1'>
         {onView && (
           <div className='w-6 h-6 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded-full transition-colors duration-200'>
-            <Icon
-              icon='ri:eye-line'
-              className='w-4 h-4 text-gray-600 hover:text-gray-800'
-              onClick={() => onView(item)}
-            />
+            <div title='View'>
+              <Icon
+                icon='ri:eye-line'
+                className='w-4 h-4 text-gray-600 hover:text-gray-800'
+                onClick={() => onView(item)}
+              />
+            </div>
           </div>
         )}
         {onEdit && (
           <div className='w-6 h-6 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded-full transition-colors duration-200'>
-            <Icon
-              icon='ri:file-edit-line'
-              className='w-4 h-4 text-blue-500 hover:text-blue-600'
-              onClick={() => onEdit(item)}
-            />
+            <div title='Edit'>
+              <Icon
+                icon='ri:file-edit-line'
+                className='w-4 h-4 text-blue-500 hover:text-blue-600'
+                onClick={() => onEdit(item)}
+              />
+            </div>
           </div>
         )}
         {onDelete && (
           <div className='w-6 h-6 flex items-center justify-center cursor-pointer hover:bg-red-50 rounded-full transition-colors duration-200'>
-            <Icon
-              icon='ri:delete-bin-7-line'
-              className='w-4 h-4 text-red-500 hover:text-red-600'
-              onClick={() => onDelete(item)}
-            />
+            <div title='Delete'>
+              <Icon
+                icon='ri:delete-bin-7-line'
+                className='w-4 h-4 text-red-500 hover:text-red-600'
+                onClick={() => onDelete(item)}
+              />
+            </div>
           </div>
         )}
       </td>
@@ -115,11 +121,13 @@ const getCell = (
   if (col.type === 'copy') {
     return (
       <td key={col.key} className='p-3'>
-        <Icon
-          icon='ri:file-copy-line'
-          className='w-4 h-4 text-gray-600 hover:text-gray-800 cursor-pointer'
-          onClick={() => navigator.clipboard.writeText(value)}
-        />
+        <div title='Copy'>
+          <Icon
+            icon='ri:file-copy-line'
+            className='w-4 h-4 text-gray-600 hover:text-gray-800 cursor-pointer'
+            onClick={() => navigator.clipboard.writeText(value)}
+          />
+        </div>
       </td>
     )
   }
