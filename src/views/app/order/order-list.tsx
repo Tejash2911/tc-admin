@@ -1,6 +1,5 @@
 import { useRouter } from 'next/navigation'
 import { useAppDispatch } from '@/redux/redux-hooks'
-import { errorActions } from '@/redux/slices/errorSlice'
 import { changeOrderStatus } from '@/redux/slices/orderSlice'
 import { GetOrderI } from '@/types/api-payload-types'
 import { ColumnI } from '@/types/table-props'
@@ -20,13 +19,7 @@ const OrderListView = ({ orders, getData, loading = false }: IProps) => {
     onStatusChange: (item: GetOrderI, newValue: string) => {
       const payload = { status: newValue }
 
-      dispatch(changeOrderStatus({ id: item._id, payload }))
-        .unwrap()
-        .then((res: any) => {
-          dispatch(errorActions.setErrorMessage(res?.message))
-          getData()
-        })
-        .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
+      dispatch(changeOrderStatus({ id: item._id, payload })).then(() => getData())
     }
   }
 

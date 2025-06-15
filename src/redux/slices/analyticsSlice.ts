@@ -1,5 +1,6 @@
 import analyticsService from '@/service/analytics-service'
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import { showToastError } from '@/components/toast'
 import { createAppSlice } from '../createAppSlice'
 
 export const getTopCategories = createAsyncThunk('analytics/topCategories', async (_, { rejectWithValue }) => {
@@ -7,7 +8,8 @@ export const getTopCategories = createAsyncThunk('analytics/topCategories', asyn
     const { data } = await analyticsService.getTopCategories()
 
     return data
-  } catch (error) {
+  } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
@@ -17,7 +19,8 @@ export const getOrderAnalytics = createAsyncThunk('analytics/order', async (_, {
     const { data } = await analyticsService.getOrderAnalytics()
 
     return data
-  } catch (error) {
+  } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
@@ -27,7 +30,8 @@ export const getOrderPriceAnalytics = createAsyncThunk('analytics/orderPrice', a
     const { data } = await analyticsService.getOrderPriceAnalytics()
 
     return data
-  } catch (error) {
+  } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
@@ -37,7 +41,8 @@ export const getPopularSizeColor = createAsyncThunk('analytics/popularSizeColor'
     const { data } = await analyticsService.getPopularSizeColor()
 
     return data
-  } catch (error) {
+  } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
@@ -49,7 +54,8 @@ export const getTopProducts = createAsyncThunk(
       const { data } = await analyticsService.getTopProducts(payload)
 
       return data
-    } catch (error) {
+    } catch (error: any) {
+      showToastError(error?.data?.message)
       return rejectWithValue(error)
     }
   }

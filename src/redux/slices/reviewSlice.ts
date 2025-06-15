@@ -1,6 +1,7 @@
 import reviewService from '@/service/review-service'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AddReviewI } from '@/types/api-payload-types'
+import { showToastError, showToastSuccess } from '@/components/toast'
 import { createAppSlice } from '../createAppSlice'
 
 export const getAllReviewByProductId = createAsyncThunk(
@@ -10,7 +11,8 @@ export const getAllReviewByProductId = createAsyncThunk(
       const { data } = await reviewService.getAll(id)
 
       return { data: Array.isArray(data) ? data : [] }
-    } catch (error) {
+    } catch (error: any) {
+      showToastError(error?.data?.message)
       return rejectWithValue(error)
     }
   }
@@ -19,9 +21,10 @@ export const getAllReviewByProductId = createAsyncThunk(
 export const addReview = createAsyncThunk('review/addReview', async (payload: AddReviewI, { rejectWithValue }) => {
   try {
     const res = await reviewService.add(payload)
-
+    showToastSuccess(res?.data?.message)
     return res
-  } catch (error) {
+  } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
@@ -29,9 +32,10 @@ export const addReview = createAsyncThunk('review/addReview', async (payload: Ad
 export const upvoteReview = createAsyncThunk('review/upvoteReview', async (id: string, { rejectWithValue }) => {
   try {
     const { data } = await reviewService.upvote(id)
-
+    showToastSuccess(data?.message)
     return data
-  } catch (error) {
+  } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
@@ -39,9 +43,10 @@ export const upvoteReview = createAsyncThunk('review/upvoteReview', async (id: s
 export const abuseReview = createAsyncThunk('review/abuseReview', async (id: string, { rejectWithValue }) => {
   try {
     const { data } = await reviewService.abuse(id)
-
+    showToastSuccess(data?.message)
     return data
-  } catch (error) {
+  } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
@@ -83,8 +88,7 @@ const reviewSlice = createAppSlice({
     builder.addCase(addReview.pending, state => {
       state.loading = true
     })
-    builder.addCase(addReview.fulfilled, (state, { payload: { data } }) => {
-      state.reviews = data
+    builder.addCase(addReview.fulfilled, state => {
       state.loading = false
     })
     builder.addCase(addReview.rejected, state => {

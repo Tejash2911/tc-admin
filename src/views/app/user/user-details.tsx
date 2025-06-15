@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
-import { errorActions } from '@/redux/slices/errorSlice'
 import { deleteUser, getUserById, updateUserById, userActions } from '@/redux/slices/userSlice'
 import { AddUserI } from '@/types/api-payload-types'
 import useModal from '@/hooks/use-modal'
@@ -63,23 +62,14 @@ const UserDetailsPage = ({ id }: IProps) => {
     },
     onSubmit: (e: React.FormEvent) => {
       e.preventDefault()
-      dispatch(updateUserById({ id, payload: formData }))
-        .unwrap()
-        .then(res => {
-          dispatch(errorActions.setErrorMessage(res?.message))
-        })
-        .then(() => router.push('/user'))
-        .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
+      dispatch(updateUserById({ id, payload: formData })).then(() => router.push('/user'))
     },
     confirmDelete: () => {
       const { selectedRow } = isDelete
-      dispatch(deleteUser(selectedRow.id))
-        .unwrap()
-        .then(res => {
-          dispatch(errorActions.setErrorMessage(res?.message))
-          isDelete.onClose()
-        })
-        .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
+      dispatch(deleteUser(selectedRow.id)).then(() => {
+        isDelete.onClose()
+        router.push('/user')
+      })
     }
   }
 

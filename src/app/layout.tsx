@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Urbanist } from 'next/font/google'
 import ReduxProvider from '@/redux/ReduxProvider'
+import { ToastNotification } from '@/components/toast'
 import './globals.css'
 
 const urbanist = Urbanist({
@@ -22,7 +23,10 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={urbanist.className}>
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <ToastNotification />
+          {children}
+        </ReduxProvider>
       </body>
     </html>
   )

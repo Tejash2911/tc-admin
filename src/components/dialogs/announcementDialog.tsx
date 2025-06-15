@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch } from '@/redux/redux-hooks'
 import { addAnnouncement, updateAnnouncement } from '@/redux/slices/announcementSlice'
-import { errorActions } from '@/redux/slices/errorSlice'
 import { AddAnnouncementI } from '@/types/api-payload-types'
 import { Button } from '../button'
 import { Select, Textarea } from '../input'
@@ -44,24 +43,15 @@ const AnnouncementDialog = ({ open, setOpen, data, getData }: IProps) => {
       e.preventDefault()
 
       if (data.isEdit) {
-        dispatch(updateAnnouncement({ payload: formData, id: data._id }))
-          .unwrap()
-          .then(res => {
-            dispatch(errorActions.setErrorMessage(res?.message))
-            handle.handleClose()
-            getData()
-          })
-          .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
+        dispatch(updateAnnouncement({ payload: formData, id: data._id })).then(() => {
+          handle.handleClose()
+          getData()
+        })
       } else {
-        dispatch(addAnnouncement(formData))
-          .unwrap()
-          .then(res => {
-            dispatch(errorActions.setErrorMessage(res?.message))
-            handle.handleClose()
-            getData()
-          })
-          .then(handle.handleClose)
-          .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
+        dispatch(addAnnouncement(formData)).then(() => {
+          handle.handleClose()
+          getData()
+        })
       }
     },
     handleClose: () => {

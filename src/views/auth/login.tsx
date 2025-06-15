@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { login } from '@/redux/slices/authSlice'
-import { errorActions } from '@/redux/slices/errorSlice'
 
 const LoginV2 = () => {
   const [email, setEmail] = useState<string>('')
@@ -22,9 +21,6 @@ const LoginV2 = () => {
     onSubmit: (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       dispatch(login({ email, password }))
-        .unwrap()
-        .then(res => dispatch(errorActions.setErrorMessage(res?.message)))
-        .catch(error => dispatch(errorActions.setErrorMessage(error?.data?.message)))
     }
   }
 

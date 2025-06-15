@@ -1,14 +1,16 @@
 import authService from '@/service/auth-service'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { LoginI } from '@/types/api-payload-types'
+import type { LoginI } from '@/types/api-payload-types'
+import { showToastError, showToastSuccess } from '@/components/toast'
 import { createAppSlice } from '../createAppSlice'
 
 export const login = createAsyncThunk('auth/login', async (payload: LoginI, { rejectWithValue }) => {
   try {
     const { data } = await authService.login(payload)
-
-    return data
-  } catch (error) {
+    showToastSuccess(data.message)
+    return data.data
+  } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
@@ -16,9 +18,10 @@ export const login = createAsyncThunk('auth/login', async (payload: LoginI, { re
 export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
   try {
     const { data } = await authService.logout()
-
+    showToastSuccess(data.message)
     return data
-  } catch (error) {
+  } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })

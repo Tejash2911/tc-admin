@@ -1,6 +1,5 @@
 import { useRouter } from 'next/navigation'
 import { useAppDispatch } from '@/redux/redux-hooks'
-import { errorActions } from '@/redux/slices/errorSlice'
 import { deleteProduct } from '@/redux/slices/productSlice'
 import { GetProductI } from '@/types/api-payload-types'
 import { ColumnI } from '@/types/table-props'
@@ -18,21 +17,16 @@ interface IProps {
 const ProductListView = ({ products, getData, loading = false }: IProps) => {
   const dispatch = useAppDispatch()
   const router = useRouter()
-
   const productDialog = useModal()
   const isDelete = useModal()
 
   const handle = {
     confirmDelete: () => {
       const { selectedRow } = isDelete
-      dispatch(deleteProduct(selectedRow.id))
-        .unwrap()
-        .then((res: any) => {
-          dispatch(errorActions.setErrorMessage(res?.message))
-          isDelete.onClose()
-          getData()
-        })
-        .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
+      dispatch(deleteProduct(selectedRow.id)).then(() => {
+        isDelete.onClose()
+        getData()
+      })
     }
   }
 

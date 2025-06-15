@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch } from '@/redux/redux-hooks'
-import { errorActions } from '@/redux/slices/errorSlice'
 import { addProduct, updateProduct } from '@/redux/slices/productSlice'
 import { AddProductI } from '@/types/api-payload-types'
 import { Button } from '../button'
@@ -74,23 +73,15 @@ const ProductDialog = ({ open, setOpen, data, getData }: IProps) => {
       e.preventDefault()
 
       if (data.isEdit) {
-        dispatch(updateProduct({ payload: formData, id: data._id }))
-          .unwrap()
-          .then(res => {
-            dispatch(errorActions.setErrorMessage(res?.message))
-            handle.handleClose()
-            getData()
-          })
-          .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
+        dispatch(updateProduct({ payload: formData, id: data._id })).then(() => {
+          handle.handleClose()
+          getData()
+        })
       } else {
-        dispatch(addProduct(formData))
-          .unwrap()
-          .then(res => {
-            dispatch(errorActions.setErrorMessage(res?.message))
-            handle.handleClose()
-            getData()
-          })
-          .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
+        dispatch(addProduct(formData)).then(() => {
+          handle.handleClose()
+          getData()
+        })
       }
     },
     handleClose: () => {

@@ -1,6 +1,7 @@
 import productService from '@/service/product-service'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import type { AddProductI, GetDataI, UpdateProductI } from '@/types/api-payload-types'
+import { showToastError, showToastSuccess } from '@/components/toast'
 import { createAppSlice } from '../createAppSlice'
 
 export const getAllProducts = createAsyncThunk(
@@ -11,6 +12,7 @@ export const getAllProducts = createAsyncThunk(
 
       return { list: Array.isArray(data.data) ? data.data : [], rowCount: data.totalCount }
     } catch (error: any) {
+      showToastError(error?.data?.message)
       return rejectWithValue(error)
     }
   }
@@ -18,20 +20,22 @@ export const getAllProducts = createAsyncThunk(
 
 export const addProduct = createAsyncThunk('product/addProduct', async (payload: AddProductI, { rejectWithValue }) => {
   try {
-    const res = await productService.add(payload)
-
-    return res.data
+    const { data } = await productService.add(payload)
+    showToastSuccess(data?.message)
+    return data
   } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
 
 export const getProductById = createAsyncThunk('product/getProductById', async (id: string, { rejectWithValue }) => {
   try {
-    const res = await productService.getById(id)
+    const { data } = await productService.getById(id)
 
-    return res.data
+    return data
   } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
@@ -40,10 +44,11 @@ export const updateProduct = createAsyncThunk(
   'product/updateProduct',
   async (payload: UpdateProductI, { rejectWithValue }) => {
     try {
-      const res = await productService.update(payload)
-
-      return res.data
+      const { data } = await productService.update(payload)
+      showToastSuccess(data?.message)
+      return data
     } catch (error: any) {
+      showToastError(error?.data?.message)
       return rejectWithValue(error)
     }
   }
@@ -51,10 +56,11 @@ export const updateProduct = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk('product/deleteProduct', async (id: string, { rejectWithValue }) => {
   try {
-    const res = await productService.deleteById(id)
-
-    return res
-  } catch (error) {
+    const { data } = await productService.deleteById(id)
+    showToastSuccess(data?.message)
+    return data
+  } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })

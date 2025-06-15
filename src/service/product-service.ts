@@ -42,7 +42,7 @@ const update = (ORpayload: UpdateProductI): Promise<ApiSuccessI | ApiErrorI> => 
   })
 }
 
-const deleteById = (id: string) => {
+const deleteById = (id: string): Promise<ApiSuccessI | ApiErrorI> => {
   return new Promise((resolve, reject) => {
     axiosInstance
       .delete(`/product/${id}`)

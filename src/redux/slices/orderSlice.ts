@@ -1,6 +1,7 @@
 import orderService from '@/service/order-service'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import type { GetDataI, GetOrderI } from '@/types/api-payload-types'
+import { showToastError, showToastSuccess } from '@/components/toast'
 import { createAppSlice } from '../createAppSlice'
 
 export const getAllOrders = createAsyncThunk('order/getAllOrders', async (payload: GetDataI, { rejectWithValue }) => {
@@ -15,40 +16,44 @@ export const getAllOrders = createAsyncThunk('order/getAllOrders', async (payloa
 
 export const addOrder = createAsyncThunk('order/addOrder', async (payload: any, { rejectWithValue }) => {
   try {
-    const res = await orderService.add(payload)
-
-    return res.data
+    const { data } = await orderService.add(payload)
+    showToastSuccess(data?.message)
+    return data
   } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
 
 export const getOrderById = createAsyncThunk('order/getOrderById', async (id: string, { rejectWithValue }) => {
   try {
-    const res = await orderService.getById(id)
+    const { data } = await orderService.getById(id)
 
-    return res.data
+    return data
   } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
 
 export const updateOrder = createAsyncThunk('order/updateOrder', async (payload: any, { rejectWithValue }) => {
   try {
-    const res = await orderService.update(payload)
-
-    return res.data
+    const { data } = await orderService.update(payload)
+    showToastSuccess(data?.message)
+    return data
   } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
 
 export const deleteOrder = createAsyncThunk('order/deleteOrder', async (id: string, { rejectWithValue }) => {
   try {
-    const res = await orderService.deleteById(id)
-
-    return res
-  } catch (error) {
+    const { data } = await orderService.deleteById(id)
+    showToastSuccess(data?.message)
+    return data
+  } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
@@ -57,10 +62,11 @@ export const getOrdersByUserId = createAsyncThunk(
   'order/getOrdersByUserId',
   async (id: string, { rejectWithValue }) => {
     try {
-      const res = await orderService.getByUserId(id)
+      const { data } = await orderService.getByUserId(id)
 
-      return res
-    } catch (error) {
+      return data
+    } catch (error: any) {
+      showToastError(error?.data?.message)
       return rejectWithValue(error)
     }
   }
@@ -70,10 +76,11 @@ export const changeOrderStatus = createAsyncThunk(
   'order/changeOrderStatus',
   async (payload: any, { rejectWithValue }) => {
     try {
-      const res = await orderService.changeOrderStatus(payload)
-
-      return res
-    } catch (error) {
+      const { data } = await orderService.changeOrderStatus(payload)
+      showToastSuccess(data?.message)
+      return data
+    } catch (error: any) {
+      showToastError(error?.data?.message)
       return rejectWithValue(error)
     }
   }

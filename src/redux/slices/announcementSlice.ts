@@ -1,6 +1,7 @@
 import announcementService from '@/service/announcement-service'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AddAnnouncementI, GetDataI, UpdateAnnouncementI } from '@/types/api-payload-types'
+import { showToastError, showToastSuccess } from '@/components/toast'
 import { createAppSlice } from '../createAppSlice'
 
 export const getAllAnnouncements = createAsyncThunk(
@@ -10,7 +11,8 @@ export const getAllAnnouncements = createAsyncThunk(
       const { data } = await announcementService.getAll(payload)
 
       return { list: Array.isArray(data.data) ? data.data : [], rowCount: data.totalCount }
-    } catch (error) {
+    } catch (error: any) {
+      showToastError(error?.data?.message)
       return rejectWithValue(error)
     }
   }
@@ -24,6 +26,7 @@ export const getAnnouncementById = createAsyncThunk(
 
       return res.data
     } catch (error: any) {
+      showToastError(error?.data?.message)
       return rejectWithValue(error)
     }
   }
@@ -34,9 +37,10 @@ export const addAnnouncement = createAsyncThunk(
   async (payload: AddAnnouncementI, { rejectWithValue }) => {
     try {
       const { data } = await announcementService.add(payload)
-
+      showToastSuccess(data.message)
       return data
-    } catch (error) {
+    } catch (error: any) {
+      showToastError(error?.data?.message)
       return rejectWithValue(error)
     }
   }
@@ -47,9 +51,10 @@ export const updateAnnouncement = createAsyncThunk(
   async (payload: UpdateAnnouncementI, { rejectWithValue }) => {
     try {
       const { data } = await announcementService.update(payload)
-
+      showToastSuccess(data.message)
       return data
-    } catch (error) {
+    } catch (error: any) {
+      showToastError(error?.data?.message)
       return rejectWithValue(error)
     }
   }
@@ -60,9 +65,10 @@ export const deleteAnnouncement = createAsyncThunk(
   async (id: string, { rejectWithValue }) => {
     try {
       const { data } = await announcementService.deleteById(id)
-
+      showToastSuccess(data.message)
       return data
-    } catch (error) {
+    } catch (error: any) {
+      showToastError(error?.data?.message)
       return rejectWithValue(error)
     }
   }
@@ -73,9 +79,10 @@ export const disableAnnoucements = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await announcementService.disableAll()
-
+      showToastSuccess(data.message)
       return data
-    } catch (error) {
+    } catch (error: any) {
+      showToastError(error?.data?.message)
       return rejectWithValue(error)
     }
   }

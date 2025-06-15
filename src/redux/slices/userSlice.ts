@@ -1,6 +1,7 @@
 import userService from '@/service/user-service'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { GetDataI, UpdateUserI } from '@/types/api-payload-types'
+import { showToastError, showToastSuccess } from '@/components/toast'
 import { createAppSlice } from '../createAppSlice'
 
 export const getAllUsers = createAsyncThunk('user/getAllUsers', async (payload: GetDataI, { rejectWithValue }) => {
@@ -8,7 +9,8 @@ export const getAllUsers = createAsyncThunk('user/getAllUsers', async (payload: 
     const { data } = await userService.getAll(payload)
 
     return { users: data.data, rowCount: data.totalCount }
-  } catch (error) {
+  } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
@@ -19,6 +21,7 @@ export const getUserById = createAsyncThunk('user/getUserById', async (id: strin
 
     return res.data
   } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })
@@ -27,10 +30,11 @@ export const updateUserById = createAsyncThunk(
   'user/updateUserById',
   async (payload: UpdateUserI, { rejectWithValue }) => {
     try {
-      const res = await userService.update(payload)
-
-      return res.data
+      const { data } = await userService.update(payload)
+      showToastSuccess(data?.message)
+      return data
     } catch (error: any) {
+      showToastError(error?.data?.message)
       return rejectWithValue(error)
     }
   }
@@ -39,9 +43,10 @@ export const updateUserById = createAsyncThunk(
 export const deleteUser = createAsyncThunk('user/deleteUser', async (id: string, { rejectWithValue }) => {
   try {
     const { data } = await userService.deleteById(id)
-
+    showToastSuccess(data?.message)
     return data
-  } catch (error) {
+  } catch (error: any) {
+    showToastError(error?.data?.message)
     return rejectWithValue(error)
   }
 })

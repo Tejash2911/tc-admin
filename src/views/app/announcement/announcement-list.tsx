@@ -1,6 +1,5 @@
 import { useAppDispatch } from '@/redux/redux-hooks'
 import { deleteAnnouncement } from '@/redux/slices/announcementSlice'
-import { errorActions } from '@/redux/slices/errorSlice'
 import { GetAnnouncementsI } from '@/types/api-payload-types'
 import { ColumnI } from '@/types/table-props'
 import useModal from '@/hooks/use-modal'
@@ -16,21 +15,16 @@ interface IProps {
 
 const AnnoucementListView = ({ announcements, getData, loading = false }: IProps) => {
   const dispatch = useAppDispatch()
-
   const announcementDialog = useModal()
   const isDelete = useModal()
 
   const handle = {
     confirmDelete: () => {
       const { selectedRow } = isDelete
-      dispatch(deleteAnnouncement(selectedRow.id))
-        .unwrap()
-        .then(res => {
-          dispatch(errorActions.setErrorMessage(res?.message))
-          isDelete.onClose()
-          getData()
-        })
-        .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
+      dispatch(deleteAnnouncement(selectedRow.id)).then(() => {
+        isDelete.onClose()
+        getData()
+      })
     }
   }
 

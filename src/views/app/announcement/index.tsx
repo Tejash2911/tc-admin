@@ -3,7 +3,6 @@
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { disableAnnoucements, getAllAnnouncements } from '@/redux/slices/announcementSlice'
-import { errorActions } from '@/redux/slices/errorSlice'
 import { Icon } from '@iconify/react'
 import useModal from '@/hooks/use-modal'
 import { useQuery } from '@/hooks/useQuery'
@@ -27,13 +26,7 @@ const AnnouncementView = () => {
       dispatch(getAllAnnouncements(query))
     },
     disableAllAnnouncements: () => {
-      dispatch(disableAnnoucements())
-        .unwrap()
-        .then(res => {
-          dispatch(errorActions.setErrorMessage(res?.message))
-          handle.getAllAnnouncements()
-        })
-        .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
+      dispatch(disableAnnoucements()).then(() => handle.getAllAnnouncements())
     }
   }
 

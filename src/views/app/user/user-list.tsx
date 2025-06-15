@@ -1,6 +1,5 @@
 import { useRouter } from 'next/navigation'
 import { useAppDispatch } from '@/redux/redux-hooks'
-import { errorActions } from '@/redux/slices/errorSlice'
 import { deleteUser } from '@/redux/slices/userSlice'
 import { GetUsersI } from '@/types/api-payload-types'
 import { ColumnI } from '@/types/table-props'
@@ -23,14 +22,10 @@ const UserListView = ({ users, getData, loading = false }: IProps) => {
   const handle = {
     confirmDelete: () => {
       const { selectedRow } = isDelete
-      dispatch(deleteUser(selectedRow.id))
-        .unwrap()
-        .then(res => {
-          dispatch(errorActions.setErrorMessage(res?.message))
-          isDelete.onClose()
-          getData()
-        })
-        .catch(err => dispatch(errorActions.setErrorMessage(err?.message)))
+      dispatch(deleteUser(selectedRow.id)).then(() => {
+        isDelete.onClose()
+        getData()
+      })
     }
   }
 
