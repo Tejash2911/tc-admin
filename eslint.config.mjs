@@ -25,7 +25,8 @@ export default defineConfig([
         }
       ],
       '@typescript-eslint/no-explicit-any': 'off',
-      'react-hooks/exhaustive-deps': 'off'
+      'react-hooks/exhaustive-deps': 'off',
+      '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }]
     }
   },
   {

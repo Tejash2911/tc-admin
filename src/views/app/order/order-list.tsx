@@ -1,8 +1,8 @@
 import { useRouter } from 'next/navigation'
 import { useAppDispatch } from '@/redux/redux-hooks'
 import { changeOrderStatus } from '@/redux/slices/orderSlice'
-import { GetOrderI } from '@/types/api-payload-types'
-import { ColumnI } from '@/types/table-props'
+import type { GetOrderI } from '@/types/api-payload-types'
+import type { ColumnI } from '@/types/table-props'
 import { Table } from '@/components/table'
 
 interface IProps {

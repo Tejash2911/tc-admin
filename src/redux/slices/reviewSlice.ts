@@ -1,6 +1,6 @@
 import reviewService from '@/service/review-service'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { AddReviewI } from '@/types/api-payload-types'
+import type { AddReviewI } from '@/types/api-payload-types'
 import { showToastError, showToastSuccess } from '@/components/toast'
 import { createAppSlice } from '../createAppSlice'
 

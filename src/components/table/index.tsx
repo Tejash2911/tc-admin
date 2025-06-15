@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { Icon } from '@iconify/react'
-import { ColumnI, TableProps } from '@/types/table-props'
+import type { ColumnI, TableProps } from '@/types/table-props'
 import { Select } from '../input'
 
 const getCell = (

@@ -1,6 +1,6 @@
 import userService from '@/service/user-service'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { GetDataI, UpdateUserI } from '@/types/api-payload-types'
+import type { GetDataI, UpdateUserI } from '@/types/api-payload-types'
 import { showToastError, showToastSuccess } from '@/components/toast'
 import { createAppSlice } from '../createAppSlice'
 

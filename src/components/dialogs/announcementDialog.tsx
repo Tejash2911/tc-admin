@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch } from '@/redux/redux-hooks'
 import { addAnnouncement, updateAnnouncement } from '@/redux/slices/announcementSlice'
-import { AddAnnouncementI } from '@/types/api-payload-types'
+import type { AddAnnouncementI } from '@/types/api-payload-types'
 import { Button } from '../button'
 import { Select, Textarea } from '../input'
 import Modal from '../modal'

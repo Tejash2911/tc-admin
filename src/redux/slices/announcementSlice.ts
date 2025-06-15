@@ -1,6 +1,6 @@
 import announcementService from '@/service/announcement-service'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { AddAnnouncementI, GetDataI, UpdateAnnouncementI } from '@/types/api-payload-types'
+import type { AddAnnouncementI, GetDataI, UpdateAnnouncementI } from '@/types/api-payload-types'
 import { showToastError, showToastSuccess } from '@/components/toast'
 import { createAppSlice } from '../createAppSlice'
 

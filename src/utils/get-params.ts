@@ -1,4 +1,4 @@
-import { GetDataI } from '@/types/api-payload-types'
+import type { GetDataI } from '@/types/api-payload-types'
 
 export const getCommonParams = (nParams: any = {}): GetDataI => {
   try {

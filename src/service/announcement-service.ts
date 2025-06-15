@@ -1,7 +1,8 @@
 import { axiosInstance } from '@/libs/axios'
 import { getCommonParams } from '@/utils/get-params'
-import { AddAnnouncementI, GetDataI, UpdateAnnouncementI } from '@/types/api-payload-types'
-import { ApiErrorI, ApiSuccessI, handleApiErr, handleApiRes } from './handle-response'
+import type { AddAnnouncementI, GetDataI, UpdateAnnouncementI } from '@/types/api-payload-types'
+import type { ApiErrorI, ApiSuccessI } from './handle-response'
+import { handleApiErr, handleApiRes } from './handle-response'
 
 const getAll = (payload: GetDataI): Promise<ApiSuccessI | ApiErrorI> => {
   const nParams = getCommonParams(payload)

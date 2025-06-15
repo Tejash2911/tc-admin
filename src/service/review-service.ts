@@ -1,6 +1,7 @@
 import { axiosInstance } from '@/libs/axios'
-import { AddReviewI } from '@/types/api-payload-types'
-import { ApiErrorI, ApiSuccessI, handleApiErr, handleApiRes } from './handle-response'
+import type { AddReviewI } from '@/types/api-payload-types'
+import type { ApiErrorI, ApiSuccessI } from './handle-response'
+import { handleApiErr, handleApiRes } from './handle-response'
 
 const getAll = (id: string): Promise<ApiSuccessI | ApiErrorI> => {
   return new Promise((resolve, reject) => {

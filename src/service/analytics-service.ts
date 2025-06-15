@@ -1,5 +1,6 @@
 import { axiosInstance } from '@/libs/axios'
-import { ApiErrorI, ApiSuccessI, handleApiErr, handleApiRes } from './handle-response'
+import type { ApiErrorI, ApiSuccessI } from './handle-response'
+import { handleApiErr, handleApiRes } from './handle-response'
 
 const getTopCategories = (): Promise<ApiSuccessI | ApiErrorI> => {
   return new Promise((resolve, reject) => {

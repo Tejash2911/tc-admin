@@ -1,10 +1,11 @@
 'use client'
 
-import { PropsWithChildren, useState } from 'react'
+import type { ReactNode } from 'react'
+import { useState } from 'react'
 import Navbar from '@/components/navbar'
 import Sidebar from '@/components/sidebar'
 
-export default function DashboardLayout({ children }: PropsWithChildren) {
+export default function DashboardLayout({ children }: { children: ReactNode }) {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false)
 
   return (

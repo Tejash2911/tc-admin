@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch } from '@/redux/redux-hooks'
 import { addProduct, updateProduct } from '@/redux/slices/productSlice'
-import { AddProductI } from '@/types/api-payload-types'
+import type { AddProductI } from '@/types/api-payload-types'
 import { Button } from '../button'
 import ImageUpload from '../image-upload'
 import { Input, Textarea } from '../input'
