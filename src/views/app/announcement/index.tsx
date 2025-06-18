@@ -32,10 +32,10 @@ const AnnouncementView = () => {
 
   return (
     <ContentLayout title='Announcements'>
-      <div className='flex justify-between items-center bg-white p-4 rounded-lg text-gray-700 mb-4 border border-gray-300'>
+      <div className='mb-4 flex items-center justify-between rounded-lg border border-gray-300 bg-white p-4 text-gray-700'>
         <div className='flex items-center justify-center gap-2'>
           <button
-            className='border-2 border-teal-700 rounded-full flex justify-center items-center transition-transform hover:scale-110 hover:bg-teal-700 hover:text-white'
+            className='flex items-center justify-center rounded-full border-2 border-teal-700 transition-transform hover:scale-110 hover:bg-teal-700 hover:text-white'
             onClick={() => announcementDialog.onOpen({ isEdit: false })}
           >
             <Icon icon='ri:add-line' />
@@ -44,7 +44,7 @@ const AnnouncementView = () => {
         </div>
         <div className='flex items-center justify-center gap-2'>
           <button
-            className='border-2 border-teal-700 rounded-full flex justify-center items-center transition-transform hover:scale-110 hover:bg-teal-700 hover:text-white'
+            className='flex items-center justify-center rounded-full border-2 border-teal-700 transition-transform hover:scale-110 hover:bg-teal-700 hover:text-white'
             onClick={handle.disableAllAnnouncements}
           >
             <Icon icon='ri:stop-line' />

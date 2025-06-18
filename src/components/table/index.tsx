@@ -18,8 +18,8 @@ const getCell = (
     return (
       <td key={col.key} className='p-3'>
         <p
-          className={`text-center font-medium rounded-full p-1 border text-xs ${
-            value ? 'bg-lime-100 text-lime-600 border-lime-600' : 'bg-red-100 text-red-500 border-red-500'
+          className={`rounded-full border p-1 text-center text-xs font-medium ${
+            value ? 'border-lime-600 bg-lime-100 text-lime-600' : 'border-red-500 bg-red-100 text-red-500'
           }`}
         >
           {value ? 'Activated' : 'Deactivated'}
@@ -38,35 +38,35 @@ const getCell = (
 
   if (col.type === 'action') {
     return (
-      <td key={col.key} className='p-3 flex items-center gap-1'>
+      <td key={col.key} className='flex items-center gap-1 p-3'>
         {onView && (
-          <div className='w-6 h-6 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded-full transition-colors duration-200'>
+          <div className='flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition-colors duration-200 hover:bg-gray-100'>
             <div title='View'>
               <Icon
                 icon='ri:eye-line'
-                className='w-4 h-4 text-gray-600 hover:text-gray-800'
+                className='h-4 w-4 text-gray-600 hover:text-gray-800'
                 onClick={() => onView(item)}
               />
             </div>
           </div>
         )}
         {onEdit && (
-          <div className='w-6 h-6 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded-full transition-colors duration-200'>
+          <div className='flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition-colors duration-200 hover:bg-gray-100'>
             <div title='Edit'>
               <Icon
                 icon='ri:file-edit-line'
-                className='w-4 h-4 text-blue-500 hover:text-blue-600'
+                className='h-4 w-4 text-blue-500 hover:text-blue-600'
                 onClick={() => onEdit(item)}
               />
             </div>
           </div>
         )}
         {onDelete && (
-          <div className='w-6 h-6 flex items-center justify-center cursor-pointer hover:bg-red-50 rounded-full transition-colors duration-200'>
+          <div className='flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition-colors duration-200 hover:bg-red-50'>
             <div title='Delete'>
               <Icon
                 icon='ri:delete-bin-7-line'
-                className='w-4 h-4 text-red-500 hover:text-red-600'
+                className='h-4 w-4 text-red-500 hover:text-red-600'
                 onClick={() => onDelete(item)}
               />
             </div>
@@ -87,7 +87,7 @@ const getCell = (
   if (col.type === 'image') {
     return (
       <td key={col.key} className='p-3'>
-        <Image src={value} height={100} width={100} className={`w-6 h-6 rounded-full object-center`} alt='avatar' />
+        <Image src={value} height={100} width={100} className={`h-6 w-6 rounded-full object-center`} alt='avatar' />
       </td>
     )
   }
@@ -124,7 +124,7 @@ const getCell = (
         <div title='Copy'>
           <Icon
             icon='ri:file-copy-line'
-            className='w-4 h-4 text-gray-600 hover:text-gray-800 cursor-pointer'
+            className='h-4 w-4 cursor-pointer text-gray-600 hover:text-gray-800'
             onClick={() => navigator.clipboard.writeText(value)}
           />
         </div>
@@ -150,9 +150,9 @@ export const Table = ({
   skeletonRows = 10
 }: TableProps) => {
   return (
-    <div className='mt-5 overflow-auto border border-gray-300 rounded-lg'>
+    <div className='mt-5 overflow-auto rounded-lg border border-gray-300'>
       <table className='w-full border-collapse'>
-        <thead className='bg-teal-700 text-white text-left'>
+        <thead className='bg-teal-700 text-left text-white'>
           <tr>
             {columns.map((col, index) => (
               <td key={index} className={`p-3 ${col.width || ''}`}>
@@ -167,7 +167,7 @@ export const Table = ({
               <tr key={index} className='border-b border-gray-300'>
                 {columns.map((col, colIndex) => (
                   <td key={colIndex} className='p-4'>
-                    <div className='h-4 w-full bg-gray-200 rounded-xl animate-pulse'></div>
+                    <div className='h-4 w-full animate-pulse rounded-xl bg-gray-200'></div>
                   </td>
                 ))}
               </tr>

@@ -22,7 +22,7 @@ const ConfirmDeleteDialog = ({
         <h2 className='text-lg font-semibold'>{title}</h2>
         <p className='text-gray-600'>{description}</p>
 
-        <div className='flex gap-2 justify-end mt-2'>
+        <div className='mt-2 flex justify-end gap-2'>
           <Button onClick={onDelete} variant='delete'>
             Delete
           </Button>

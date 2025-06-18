@@ -91,8 +91,8 @@ const ProductDialog = ({ open, setOpen, data, getData }: IProps) => {
 
   return (
     <Modal open={open} size='xl'>
-      <form onSubmit={handle.onSubmit} className='flex flex-col gap-4 mx-auto'>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+      <form onSubmit={handle.onSubmit} className='mx-auto flex flex-col gap-4'>
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
           {/* Left Column */}
           <div className='flex flex-col gap-2'>
             <Input
@@ -188,7 +188,7 @@ const ProductDialog = ({ open, setOpen, data, getData }: IProps) => {
             </div>
           </div>
         </div>
-        <div className='flex gap-3 justify-end mt-2'>
+        <div className='mt-2 flex justify-end gap-3'>
           <Button type='submit' icon={data.isEdit ? 'save' : 'add'} variant='primary'>
             {data.isEdit ? 'Save' : 'Add'}
           </Button>

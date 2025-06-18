@@ -81,7 +81,7 @@ const AnnouncementDialog = ({ open, setOpen, data, getData }: IProps) => {
             { label: 'Yes', value: 'true' }
           ]}
         />
-        <div className='flex gap-3 justify-end mt-2'>
+        <div className='mt-2 flex justify-end gap-3'>
           <Button type='submit' icon={data.isEdit ? 'save' : 'add'} variant='primary'>
             {data.isEdit ? 'Save' : 'Add'}
           </Button>

@@ -16,7 +16,7 @@ const Stats = () => {
   return (
     <div className='flex flex-col gap-8'>
       {orderPriceStats && (
-        <div className='flex flex-col sm:flex-row gap-4 w-full'>
+        <div className='flex w-full flex-col gap-4 sm:flex-row'>
           <PriceStatCard
             title="Today's Orders"
             value={orderPriceStats?.today}

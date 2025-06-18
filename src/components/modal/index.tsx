@@ -23,7 +23,7 @@ const Modal = ({ children, open, size = 'md' }: IProps) => {
 
       {/* Modal */}
       <div
-        className={`fixed left-1/2 top-1/2 z-50 w-full text-sm ${modalSizes[size]} -translate-x-1/2 -translate-y-1/2 transform rounded-lg bg-white p-6 shadow-2xl`}
+        className={`fixed top-1/2 left-1/2 z-50 w-full text-sm ${modalSizes[size]} -translate-x-1/2 -translate-y-1/2 transform rounded-lg bg-white p-6 shadow-2xl`}
       >
         {children}
       </div>

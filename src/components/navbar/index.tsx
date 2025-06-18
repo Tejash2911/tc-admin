@@ -22,30 +22,35 @@ const Navbar = ({ isOpen, setSideBar }: IProps) => {
   const handle = {
     onLogout: () => {
       router.push('/logout')
+    },
+    toggleSidebar: () => {
+      setSideBar(!isOpen)
     }
   }
 
   return (
-    <div className='w-full h-[50px] sticky top-0 bg-white/80 shadow-md'>
-      <div className='h-full px-6 flex items-center justify-between'>
+    <div className='sticky top-0 h-[50px] w-full bg-white/80 shadow-md'>
+      <div className='flex h-full items-center justify-between px-6'>
         <div className='flex items-center gap-4'>
           <button
-            onClick={() => setSideBar(!isOpen)}
-            className={`transition-transform duration-100 ${isOpen ? 'rotate-y-0' : 'rotate-y-180'}`}
+            onClick={handle.toggleSidebar}
+            className={`flex h-8 w-8 items-center justify-center rounded-lg p-1 transition-all duration-200 ease-in-out ${
+              isOpen ? 'rotate-y-0 bg-gray-100' : 'rotate-y-180 bg-white'
+            }`}
           >
-            <Icon icon='ri:menu-unfold-4-line' />
+            <Icon icon='ri:menu-unfold-4-line' className='h-4 w-4' />
           </button>
           <Link href='/home' className='flex items-center gap-2'>
-            <span className='font-bold text-xl text-gray-900'>TejashCreation</span>
+            <span className='text-xl font-bold text-gray-900'>TejashCreation</span>
           </Link>
         </div>
         <div className='flex items-center gap-4'>
           {isMounted && currentUser && (
             <div className='flex items-center gap-2'>
-              <Image src={currentUser?.avatar} width={100} height={100} alt='avatar' className='w-8 h-8 rounded-full' />
+              <Image src={currentUser?.avatar} width={100} height={100} alt='avatar' className='h-8 w-8 rounded-full' />
               <button
                 onClick={handle.onLogout}
-                className='font-medium text-gray-700 hover:text-gray-900 transition-colors'
+                className='font-medium text-gray-700 transition-colors hover:text-gray-900'
               >
                 Logout
               </button>

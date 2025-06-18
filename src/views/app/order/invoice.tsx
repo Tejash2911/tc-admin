@@ -51,15 +51,15 @@ const Invoice = ({ id }: IProps) => {
       {order && (
         <>
           <div id='invoice-container'>
-            <div className='bg-white p-8 rounded-lg flex flex-col gap-8 border border-gray-300'>
+            <div className='flex flex-col gap-8 rounded-lg border border-gray-300 bg-white p-8'>
               {/* First Section */}
-              <div className='flex justify-between flex-wrap'>
+              <div className='flex flex-wrap justify-between'>
                 <div>
-                  <h1 className='text-xl font-bold mb-2'>Invoice</h1>
+                  <h1 className='mb-2 text-xl font-bold'>Invoice</h1>
                   <div className='text-gray-600'>
                     Status:{' '}
                     <span
-                      className={`px-3 py-1 rounded-full font-medium ${
+                      className={`rounded-full px-3 py-1 font-medium ${
                         statusColors[order.orderStatus as OrderStatus] || ''
                       }`}
                     >
@@ -67,8 +67,8 @@ const Invoice = ({ id }: IProps) => {
                     </span>
                   </div>
                 </div>
-                <div className='text-right mt-4 md:mt-0'>
-                  <h2 className='text-lg mb-2'>{process.env.NEXT_PUBLIC_COMPANY_NAME}</h2>
+                <div className='mt-4 text-right md:mt-0'>
+                  <h2 className='mb-2 text-lg'>{process.env.NEXT_PUBLIC_COMPANY_NAME}</h2>
                   <p>
                     {process.env.NEXT_PUBLIC_COMPANY_ADDRESS}
                     <br />
@@ -78,7 +78,7 @@ const Invoice = ({ id }: IProps) => {
               </div>
 
               {/* Second Section */}
-              <div className='flex justify-between flex-wrap gap-4'>
+              <div className='flex flex-wrap justify-between gap-4'>
                 <div className='text-left'>
                   <p className='mb-1'>Date</p>
                   <p className='text-gray-600'>{new Date(order?.createdAt).toLocaleString()}</p>
@@ -98,26 +98,26 @@ const Invoice = ({ id }: IProps) => {
               </div>
 
               {/* Third Section: Table */}
-              <div className='mt-6 overflow-x-auto border border-gray-300 rounded-lg'>
+              <div className='mt-6 overflow-x-auto rounded-lg border border-gray-300'>
                 <table className='w-full border-collapse'>
                   <thead className='bg-teal-700 text-white'>
                     <tr>
-                      <td className='py-3 px-4 text-left'>#</td>
-                      <td className='py-3 px-4 text-left'>Product Name</td>
-                      <td className='py-3 px-4 text-left'>Quantity</td>
-                      <td className='py-3 px-4 text-left'>Item Price</td>
-                      <td className='py-3 px-4 text-left'>Total</td>
+                      <td className='px-4 py-3 text-left'>#</td>
+                      <td className='px-4 py-3 text-left'>Product Name</td>
+                      <td className='px-4 py-3 text-left'>Quantity</td>
+                      <td className='px-4 py-3 text-left'>Item Price</td>
+                      <td className='px-4 py-3 text-left'>Total</td>
                     </tr>
                   </thead>
                   <tbody>
                     {order.products &&
                       order?.products?.map((o: any, index: number) => (
                         <tr key={index}>
-                          <td className='py-3 px-4'>{index + 1}</td>
-                          <td className='py-3 px-4'>{o?.title}</td>
-                          <td className='py-3 px-4'>{o?.quantity}</td>
-                          <td className='py-3 px-4'>{o?.price}</td>
-                          <td className='py-3 px-4 text-red-600'>{o?.price * o?.quantity}</td>
+                          <td className='px-4 py-3'>{index + 1}</td>
+                          <td className='px-4 py-3'>{o?.title}</td>
+                          <td className='px-4 py-3'>{o?.quantity}</td>
+                          <td className='px-4 py-3'>{o?.price}</td>
+                          <td className='px-4 py-3 text-red-600'>{o?.price * o?.quantity}</td>
                         </tr>
                       ))}
                   </tbody>
@@ -125,7 +125,7 @@ const Invoice = ({ id }: IProps) => {
               </div>
 
               {/* Fourth Section */}
-              <div className='flex flex-wrap gap-4 justify-between bg-gray-100 p-6 rounded-lg'>
+              <div className='flex flex-wrap justify-between gap-4 rounded-lg bg-gray-100 p-6'>
                 <div className='flex flex-col gap-1'>
                   <p>Order Type</p>
                   <span className='text-gray-700'>{order?.type}</span>
@@ -149,7 +149,7 @@ const Invoice = ({ id }: IProps) => {
           </div>
 
           {/* Print Button */}
-          <div className='flex justify-end mt-4'>
+          <div className='mt-4 flex justify-end'>
             <Button onClick={handle.handlePrint} icon='print'>
               Print Invoice
             </Button>

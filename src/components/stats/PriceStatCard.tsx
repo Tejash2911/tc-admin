@@ -10,7 +10,7 @@ interface PriceStatCardProps {
 export const PriceStatCard = ({ title, value, icon, bgColor }: PriceStatCardProps) => {
   return (
     <div
-      className={`flex-1 h-[150px] p-8 rounded-lg text-white ${bgColor} flex flex-col justify-center items-center gap-2`}
+      className={`h-[150px] flex-1 rounded-lg p-8 text-white ${bgColor} flex flex-col items-center justify-center gap-2`}
     >
       {icon}
       <p>{title}</p>

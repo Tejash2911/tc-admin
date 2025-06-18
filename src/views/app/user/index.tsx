@@ -28,7 +28,7 @@ const UsersView = () => {
 
   return (
     <ContentLayout title='Users'>
-      <div className='bg-white rounded-lg p-4 mb-4 border border-gray-300'>
+      <div className='mb-4 rounded-lg border border-gray-300 bg-white p-4'>
         <Input
           type='text'
           placeholder='Search user by name/email/phone/id'

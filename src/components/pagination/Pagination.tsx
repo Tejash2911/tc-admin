@@ -20,11 +20,11 @@ const Pagination: React.FC<PaginationProps> = ({
   hasPreviousPage
 }) => {
   return (
-    <div className='w-full flex items-center justify-between mt-2 text-sm'>
+    <div className='mt-2 flex w-full items-center justify-between text-sm'>
       <button
         onClick={() => hasPreviousPage && onPageChange(currentPage - 1)}
-        className={`w-max mx-1 ${
-          hasPreviousPage ? 'text-gray-700 hover:text-teal-600 hover:underline' : 'text-gray-400 pointer-events-none'
+        className={`mx-1 w-max ${
+          hasPreviousPage ? 'text-gray-700 hover:text-teal-600 hover:underline' : 'pointer-events-none text-gray-400'
         }`}
       >
         Previous
@@ -40,8 +40,8 @@ const Pagination: React.FC<PaginationProps> = ({
       </div>
       <button
         onClick={() => hasNextPage && onPageChange(currentPage + 1)}
-        className={`w-max mx-1 ${
-          hasNextPage ? 'text-gray-700 hover:text-teal-600 hover:underline' : 'text-gray-400 pointer-events-none'
+        className={`mx-1 w-max ${
+          hasNextPage ? 'text-gray-700 hover:text-teal-600 hover:underline' : 'pointer-events-none text-gray-400'
         }`}
       >
         Next

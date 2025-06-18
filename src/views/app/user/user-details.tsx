@@ -80,10 +80,10 @@ const UserDetailsPage = ({ id }: IProps) => {
   return (
     <ContentLayout title='User Details'>
       {user && (
-        <div className='w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='bg-white rounded-lg p-8 border border-gray-300'>
+        <div className='mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8'>
+          <div className='rounded-lg border border-gray-300 bg-white p-8'>
             {/* Top Section */}
-            <div className='flex items-center justify-between mb-8'>
+            <div className='mb-8 flex items-center justify-between'>
               <div className='flex items-center gap-4'>
                 {user.avatar && (
                   <Image
@@ -91,7 +91,7 @@ const UserDetailsPage = ({ id }: IProps) => {
                     height={50}
                     width={50}
                     alt='avatar'
-                    className='w-12 h-12 rounded-full object-cover'
+                    className='h-12 w-12 rounded-full object-cover'
                   />
                 )}
                 <h2 className='text-gray-900'>UserID: {user._id}</h2>
@@ -99,7 +99,7 @@ const UserDetailsPage = ({ id }: IProps) => {
             </div>
 
             {/* Form Section */}
-            <form onSubmit={handle.onSubmit} className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+            <form onSubmit={handle.onSubmit} className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
               {/* First Name */}
               <Input
                 name='firstName'

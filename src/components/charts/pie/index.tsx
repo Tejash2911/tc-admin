@@ -45,8 +45,8 @@ const PieChart = ({ data, title }: IProps) => {
   }
 
   return (
-    <div className='border border-gray-300 bg-white rounded-lg p-4'>
-      <h2 className='text-base font-medium mb-2'>{title}</h2>
+    <div className='rounded-lg border border-gray-300 bg-white p-4'>
+      <h2 className='mb-2 text-base font-medium'>{title}</h2>
       <div className='h-64'>
         <Pie data={chartData} options={options} />
       </div>

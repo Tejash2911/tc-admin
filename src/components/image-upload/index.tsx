@@ -56,20 +56,20 @@ const ImageUpload = ({ value, onChange }: Props) => {
     <div
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      className={`relative w-full h-40 flex flex-col items-center justify-center p-2 border-2 border-dashed rounded-lg cursor-pointer`}
+      className={`relative flex h-40 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-2`}
       onClick={() => fileInputRef.current?.click()}
     >
       {preview ? (
         <>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={preview} alt='preview' className='w-full h-full object-contain rounded-lg' />
+          <img src={preview} alt='preview' className='h-full w-full rounded-lg object-contain' />
           <button
             type='button'
             onClick={e => {
               e.stopPropagation()
               handleRemoveImage()
             }}
-            className='absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600'
+            className='absolute top-2 right-2 rounded-full bg-red-500 p-1 text-white hover:bg-red-600'
           >
             <Icon icon='mdi:close' />
           </button>

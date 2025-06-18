@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Icon } from '@iconify/react'
@@ -28,19 +28,57 @@ const NavItem = ({ href, icon, label }: INavItem) => {
 
 interface IProps {
   isOpen: boolean
+  onClose: () => void
 }
 
-const Sidebar = ({ isOpen }: IProps) => {
+const Sidebar = ({ isOpen, onClose }: IProps) => {
+  const sidebarRef = useRef<HTMLDivElement>(null)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node) && onClose && !isTransitioning) {
+        setIsTransitioning(true)
+        setTimeout(() => {
+          onClose()
+          setIsTransitioning(false)
+        }, 100)
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen, onClose, isTransitioning])
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen])
+
   return (
     <div
-      className={`fixed top-[50px] bottom-0 bg-white transition-all duration-300 ease-in-out h-[calc(100vh-50px)] w-max z-50 shadow-md ${
-        isOpen ? 'left-0' : '-left-full'
+      ref={sidebarRef}
+      className={`fixed top-[50px] bottom-0 h-[calc(100vh-50px)] w-52 bg-white shadow-md transition-all duration-300 ease-in-out ${
+        isOpen ? 'left-0' : '-left-52'
       }`}
+      onClick={e => e.stopPropagation()}
     >
-      <div className='p-5 text-[#555] space-y-6'>
+      <div className='space-y-6 p-5 text-[#555]'>
         {/* Dashboard */}
         <div>
-          <h3 className='text-xs text-[#bbb] font-semibold mb-2'>Dashboard</h3>
+          <h3 className='mb-2 text-xs font-semibold text-[#bbb]'>Dashboard</h3>
           <ul className='space-y-1'>
             <li>
               <NavItem href='/home' icon={<Icon icon='ri:home-line' />} label='Home' />
@@ -56,7 +94,7 @@ const Sidebar = ({ isOpen }: IProps) => {
 
         {/* All Menu */}
         <div>
-          <h3 className='text-xs text-[#bbb] font-semibold mb-2'>All Menu</h3>
+          <h3 className='mb-2 text-xs font-semibold text-[#bbb]'>All Menu</h3>
           <ul className='space-y-1'>
             <li>
               <NavItem href='/user' icon={<Icon icon='ri:user-line' />} label='Users' />
@@ -72,7 +110,7 @@ const Sidebar = ({ isOpen }: IProps) => {
 
         {/* Connect */}
         <div>
-          <h3 className='text-xs text-[#bbb] font-semibold mb-2'>Connect</h3>
+          <h3 className='mb-2 text-xs font-semibold text-[#bbb]'>Connect</h3>
           <ul className='space-y-1'>
             <li>
               <NavItem href='mailto:tcpatel2911@gmail.com' icon={<Icon icon='ri:mail-line' />} label='Mail' />

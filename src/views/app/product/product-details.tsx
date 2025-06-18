@@ -31,17 +31,17 @@ const ProductDetails = ({ id }: IProps) => {
 
   return (
     <ContentLayout title='Product Details'>
-      <div className='border border-gray-300 bg-white rounded-lg p-6 grid grid-cols-1 md:grid-cols-2 mt-6'>
+      <div className='mt-6 grid grid-cols-1 rounded-lg border border-gray-300 bg-white p-6 md:grid-cols-2'>
         {/* Image Section */}
         {product?.img && (
-          <div className='flex justify-center items-center'>
+          <div className='flex items-center justify-center'>
             <Image
               src={product?.img}
               alt={product?.title}
               width={300}
               height={300}
               priority
-              className='rounded-lg object-contain max-h-80'
+              className='max-h-80 rounded-lg object-contain'
             />
           </div>
         )}
@@ -49,9 +49,9 @@ const ProductDetails = ({ id }: IProps) => {
         {/* Info Section */}
         <div className='space-y-4'>
           <h3 className='text-lg font-bold text-gray-900'>{product?.title}</h3>
-          <p className='text-gray-600 text-base'>{product?.desc}</p>
+          <p className='text-base text-gray-600'>{product?.desc}</p>
 
-          <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 text-gray-700 bg-gray-50 p-4 rounded-lg border border-gray-300'>
+          <div className='grid grid-cols-1 gap-2 rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-700 sm:grid-cols-2 sm:gap-4'>
             <div className='flex items-center gap-2'>
               <span className='font-medium'>Product No:</span>
               <span className='font-medium text-gray-900'>{product?.productNo}</span>
@@ -79,7 +79,7 @@ const ProductDetails = ({ id }: IProps) => {
             <div className='flex items-center gap-2'>
               <span className='font-medium'>In Inventory:</span>
               <span
-                className={`px-2 py-1 rounded-full font-medium ${
+                className={`rounded-full px-2 py-1 font-medium ${
                   product?.is_in_inventory ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                 }`}
               >
@@ -88,7 +88,7 @@ const ProductDetails = ({ id }: IProps) => {
             </div>
           </div>
 
-          <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 text-gray-700 bg-gray-50 p-4 rounded-lg border border-gray-300'>
+          <div className='grid grid-cols-1 gap-2 rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-700 sm:grid-cols-2 sm:gap-4'>
             <div className='flex items-center gap-2'>
               <span className='font-medium'>Price:</span>
               <span className='font-medium text-gray-900'>₹ {product?.price?.toFixed(2)}</span>
@@ -110,7 +110,7 @@ const ProductDetails = ({ id }: IProps) => {
           </div>
         </div>
       </div>
-      <div className='border border-gray-300 bg-white rounded-lg p-6 mt-6'>
+      <div className='mt-6 rounded-lg border border-gray-300 bg-white p-6'>
         <ReviewComponent productId={id} />
       </div>
     </ContentLayout>

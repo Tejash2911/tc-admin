@@ -28,10 +28,10 @@ const ReviewComponent = ({ productId }: ReviewProps) => {
       {/* Reviews List */}
       <div className='space-y-4'>
         {reviews.map((review: any) => (
-          <div key={review._id} className='p-3 text-gray-700 bg-gray-50 rounded-lg border border-gray-300'>
+          <div key={review._id} className='rounded-lg border border-gray-300 bg-gray-50 p-3 text-gray-700'>
             <div className='flex items-start justify-between'>
               <div>
-                <div className='flex items-center gap-3 mb-2'>
+                <div className='mb-2 flex items-center gap-3'>
                   <h3 className='font-semibold text-gray-900'>
                     {review.user?.firstName + ' ' + review.user?.lastName || 'Anonymous'}
                   </h3>
@@ -40,7 +40,7 @@ const ReviewComponent = ({ productId }: ReviewProps) => {
                       {[1, 2, 3, 4, 5].map(star => (
                         <svg
                           key={star}
-                          className={`w-4 h-4 ${star <= review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                          className={`h-4 w-4 ${star <= review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
                           fill='currentColor'
                           viewBox='0 0 20 20'
                         >
@@ -50,7 +50,7 @@ const ReviewComponent = ({ productId }: ReviewProps) => {
                     </div>
                   </div>
                 </div>
-                <p className='text-gray-600 leading-relaxed'>{review.review}</p>
+                <p className='leading-relaxed text-gray-600'>{review.review}</p>
               </div>
               <div className='flex flex-col items-end text-sm text-gray-500'>
                 <span className='text-xs text-gray-400'>{new Date(review.createdAt).toLocaleDateString()}</span>

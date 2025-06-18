@@ -10,13 +10,13 @@ interface StatCardProps {
 
 export const StatCard = ({ title, value, icon, iconBgColor, iconColor }: StatCardProps) => {
   return (
-    <div className='flex-1 min-w-[250px] h-[100px] p-4 border border-gray-300 bg-white rounded-lg flex'>
-      <div className='flex justify-center items-center w-1/3'>
-        <div className={`w-[50px] h-[50px] flex justify-center items-center rounded-full ${iconBgColor}`}>
+    <div className='flex h-[100px] min-w-[250px] flex-1 rounded-lg border border-gray-300 bg-white p-4'>
+      <div className='flex w-1/3 items-center justify-center'>
+        <div className={`flex h-[50px] w-[50px] items-center justify-center rounded-full ${iconBgColor}`}>
           {React.cloneElement(icon, { className: `text-${iconColor}` })}
         </div>
       </div>
-      <div className='flex flex-col justify-center w-2/3'>
+      <div className='flex w-2/3 flex-col justify-center'>
         <p>{title}</p>
         <p className='text-xl'>{value}</p>
       </div>

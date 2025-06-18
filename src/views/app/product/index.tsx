@@ -37,7 +37,7 @@ const ProductView = () => {
 
   return (
     <ContentLayout title='Products'>
-      <div className='grid grid-cols-1 md:grid-cols-4 gap-2 bg-white p-4 rounded-lg border border-gray-300'>
+      <div className='grid grid-cols-1 gap-2 rounded-lg border border-gray-300 bg-white p-4 md:grid-cols-4'>
         <Input
           name='search'
           placeholder='Search by product name'

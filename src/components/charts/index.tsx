@@ -21,14 +21,14 @@ const ChartsComponent = () => {
   return (
     <>
       {popularSizeColor && (
-        <div className='box-border grid grid-cols-1 sm:grid-cols-2 gap-4 my-4 sm:my-8'>
+        <div className='my-4 box-border grid grid-cols-1 gap-4 sm:my-8 sm:grid-cols-2'>
           <BarChart data={popularSizeColor?.sizes} color={false} title='Top Size' />
           <BarChart data={popularSizeColor?.colors} color={true} title='Top Color' />
         </div>
       )}
 
       {popularSizeColor && topCategories && (
-        <div className='box-border grid grid-cols-1 sm:grid-cols-2 gap-4 my-4 sm:my-8'>
+        <div className='my-4 box-border grid grid-cols-1 gap-4 sm:my-8 sm:grid-cols-2'>
           <PieChart data={topProducts} title='Top Products' />
           <PieChart data={topCategories} title='Top categories' />
         </div>

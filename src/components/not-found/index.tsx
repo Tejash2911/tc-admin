@@ -20,11 +20,11 @@ const NotFound = ({
   }
 
   return (
-    <div className='flex flex-col items-center justify-center min-h-[calc(100vh-50px)] p-8'>
+    <div className='flex min-h-[calc(100vh-50px)] flex-col items-center justify-center p-8'>
       <div className='text-center'>
         <div className='mb-4'>
-          <div className='w-20 h-20 rounded-full flex items-center justify-center mx-auto'>
-            <svg className='w-12 h-12 text-gray-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+          <div className='mx-auto flex h-20 w-20 items-center justify-center rounded-full'>
+            <svg className='h-12 w-12 text-gray-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
               <path
                 strokeLinecap='round'
                 strokeLinejoin='round'
@@ -34,8 +34,8 @@ const NotFound = ({
             </svg>
           </div>
         </div>
-        <h2 className='text-2xl font-semibold mb-2 text-gray-800'>{message}</h2>
-        <p className='text-gray-600 mb-4'>{description}</p>
+        <h2 className='mb-2 text-2xl font-semibold text-gray-800'>{message}</h2>
+        <p className='mb-4 text-gray-600'>{description}</p>
       </div>
     </div>
   )
