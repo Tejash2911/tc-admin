@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface StatCardProps {
+interface IProps {
   title: string
   value: number | string
   icon: React.ReactElement<React.SVGProps<SVGSVGElement>>
@@ -8,7 +8,7 @@ interface StatCardProps {
   iconColor: string
 }
 
-export const StatCard = ({ title, value, icon, iconBgColor, iconColor }: StatCardProps) => {
+export const StatCard = ({ title, value, icon, iconBgColor, iconColor }: IProps) => {
   return (
     <div className='flex h-[100px] min-w-[250px] flex-1 rounded-lg border border-gray-300 bg-white p-4'>
       <div className='flex w-1/3 items-center justify-center'>

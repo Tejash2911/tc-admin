@@ -2,11 +2,11 @@ import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { getAllReviewByProductId } from '@/redux/slices/reviewSlice'
 
-interface ReviewProps {
+interface IProps {
   productId: string
 }
 
-const ReviewComponent = ({ productId }: ReviewProps) => {
+const ReviewComponent = ({ productId }: IProps) => {
   const dispatch = useAppDispatch()
   const { reviews } = useAppSelector(({ review }) => review)
 

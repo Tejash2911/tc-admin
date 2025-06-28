@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 
-interface Props {
+interface IProps {
   value: string
   onChange: (base64: string) => void
 }
 
-const ImageUpload = ({ value, onChange }: Props) => {
+const ImageUpload = ({ value, onChange }: IProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [preview, setPreview] = useState<string>(value)
 

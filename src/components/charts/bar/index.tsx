@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Bar } from 'react-chartjs-2'
 
-interface Iprops {
+interface IProps {
   data: { _id: string; count: number }[]
   color: boolean
   title: string
 }
 
-const BarChart = ({ data, color, title }: Iprops) => {
+const BarChart = ({ data, color, title }: IProps) => {
   const [chartData, setChartData] = useState<any>({
     labels: [],
     datasets: []

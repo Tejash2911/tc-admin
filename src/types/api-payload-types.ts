@@ -13,16 +13,6 @@ export interface LoginI {
   password: string
 }
 
-export interface CurrentUserI {
-  firstName: string
-  lastName: string
-  avtar: string
-  email: string
-  number: number
-  isAdmin: boolean
-  purchasedProducts: any[]
-}
-
 export interface GetAnnouncementsI {
   _id: string
   title: string

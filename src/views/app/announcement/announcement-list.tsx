@@ -13,7 +13,7 @@ interface IProps {
   loading?: boolean
 }
 
-const AnnoucementListView = ({ announcements, getData, loading = false }: IProps) => {
+const AnnouncementListView = ({ announcements, getData, loading = false }: IProps) => {
   const dispatch = useAppDispatch()
   const announcementDialog = useModal()
   const isDelete = useModal()
@@ -87,4 +87,4 @@ const AnnoucementListView = ({ announcements, getData, loading = false }: IProps
   )
 }
 
-export default AnnoucementListView
+export default AnnouncementListView

@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react'
 
-interface NotFoundProps {
+interface IProps {
   message?: string
   description?: string
 }
 
-const NotFound = ({
-  message = 'Invalid ID',
-  description = 'The ID you are looking for does not exist.'
-}: NotFoundProps) => {
+const NotFound = ({ message = 'Invalid ID', description = 'The ID you are looking for does not exist.' }: IProps) => {
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {

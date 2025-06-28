@@ -74,8 +74,8 @@ export const deleteAnnouncement = createAsyncThunk(
   }
 )
 
-export const disableAnnoucements = createAsyncThunk(
-  'announcement/disableAnnoucements',
+export const disableAnnouncements = createAsyncThunk(
+  'announcement/disableAnnouncements',
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await announcementService.disableAll()

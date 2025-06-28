@@ -1,11 +1,11 @@
 import type { FC } from 'react'
 
-interface ContentLayoutProps {
+interface IProps {
   children: React.ReactNode
   title?: string
 }
 
-const ContentLayout: FC<ContentLayoutProps> = ({ children, title = 'Content' }) => {
+const ContentLayout: FC<IProps> = ({ children, title = 'Content' }) => {
   return (
     <div className={`box-border flex min-h-[calc(100vh-50px)] w-full flex-col items-center`}>
       <div className='w-full max-w-7xl px-4 sm:px-6 lg:px-8'>

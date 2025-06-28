@@ -2,14 +2,14 @@
 
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
-import { disableAnnoucements, getAllAnnouncements } from '@/redux/slices/announcementSlice'
+import { disableAnnouncements, getAllAnnouncements } from '@/redux/slices/announcementSlice'
 import { Icon } from '@iconify/react'
 import useModal from '@/hooks/use-modal'
 import { useQuery } from '@/hooks/useQuery'
 import ContentLayout from '@/components/content-layout'
 import AnnouncementDialog from '@/components/dialogs/announcementDialog'
 import Pagination from '@/components/pagination/Pagination'
-import AnnoucementListView from './announcement-list'
+import AnnouncementListView from './announcement-list'
 
 const AnnouncementView = () => {
   const { announcements, rowCount, loading } = useAppSelector(({ announcement }) => announcement)
@@ -26,7 +26,7 @@ const AnnouncementView = () => {
       dispatch(getAllAnnouncements(query))
     },
     disableAllAnnouncements: () => {
-      dispatch(disableAnnoucements()).then(() => handle.getAllAnnouncements())
+      dispatch(disableAnnouncements()).then(() => handle.getAllAnnouncements())
     }
   }
 
@@ -52,7 +52,7 @@ const AnnouncementView = () => {
           Deactivate All Announcements
         </div>
       </div>
-      <AnnoucementListView announcements={announcements} getData={handle.getAllAnnouncements} loading={loading} />
+      <AnnouncementListView announcements={announcements} getData={handle.getAllAnnouncements} loading={loading} />
       <Pagination
         currentPage={query.offset}
         totalPages={Math.ceil(rowCount / query.limit)}

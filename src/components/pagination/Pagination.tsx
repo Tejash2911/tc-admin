@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface PaginationProps {
+interface IProps {
   currentPage: number
   totalPages: number
   itemsPerPage: number
@@ -10,7 +10,7 @@ interface PaginationProps {
   hasPreviousPage: boolean
 }
 
-const Pagination: React.FC<PaginationProps> = ({
+const Pagination: React.FC<IProps> = ({
   currentPage,
   totalPages,
   itemsPerPage,

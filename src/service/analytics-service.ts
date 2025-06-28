@@ -5,7 +5,7 @@ import { handleApiErr, handleApiRes } from './handle-response'
 const getTopCategories = (): Promise<ApiSuccessI | ApiErrorI> => {
   return new Promise((resolve, reject) => {
     axiosInstance
-      .get('/analytics/topcat')
+      .get('/analytics/top-cat')
       .then(res => resolve(handleApiRes(res)))
       .catch(err => reject(handleApiErr(err)))
   })
@@ -23,7 +23,7 @@ const getOrderAnalytics = (): Promise<ApiSuccessI | ApiErrorI> => {
 const getOrderPriceAnalytics = (): Promise<ApiSuccessI | ApiErrorI> => {
   return new Promise((resolve, reject) => {
     axiosInstance
-      .get('/analytics/orderprice')
+      .get('/analytics/order-price')
       .then(res => resolve(handleApiRes(res)))
       .catch(err => reject(handleApiErr(err)))
   })
@@ -32,7 +32,7 @@ const getOrderPriceAnalytics = (): Promise<ApiSuccessI | ApiErrorI> => {
 const getPopularSizeColor = (): Promise<ApiSuccessI | ApiErrorI> => {
   return new Promise((resolve, reject) => {
     axiosInstance
-      .get('/analytics/popularsizecolor')
+      .get('/analytics/popular-size-color')
       .then(res => resolve(handleApiRes(res)))
       .catch(err => reject(handleApiErr(err)))
   })
@@ -41,7 +41,7 @@ const getPopularSizeColor = (): Promise<ApiSuccessI | ApiErrorI> => {
 const getTopProducts = (payload: { for: string }): Promise<ApiSuccessI | ApiErrorI> => {
   return new Promise((resolve, reject) => {
     axiosInstance
-      .get('/analytics/topproducts', { params: payload })
+      .get('/analytics/top-products', { params: payload })
       .then(res => resolve(handleApiRes(res)))
       .catch(err => reject(handleApiErr(err)))
   })

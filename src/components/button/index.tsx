@@ -1,13 +1,13 @@
 import React from 'react'
 import { Icon } from '@iconify/react'
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'delete' | 'outline'
   icon?: 'search' | 'add' | 'delete' | 'save' | 'print'
   children: React.ReactNode
 }
 
-export const Button: React.FC<ButtonProps> = ({ variant = 'primary', icon, children, ...props }) => {
+export const Button: React.FC<IProps> = ({ variant = 'primary', icon, children, ...props }) => {
   const baseClasses =
     'flex items-center justify-center gap-1 transition-all rounded-lg py-2 px-3 transition duration-300'
 

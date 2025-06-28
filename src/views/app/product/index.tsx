@@ -52,7 +52,7 @@ const ProductView = () => {
             { label: 'Electronics', value: 'Electronics' },
             { label: 'Footwear', value: 'footwear' },
             { label: 'Clothing', value: 'clothing' },
-            { label: 'Eyewear', value: 'eyewears' }
+            { label: 'EyeWear', value: 'eyewears' }
           ]}
         />
         <Select
