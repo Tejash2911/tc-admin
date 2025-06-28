@@ -1,0 +1,23 @@
+{
+    "recommendations": [
+        "formulahendry.auto-rename-tag", // Auto Rename Tag - Automatically rename paired HTML/XML tags
+        "dsznajder.es7-react-js-snippets", // ES7+ React/Redux/React-Native snippets
+        "mhutchie.git-graph", // Git Graph - Visualize Git repository history
+        "eamodio.gitlens", // GitLens - Enhanced Git support
+        "christian-kohler.path-intellisense", // Path Intellisense - Path autocompletion
+        "christian-kohler.npm-intellisense", // npm Intellisense - npm package autocompletion
+        "esbenp.prettier-vscode", // Prettier - Code formatter
+        "dbaeumer.vscode-eslint", // ESLint
+        "bradlc.vscode-tailwindcss", // Tailwind CSS IntelliSense
+        "msjsdiag.vscode-react-native", // React Native tools
+        "ms-vscode.vscode-typescript-next", // TypeScript
+        "streetsidesoftware.code-spell-checker", // Spell checker
+        "PKief.material-icon-theme", // Material icon theme
+        "bierner.color-info", // Color info
+        "usernamehw.errorlens", // Error Lens - Enhanced error highlighting
+        "antfu.iconify", // Iconify
+        "yoavbls.pretty-ts-errors", // Pretty TypeScript errors
+        "MohammadBaqer.better-folding", // Better folding
+        "aaron-bond.better-comments", // Better comments
+    ],
+}
