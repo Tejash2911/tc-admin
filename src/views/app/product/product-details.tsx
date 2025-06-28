@@ -14,7 +14,7 @@ interface IProps {
 
 const ProductDetails = ({ id }: IProps) => {
   const dispatch = useAppDispatch()
-  const { product, productNotFound } = useAppSelector(state => state.product)
+  const { product, productNotFound } = useAppSelector(({ product }) => product)
 
   useEffect(() => {
     if (id) {
@@ -48,10 +48,14 @@ const ProductDetails = ({ id }: IProps) => {
 
         {/* Info Section */}
         <div className='space-y-4'>
-          <h3 className='text-lg font-bold text-gray-900'>{product?.title}</h3>
-          <p className='text-base text-gray-600'>{product?.desc}</p>
+          <div className='rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-700'>
+            <div className='flex flex-col space-y-2'>
+              <h3 className='text-sm font-semibold'>{product?.title}</h3>
+              <p className='text-xs text-gray-600'>{product?.desc}</p>
+            </div>
+          </div>
 
-          <div className='grid grid-cols-1 gap-2 rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-700 sm:grid-cols-2 sm:gap-4'>
+          <div className='grid grid-cols-1 gap-2 rounded-lg border border-gray-300 bg-gray-50 p-4 text-xs text-gray-700 sm:grid-cols-2 sm:gap-4'>
             <div className='flex items-center gap-2'>
               <span className='font-medium'>Product No:</span>
               <span className='font-medium text-gray-900'>{product?.productNo}</span>
@@ -88,7 +92,7 @@ const ProductDetails = ({ id }: IProps) => {
             </div>
           </div>
 
-          <div className='grid grid-cols-1 gap-2 rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-700 sm:grid-cols-2 sm:gap-4'>
+          <div className='grid grid-cols-1 gap-2 rounded-lg border border-gray-300 bg-gray-50 p-4 text-xs text-gray-700 sm:grid-cols-2 sm:gap-4'>
             <div className='flex items-center gap-2'>
               <span className='font-medium'>Price:</span>
               <span className='font-medium text-gray-900'>₹ {product?.price?.toFixed(2)}</span>
