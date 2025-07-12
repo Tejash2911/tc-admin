@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Icon } from '@iconify/react'
 import type { ColumnI, TableProps } from '@/types/table-props'
 import { Select } from '../input'
+import TooltipControl from '../tooltip'
 
 const getCell = (
   item: any,
@@ -40,37 +41,37 @@ const getCell = (
     return (
       <td key={col.key} className='flex items-center gap-1 p-3'>
         {onView && (
-          <div className='flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition-colors duration-200 hover:bg-gray-100'>
-            <div title='View'>
+          <TooltipControl content='View'>
+            <div className='flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition-colors duration-200 hover:bg-gray-100'>
               <Icon
                 icon='ri:eye-line'
                 className='h-4 w-4 text-gray-600 hover:text-gray-800'
                 onClick={() => onView(item)}
               />
             </div>
-          </div>
+          </TooltipControl>
         )}
         {onEdit && (
-          <div className='flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition-colors duration-200 hover:bg-gray-100'>
-            <div title='Edit'>
+          <TooltipControl content='Edit'>
+            <div className='flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition-colors duration-200 hover:bg-blue-100'>
               <Icon
                 icon='ri:file-edit-line'
                 className='h-4 w-4 text-blue-500 hover:text-blue-600'
                 onClick={() => onEdit(item)}
               />
             </div>
-          </div>
+          </TooltipControl>
         )}
         {onDelete && (
-          <div className='flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition-colors duration-200 hover:bg-red-50'>
-            <div title='Delete'>
+          <TooltipControl content='Delete'>
+            <div className='flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition-colors duration-200 hover:bg-red-100'>
               <Icon
                 icon='ri:delete-bin-7-line'
                 className='h-4 w-4 text-red-500 hover:text-red-600'
                 onClick={() => onDelete(item)}
               />
             </div>
-          </div>
+          </TooltipControl>
         )}
       </td>
     )
@@ -121,13 +122,15 @@ const getCell = (
   if (col.type === 'copy') {
     return (
       <td key={col.key} className='p-3'>
-        <div title='Copy'>
-          <Icon
-            icon='ri:file-copy-line'
-            className='h-4 w-4 cursor-pointer text-gray-600 hover:text-gray-800'
-            onClick={() => navigator.clipboard.writeText(value)}
-          />
-        </div>
+        <TooltipControl content='Copy'>
+          <div className='flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition-colors duration-200 hover:bg-gray-100'>
+            <Icon
+              icon='ri:file-copy-line'
+              className='h-4 w-4 cursor-pointer text-gray-600 hover:text-gray-800'
+              onClick={() => navigator.clipboard.writeText(value)}
+            />
+          </div>
+        </TooltipControl>
       </td>
     )
   }
