@@ -3,11 +3,9 @@ import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
 import { getPopularSizeColor, getTopCategories, getTopProducts } from '@/redux/slices/analyticsSlice'
 import BarChart from './bar'
 import PieChart from './pie'
-import '@/utils/chartSetup'
 
 const ChartsComponent = () => {
   const { popularSizeColor, topCategories, topProducts } = useAppSelector(({ analytics }) => analytics)
-
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -22,8 +20,8 @@ const ChartsComponent = () => {
     <>
       {popularSizeColor && (
         <div className='my-4 box-border grid grid-cols-1 gap-4 sm:my-8 sm:grid-cols-2'>
-          <BarChart data={popularSizeColor?.sizes} color={false} title='Top Size' />
-          <BarChart data={popularSizeColor?.colors} color={true} title='Top Color' />
+          <BarChart data={popularSizeColor?.sizes} title='Top Size' />
+          <BarChart data={popularSizeColor?.colors} title='Top Color' />
         </div>
       )}
 

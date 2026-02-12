@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Pie } from 'react-chartjs-2'
+import ReusableChart from '@/components/chart'
 
 interface IProps {
   data: { title: string; purchasedCount: number }[]
@@ -47,9 +47,7 @@ const PieChart = ({ data, title }: IProps) => {
   return (
     <div className='rounded-lg border border-gray-300 bg-white p-4'>
       <h2 className='mb-2 text-base font-medium'>{title}</h2>
-      <div className='h-64'>
-        <Pie data={chartData} options={options} />
-      </div>
+      <ReusableChart type='pie' data={chartData} options={options} height={250} />
     </div>
   )
 }
