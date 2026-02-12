@@ -43,7 +43,8 @@ export const makeStore = (preloadedState?: RootState) => {
     // middleware: (getDefaultMiddleware) => {
     //   return getDefaultMiddleware().concat(quotesApiSlice.middleware)
     // },
-    preloadedState
+    preloadedState,
+    devTools: process.env.NEXT_MODE === 'development'
   })
 
   // configure listeners using the provided defaults
