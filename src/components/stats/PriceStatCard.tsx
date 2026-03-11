@@ -10,7 +10,7 @@ interface IProps {
 export const PriceStatCard = ({ title, value, icon, bgColor }: IProps) => {
   return (
     <div
-      className={`h-[150px] flex-1 rounded-lg p-8 text-white ${bgColor} flex flex-col items-center justify-center gap-2`}
+      className={`h-[125px] flex-1 rounded-lg p-8 text-white ${bgColor} flex flex-col items-center justify-center gap-2`}
     >
       {icon}
       <p>{title}</p>

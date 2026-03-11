@@ -151,10 +151,8 @@ const UserDetailsPage = ({ id }: IProps) => {
 
               {/* Submit Buttons */}
               <div className='col-span-full flex justify-end gap-4'>
-                <Button type='submit' icon='save'>
-                  Update User
-                </Button>
-                <Button type='button' icon='delete' variant='delete' onClick={() => isDelete.onOpen({ id })}>
+                <Button type='submit'>Update User</Button>
+                <Button type='button' variant='delete' onClick={() => isDelete.onOpen({ id })}>
                   Delete User
                 </Button>
               </div>

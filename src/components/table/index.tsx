@@ -17,21 +17,21 @@ const getCell = (
 
   if (col.type === 'status') {
     return (
-      <td key={col.key} className='p-3'>
-        <p
-          className={`rounded-full border p-1 text-center text-xs font-medium ${
-            value ? 'border-lime-600 bg-lime-100 text-lime-600' : 'border-red-500 bg-red-100 text-red-500'
+      <td key={col.key} className='px-4 py-3'>
+        <span
+          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+            value ? 'border-green-600 bg-green-50 text-green-700' : 'border-red-500 bg-red-50 text-red-700'
           }`}
         >
           {value ? 'Activated' : 'Deactivated'}
-        </p>
+        </span>
       </td>
     )
   }
 
   if (col.type === 'date') {
     return (
-      <td key={col.key} className='p-3'>
+      <td key={col.key} className='px-4 py-3 text-sm text-gray-900'>
         {new Date(value).toLocaleDateString()}
       </td>
     )
@@ -39,64 +39,60 @@ const getCell = (
 
   if (col.type === 'action') {
     return (
-      <td key={col.key} className='flex items-center gap-1 p-3'>
-        {onView && (
-          <TooltipControl content='View'>
-            <div className='flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition-colors duration-200 hover:bg-gray-100'>
-              <Icon
-                icon='ri:eye-line'
-                className='h-4 w-4 text-gray-600 hover:text-gray-800'
-                onClick={() => onView(item)}
-              />
-            </div>
-          </TooltipControl>
-        )}
-        {onEdit && (
-          <TooltipControl content='Edit'>
-            <div className='flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition-colors duration-200 hover:bg-blue-100'>
-              <Icon
-                icon='ri:file-edit-line'
-                className='h-4 w-4 text-blue-500 hover:text-blue-600'
-                onClick={() => onEdit(item)}
-              />
-            </div>
-          </TooltipControl>
-        )}
-        {onDelete && (
-          <TooltipControl content='Delete'>
-            <div className='flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition-colors duration-200 hover:bg-red-100'>
-              <Icon
-                icon='ri:delete-bin-7-line'
-                className='h-4 w-4 text-red-500 hover:text-red-600'
-                onClick={() => onDelete(item)}
-              />
-            </div>
-          </TooltipControl>
-        )}
+      <td key={col.key} className='px-4 py-3'>
+        <div className='flex items-center gap-2'>
+          {onView && (
+            <TooltipControl content='View'>
+              <button className='flex h-5 w-5 items-center justify-center rounded-lg text-gray-600 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900'>
+                <Icon icon='ri:eye-line' className='h-4 w-4' onClick={() => onView(item)} />
+              </button>
+            </TooltipControl>
+          )}
+          {onEdit && (
+            <TooltipControl content='Edit'>
+              <button className='flex h-5 w-5 items-center justify-center rounded-lg text-blue-600 transition-colors duration-200 hover:bg-blue-50 hover:text-blue-700'>
+                <Icon icon='ri:edit-box-line' className='h-4 w-4' onClick={() => onEdit(item)} />
+              </button>
+            </TooltipControl>
+          )}
+          {onDelete && (
+            <TooltipControl content='Delete'>
+              <button className='flex h-5 w-5 items-center justify-center rounded-lg text-red-600 transition-colors duration-200 hover:bg-red-50 hover:text-red-700'>
+                <Icon icon='ri:delete-bin-7-line' className='h-4 w-4' onClick={() => onDelete(item)} />
+              </button>
+            </TooltipControl>
+          )}
+        </div>
       </td>
     )
   }
 
   if (col.type === 'text') {
     return (
-      <td key={col.key} className='p-3'>
-        {typeof value === 'string' && value.length > 75 ? `${value.slice(0, 75)}...` : value}
+      <td key={col.key} className='px-4 py-3 text-sm text-gray-900'>
+        {value}
       </td>
     )
   }
 
   if (col.type === 'image') {
     return (
-      <td key={col.key} className='p-3'>
-        <Image src={value} height={100} width={100} className={`h-6 w-6 rounded-full object-center`} alt='avatar' />
+      <td key={col.key} className='px-4 py-3'>
+        <Image src={value} height={100} width={100} className='h-8 w-8 rounded-full object-cover' alt='avatar' />
       </td>
     )
   }
 
   if (col.type === 'boolean') {
     return (
-      <td key={col.key} className='p-3'>
-        <span className={`font-medium ${value ? 'text-green-600' : 'text-red-600'}`}>{value ? 'Yes' : 'No'}</span>
+      <td key={col.key} className='px-4 py-3 text-sm'>
+        <span
+          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+            value ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+          }`}
+        >
+          {value ? 'Yes' : 'No'}
+        </span>
       </td>
     )
   }
@@ -104,7 +100,7 @@ const getCell = (
   if (col.type === 'select') {
     const selectOptions = col.options || []
     return (
-      <td key={col.key}>
+      <td key={col.key} className='px-4 py-3'>
         <Select
           value={value}
           onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -121,22 +117,18 @@ const getCell = (
 
   if (col.type === 'copy') {
     return (
-      <td key={col.key} className='p-3'>
+      <td key={col.key} className='px-4 py-3'>
         <TooltipControl content='Copy'>
-          <div className='flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition-colors duration-200 hover:bg-gray-100'>
-            <Icon
-              icon='ri:file-copy-line'
-              className='h-4 w-4 cursor-pointer text-gray-600 hover:text-gray-800'
-              onClick={() => navigator.clipboard.writeText(value)}
-            />
-          </div>
+          <button className='flex h-5 w-5 items-center justify-center rounded-lg text-gray-600 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900'>
+            <Icon icon='ri:file-copy-line' className='h-4 w-4' onClick={() => navigator.clipboard.writeText(value)} />
+          </button>
         </TooltipControl>
       </td>
     )
   }
 
   return (
-    <td key={col.key} className='p-3'>
+    <td key={col.key} className='px-4 py-3 text-sm text-gray-900'>
       {value}
     </td>
   )
@@ -153,40 +145,37 @@ export const Table = ({
   skeletonRows = 10
 }: TableProps) => {
   return (
-    <div className='mt-5 overflow-auto rounded-lg border border-gray-300'>
+    <div className='mt-5 overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-sm'>
       <table className='w-full border-collapse'>
-        <thead className='bg-teal-700 text-left text-white'>
+        <thead className='border-b border-gray-200 bg-gray-50'>
           <tr>
             {columns.map((col, index) => (
-              <td key={index} className={`p-3 ${col.width || ''}`}>
+              <th key={index} className={`px-4 py-3 text-left text-sm font-semibold text-gray-900 ${col.width || ''}`}>
                 {col.label}
-              </td>
+              </th>
             ))}
           </tr>
         </thead>
-        <tbody className='bg-white'>
+        <tbody className='divide-y divide-gray-200'>
           {loading ? (
             Array.from({ length: skeletonRows }).map((_, index) => (
-              <tr key={index} className='border-b border-gray-300'>
+              <tr key={index} className='animate-pulse'>
                 {columns.map((col, colIndex) => (
-                  <td key={colIndex} className='p-4'>
-                    <div className='h-4 w-full animate-pulse rounded-xl bg-gray-200'></div>
+                  <td key={colIndex} className='px-4 py-3'>
+                    <div className='h-8 w-full rounded bg-gray-200'></div>
                   </td>
                 ))}
               </tr>
             ))
           ) : data.length === 0 ? (
             <tr>
-              <td colSpan={columns.length} className='p-4 text-center text-gray-500'>
+              <td colSpan={columns.length} className='px-4 py-8 text-center text-sm text-gray-500'>
                 No records found
               </td>
             </tr>
           ) : (
             data.map((item, index) => (
-              <tr
-                key={item._id || index}
-                className={`hover:bg-gray-50 ${index === data.length - 1 ? '' : 'border-b border-gray-300'}`}
-              >
+              <tr key={item._id || index} className='transition-colors duration-150 hover:bg-gray-50'>
                 {columns.map(col => getCell(item, col, onEdit, onDelete, onView, onChange))}
               </tr>
             ))

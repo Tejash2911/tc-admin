@@ -82,8 +82,8 @@ const AnnouncementDialog = ({ open, setOpen, data, getData }: IProps) => {
           ]}
         />
         <div className='mt-2 flex justify-end gap-3'>
-          <Button type='submit' icon={data.isEdit ? 'save' : 'add'} variant='primary'>
-            {data.isEdit ? 'Save' : 'Add'}
+          <Button type='submit' variant='primary'>
+            Save
           </Button>
           <Button type='reset' onClick={handle.handleClose} variant='outline'>
             Cancel

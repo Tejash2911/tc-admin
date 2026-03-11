@@ -64,9 +64,7 @@ const ProductView = () => {
             { label: 'High to Low', value: 'price-desc' }
           ]}
         />
-        <Button icon='add' onClick={() => productDialog.onOpen({ isEdit: false })}>
-          Add Product
-        </Button>
+        <Button onClick={() => productDialog.onOpen({ isEdit: false })}>Add Product</Button>
       </div>
       <ProductListView products={products} getData={handle.getAllProducts} loading={loading} />
       <Pagination

@@ -189,7 +189,7 @@ const ProductDialog = ({ open, setOpen, data, getData }: IProps) => {
           </div>
         </div>
         <div className='mt-2 flex justify-end gap-3'>
-          <Button type='submit' icon={data.isEdit ? 'save' : 'add'} variant='primary'>
+          <Button type='submit' variant='primary'>
             {data.isEdit ? 'Save' : 'Add'}
           </Button>
           <Button type='button' onClick={handle.handleClose} variant='outline'>

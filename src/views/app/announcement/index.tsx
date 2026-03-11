@@ -6,8 +6,10 @@ import { disableAnnouncements, getAllAnnouncements } from '@/redux/slices/announ
 import { Icon } from '@iconify/react'
 import useModal from '@/hooks/use-modal'
 import { useQuery } from '@/hooks/useQuery'
+import { Button } from '@/components/button'
 import ContentLayout from '@/components/content-layout'
 import AnnouncementDialog from '@/components/dialogs/announcementDialog'
+import { Input } from '@/components/input'
 import Pagination from '@/components/pagination/Pagination'
 import AnnouncementListView from './announcement-list'
 
@@ -33,23 +35,38 @@ const AnnouncementView = () => {
   return (
     <ContentLayout title='Announcements'>
       <div className='mb-4 flex items-center justify-between rounded-lg border border-gray-300 bg-white p-4 text-gray-700'>
-        <div className='flex items-center justify-center gap-2'>
-          <button
-            className='flex items-center justify-center rounded-full border-2 border-teal-700 transition-transform hover:scale-110 hover:bg-teal-700 hover:text-white'
-            onClick={() => announcementDialog.onOpen({ isEdit: false })}
+        {/* Search Section - Left Side */}
+        <div className='flex-1'>
+          <form
+            onSubmit={e => {
+              e.preventDefault()
+              handle.getAllAnnouncements()
+            }}
+            className='flex w-full max-w-md'
           >
-            <Icon icon='ri:add-line' />
-          </button>
-          Add Announcement
+            <div className='relative flex-1'>
+              <Input
+                type='text'
+                placeholder='Search announcements...'
+                className='w-full rounded-lg border border-gray-300 px-4 py-2 pr-10 focus:border-teal-500 focus:outline-none'
+                value={query.search}
+                onChange={e => updateQuery({ search: e.target.value })}
+              />
+              <Button type='submit' className='absolute top-1/2 right-2 h-6 w-6 -translate-y-1/2 p-0' variant='outline'>
+                <Icon icon='ri:search-line' className='h-4 w-4' />
+              </Button>
+            </div>
+          </form>
         </div>
-        <div className='flex items-center justify-center gap-2'>
-          <button
-            className='flex items-center justify-center rounded-full border-2 border-teal-700 transition-transform hover:scale-110 hover:bg-teal-700 hover:text-white'
-            onClick={handle.disableAllAnnouncements}
-          >
-            <Icon icon='ri:stop-line' />
-          </button>
-          Deactivate All Announcements
+
+        {/* Action Buttons - Right Side */}
+        <div className='flex flex-col gap-2 sm:flex-row'>
+          <Button onClick={() => announcementDialog.onOpen({ isEdit: false })} variant='primary'>
+            Add Announcement
+          </Button>
+          <Button onClick={handle.disableAllAnnouncements} variant='outline'>
+            Deactivate All
+          </Button>
         </div>
       </div>
       <AnnouncementListView announcements={announcements} getData={handle.getAllAnnouncements} loading={loading} />

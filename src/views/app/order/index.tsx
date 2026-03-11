@@ -61,9 +61,7 @@ const OrderView = () => {
             { label: 'New Orders', value: 'newest' }
           ]}
         />
-        <Button icon='search' type='submit'>
-          Search
-        </Button>
+        <Button type='submit'>Search</Button>
       </form>
       <OrderListView orders={orders} getData={handle.getAllOrders} loading={loading} />
       <Pagination
