@@ -10,7 +10,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "clean": "rmdir /s /q .next",
+    "clear": "rmdir /s /q node_modules .next"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.7.0",

@@ -75,11 +75,9 @@ const Invoice = ({ id }: IProps) => {
               <div className='w-full max-w-sm border border-gray-300 bg-white shadow-sm'>
                 {/* Thermal Receipt Header */}
                 <div className='border-b-1 border-dashed border-gray-400 py-4 text-center'>
-                  <h1 className='text-lg font-bold text-gray-900'>
-                    {process.env.NEXT_PUBLIC_COMPANY_NAME || 'INVOICE'}
-                  </h1>
-                  <p className='text-xs text-gray-600'>{process.env.NEXT_PUBLIC_COMPANY_ADDRESS || ''}</p>
-                  <p className='text-xs text-gray-600'>{process.env.NEXT_PUBLIC_COMPANY_ADDRESS_COUNTRY || ''}</p>
+                  <h1 className='text-lg font-bold text-gray-900'>TejashCreation Pvt. Ltd.</h1>
+                  <p className='text-xs text-gray-600'>Damka, Surat, Gujarat - 394510.</p>
+                  <p className='text-xs text-gray-600'>India</p>
                 </div>
 
                 {/* Order Information */}
