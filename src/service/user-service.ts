@@ -4,43 +4,42 @@ import type { GetDataI, UpdateUserI } from '@/types/api-payload-types'
 import type { ApiErrorI, ApiSuccessI } from './handle-response'
 import { handleApiErr, handleApiRes } from './handle-response'
 
-const getAll = (payload: GetDataI): Promise<ApiSuccessI | ApiErrorI> => {
-  const nParams = getCommonParams(payload)
-  return new Promise((resolve, reject) => {
-    axiosInstance
-      .get('/user', { params: nParams })
-      .then(res => resolve(handleApiRes(res)))
-      .catch(err => reject(handleApiErr(err)))
-  })
+const getAll = async (payload: GetDataI): Promise<ApiSuccessI | ApiErrorI> => {
+  try {
+    const nParams = getCommonParams(payload)
+    const res = await axiosInstance.get('/user', { params: nParams })
+    return handleApiRes(res)
+  } catch (err) {
+    return handleApiErr(err as any)
+  }
 }
 
-const getById = (id: string): Promise<ApiSuccessI | ApiErrorI> => {
-  return new Promise((resolve, reject) => {
-    axiosInstance
-      .get(`/user/${id}`)
-      .then(res => resolve(handleApiRes(res)))
-      .catch(err => reject(handleApiErr(err)))
-  })
+const getById = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
+  try {
+    const res = await axiosInstance.get(`/user/${id}`)
+    return handleApiRes(res)
+  } catch (err) {
+    return handleApiErr(err as any)
+  }
 }
 
-const update = (ORpayload: UpdateUserI): Promise<ApiSuccessI | ApiErrorI> => {
-  return new Promise((resolve, reject) => {
+const update = async (ORpayload: UpdateUserI): Promise<ApiSuccessI | ApiErrorI> => {
+  try {
     const { id, payload } = ORpayload
-
-    axiosInstance
-      .put(`/user/${id}`, payload)
-      .then(res => resolve(handleApiRes(res)))
-      .catch(err => reject(handleApiErr(err)))
-  })
+    const res = await axiosInstance.put(`/user/${id}`, payload)
+    return handleApiRes(res)
+  } catch (err) {
+    return handleApiErr(err as any)
+  }
 }
 
-const deleteById = (id: string): Promise<ApiSuccessI | ApiErrorI> => {
-  return new Promise((resolve, reject) => {
-    axiosInstance
-      .delete(`/user/${id}`)
-      .then(res => resolve(handleApiRes(res)))
-      .catch(err => reject(handleApiErr(err)))
-  })
+const deleteById = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
+  try {
+    const res = await axiosInstance.delete(`/user/${id}`)
+    return handleApiRes(res)
+  } catch (err) {
+    return handleApiErr(err as any)
+  }
 }
 
 const userService = {

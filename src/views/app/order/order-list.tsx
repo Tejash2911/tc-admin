@@ -1,25 +1,23 @@
 import { useRouter } from 'next/navigation'
-import { useAppDispatch } from '@/redux/redux-hooks'
-import { changeOrderStatus } from '@/redux/slices/orderSlice'
 import type { GetOrderI } from '@/types/api-payload-types'
 import type { ColumnI } from '@/types/table-props'
+import { useChangeOrderStatus } from '@/hooks/useOrderQuery'
 import { Table } from '@/components/table'
 
 interface IProps {
   orders: GetOrderI[]
-  getData: () => void
   loading?: boolean
 }
 
-const OrderListView = ({ orders, getData, loading = false }: IProps) => {
-  const dispatch = useAppDispatch()
+const OrderListView = ({ orders, loading = false }: IProps) => {
+  const { mutate: changeOrderStatus } = useChangeOrderStatus()
   const router = useRouter()
 
   const handle = {
     onStatusChange: (item: GetOrderI, newValue: string) => {
       const payload = { status: newValue }
 
-      dispatch(changeOrderStatus({ id: item._id, payload })).then(() => getData())
+      changeOrderStatus({ id: item._id, payload })
     }
   }
 

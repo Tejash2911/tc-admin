@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useAppDispatch } from '@/redux/redux-hooks'
-import { addProduct, updateProduct } from '@/redux/slices/productSlice'
 import type { AddProductI } from '@/types/api-payload-types'
+import { useAddProduct, useUpdateProduct } from '@/hooks/useProductQuery'
 import { Button } from '../button'
 import ImageUpload from '../image-upload'
 import { Input, Textarea } from '../input'
@@ -11,11 +10,11 @@ interface IProps {
   open: boolean
   setOpen: (open: boolean) => void
   data: any
-  getData: () => void
 }
 
-const ProductDialog = ({ open, setOpen, data, getData }: IProps) => {
-  const dispatch = useAppDispatch()
+const ProductDialog = ({ open, setOpen, data }: IProps) => {
+  const { mutate: addProduct } = useAddProduct()
+  const { mutate: updateProduct } = useUpdateProduct()
 
   const [formData, setFormData] = useState<AddProductI>({
     title: '',
@@ -73,15 +72,11 @@ const ProductDialog = ({ open, setOpen, data, getData }: IProps) => {
       e.preventDefault()
 
       if (data.isEdit) {
-        dispatch(updateProduct({ payload: formData, id: data._id })).then(() => {
-          handle.handleClose()
-          getData()
-        })
+        updateProduct({ payload: formData, id: data._id })
+        handle.handleClose()
       } else {
-        dispatch(addProduct(formData)).then(() => {
-          handle.handleClose()
-          getData()
-        })
+        addProduct(formData)
+        handle.handleClose()
       }
     },
     handleClose: () => {

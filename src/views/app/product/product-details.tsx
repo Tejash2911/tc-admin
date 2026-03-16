@@ -1,9 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
 import Image from 'next/image'
-import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
-import { getProductById, productActions } from '@/redux/slices/productSlice'
+import { useProductById } from '@/hooks/useProductQuery'
 import ContentLayout from '@/components/content-layout'
 import NotFound from '@/components/not-found'
 import ReviewComponent from '@/components/review'
@@ -13,19 +11,19 @@ interface IProps {
 }
 
 const ProductDetails = ({ id }: IProps) => {
-  const dispatch = useAppDispatch()
-  const { product, productNotFound } = useAppSelector(({ product }) => product)
+  const { data: product, isLoading, error } = useProductById(id)
 
-  useEffect(() => {
-    if (id) {
-      dispatch(getProductById(id))
-    }
-    return () => {
-      dispatch(productActions.resetProduct())
-    }
-  }, [id])
+  if (isLoading) {
+    return (
+      <ContentLayout title='Product Details'>
+        <div className='mt-6 flex items-center justify-center'>
+          <div className='text-gray-500'>Loading product details...</div>
+        </div>
+      </ContentLayout>
+    )
+  }
 
-  if (productNotFound) {
+  if (error || !product) {
     return <NotFound message='Product Not Found' description='The product you are looking for does not exist.' />
   }
 

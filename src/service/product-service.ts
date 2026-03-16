@@ -4,52 +4,51 @@ import type { AddProductI, GetDataI, UpdateProductI } from '@/types/api-payload-
 import type { ApiErrorI, ApiSuccessI } from './handle-response'
 import { handleApiErr, handleApiRes } from './handle-response'
 
-const getAll = (payload: GetDataI): Promise<ApiSuccessI | ApiErrorI> => {
-  const nParams = getCommonParams(payload)
-  return new Promise((resolve, reject) => {
-    axiosInstance
-      .get('/product/all', { params: nParams })
-      .then(res => resolve(handleApiRes(res)))
-      .catch(err => reject(handleApiErr(err)))
-  })
+const getAll = async (payload: GetDataI): Promise<ApiSuccessI | ApiErrorI> => {
+  try {
+    const nParams = getCommonParams(payload)
+    const res = await axiosInstance.get('/product/all', { params: nParams })
+    return handleApiRes(res)
+  } catch (err) {
+    return handleApiErr(err as any)
+  }
 }
 
-const getById = (id: string): Promise<ApiSuccessI | ApiErrorI> => {
-  return new Promise((resolve, reject) => {
-    axiosInstance
-      .get(`/product/info/${id}`)
-      .then(res => resolve(handleApiRes(res)))
-      .catch(err => reject(handleApiErr(err)))
-  })
+const getById = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
+  try {
+    const res = await axiosInstance.get(`/product/info/${id}`)
+    return handleApiRes(res)
+  } catch (err) {
+    return handleApiErr(err as any)
+  }
 }
 
-const add = (payload: AddProductI): Promise<ApiSuccessI | ApiErrorI> => {
-  return new Promise((resolve, reject) => {
-    axiosInstance
-      .post('/product', payload)
-      .then(res => resolve(handleApiRes(res)))
-      .catch(err => reject(handleApiErr(err)))
-  })
+const add = async (payload: AddProductI): Promise<ApiSuccessI | ApiErrorI> => {
+  try {
+    const res = await axiosInstance.post('/product', payload)
+    return handleApiRes(res)
+  } catch (err) {
+    return handleApiErr(err as any)
+  }
 }
 
-const update = (ORpayload: UpdateProductI): Promise<ApiSuccessI | ApiErrorI> => {
-  const { id, payload } = ORpayload
-
-  return new Promise((resolve, reject) => {
-    axiosInstance
-      .put(`/product/${id}`, payload)
-      .then(res => resolve(handleApiRes(res)))
-      .catch(err => reject(handleApiErr(err)))
-  })
+const update = async (ORpayload: UpdateProductI): Promise<ApiSuccessI | ApiErrorI> => {
+  try {
+    const { id, payload } = ORpayload
+    const res = await axiosInstance.put(`/product/${id}`, payload)
+    return handleApiRes(res)
+  } catch (err) {
+    return handleApiErr(err as any)
+  }
 }
 
-const deleteById = (id: string): Promise<ApiSuccessI | ApiErrorI> => {
-  return new Promise((resolve, reject) => {
-    axiosInstance
-      .delete(`/product/${id}`)
-      .then(res => resolve(handleApiRes(res)))
-      .catch(err => reject(handleApiErr(err)))
-  })
+const deleteById = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
+  try {
+    const res = await axiosInstance.delete(`/product/${id}`)
+    return handleApiRes(res)
+  } catch (err) {
+    return handleApiErr(err as any)
+  }
 }
 
 const productService = {

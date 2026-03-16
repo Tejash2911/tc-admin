@@ -4,14 +4,13 @@ import type { FormEvent } from 'react'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
-import { login } from '@/redux/slices/authSlice'
+import { useAuthUser, useLogin } from '@/hooks/useAuthQuery'
 
 const LoginV2 = () => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const { currentUser, loading } = useAppSelector(({ auth }) => auth)
-  const dispatch = useAppDispatch()
+  const { data: currentUser } = useAuthUser()
+  const { mutate: login, isPending: loading } = useLogin()
   const router = useRouter()
 
   useEffect(() => {
@@ -21,7 +20,7 @@ const LoginV2 = () => {
   const handle = {
     onSubmit: (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      dispatch(login({ email, password }))
+      login({ email, password })
     }
   }
 
@@ -57,7 +56,7 @@ const LoginV2 = () => {
           <button
             type='submit'
             className='focus:shadow-outline rounded-lg bg-black px-4 py-2 text-white focus:outline-none disabled:bg-gray-500'
-            disabled={loading}
+            // disabled={loading}
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>

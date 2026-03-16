@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useAppSelector } from '@/redux/redux-hooks'
 import { Icon } from '@iconify/react'
+import { useAuthUser, useLogout } from '@/hooks/useAuthQuery'
 
 interface INavItem {
   href: string
@@ -29,7 +29,8 @@ const NavItem = ({ href, icon, label }: INavItem) => {
 }
 
 const Navbar = () => {
-  const { currentUser } = useAppSelector(({ auth }) => auth)
+  const { data: currentUser } = useAuthUser()
+  const { mutate: logout } = useLogout()
   const [isMounted, setIsMounted] = useState<boolean>(false)
   const router = useRouter()
 
@@ -39,7 +40,11 @@ const Navbar = () => {
 
   const handle = {
     onLogout: () => {
-      router.push('/logout')
+      logout(undefined, {
+        onSuccess: () => {
+          router.push('/login')
+        }
+      })
     }
   }
 

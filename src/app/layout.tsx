@@ -3,6 +3,7 @@ import { Urbanist } from 'next/font/google'
 import ReduxProvider from '@/redux/ReduxProvider'
 import { ToastNotification } from '@/components/toast'
 import './globals.css'
+import QueryProvider from '@/providers/QueryProvider'
 
 const urbanist = Urbanist({
   weight: '400',
@@ -23,10 +24,12 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={urbanist.className}>
-        <ReduxProvider>
-          <ToastNotification />
-          {children}
-        </ReduxProvider>
+        <QueryProvider>
+          <ReduxProvider>
+            <ToastNotification />
+            {children}
+          </ReduxProvider>
+        </QueryProvider>
       </body>
     </html>
   )

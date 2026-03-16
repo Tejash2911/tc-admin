@@ -1,20 +1,12 @@
-import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
-import { getAllReviewByProductId } from '@/redux/slices/reviewSlice'
+import { useReviewsByProductId } from '@/hooks/useReviewQuery'
 
 interface IProps {
   productId: string
 }
 
 const ReviewComponent = ({ productId }: IProps) => {
-  const dispatch = useAppDispatch()
-  const { reviews } = useAppSelector(({ review }) => review)
-
-  useEffect(() => {
-    if (productId) {
-      dispatch(getAllReviewByProductId(productId))
-    }
-  }, [productId])
+  const { data: reviewsData, isLoading } = useReviewsByProductId(productId)
+  const reviews = reviewsData?.data || []
 
   return (
     <div className='space-y-4'>
@@ -25,7 +17,11 @@ const ReviewComponent = ({ productId }: IProps) => {
 
       {/* Reviews List */}
       <div className='space-y-4'>
-        {reviews.length > 0 ? (
+        {isLoading ? (
+          <div className='rounded-lg border border-gray-300 bg-gray-50 p-3 text-center text-sm text-gray-600'>
+            Loading reviews...
+          </div>
+        ) : reviews.length > 0 ? (
           reviews.map((review: any) => (
             <div key={review._id} className='rounded-lg border border-gray-300 bg-gray-50 p-3 text-gray-700'>
               <div className='flex items-start justify-between'>

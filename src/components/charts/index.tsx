@@ -1,20 +1,11 @@
-import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
-import { getPopularSizeColor, getTopCategories, getTopProducts } from '@/redux/slices/analyticsSlice'
+import { usePopularSizeColor, useTopCategories, useTopProducts } from '@/hooks/useAnalyticsQuery'
 import BarChart from './bar'
 import PieChart from './pie'
 
 const ChartsComponent = () => {
-  const { popularSizeColor, topCategories, topProducts } = useAppSelector(({ analytics }) => analytics)
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    Promise.all([
-      dispatch(getTopCategories()),
-      dispatch(getPopularSizeColor()),
-      dispatch(getTopProducts({ for: 'chart' }))
-    ])
-  }, [])
+  const { data: popularSizeColor } = usePopularSizeColor()
+  const { data: topCategories } = useTopCategories()
+  const { data: topProducts } = useTopProducts({ for: 'chart' })
 
   return (
     <>

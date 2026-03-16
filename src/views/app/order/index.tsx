@@ -1,8 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
-import { getAllOrders } from '@/redux/slices/orderSlice'
+import { useAllOrders } from '@/hooks/useOrderQuery'
 import { useQuery } from '@/hooks/useQuery'
 import { Button } from '@/components/button'
 import ContentLayout from '@/components/content-layout'
@@ -11,24 +9,18 @@ import Pagination from '@/components/pagination/Pagination'
 import OrderListView from './order-list'
 
 const OrderView = () => {
-  const { orders, rowCount, loading } = useAppSelector(({ order }) => order)
-  const dispatch = useAppDispatch()
   const { query, updateQuery } = useQuery({})
 
-  useEffect(() => {
-    handle.getAllOrders()
-  }, [query.offset, query.limit])
+  const { data: ordersData, isLoading } = useAllOrders(query)
+  const orders = ordersData?.list || []
+  const rowCount = ordersData?.rowCount || 0
 
   const handle = {
-    getAllOrders: () => {
-      dispatch(getAllOrders(query))
-    },
     handleSearch: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, { type }: { type: string }) => {
       updateQuery({ [type]: e.target.value })
     },
     onSearch: (e: React.FormEvent) => {
       e.preventDefault()
-      dispatch(getAllOrders(query))
     }
   }
 
@@ -63,7 +55,7 @@ const OrderView = () => {
         />
         <Button type='submit'>Search</Button>
       </form>
-      <OrderListView orders={orders} getData={handle.getAllOrders} loading={loading} />
+      <OrderListView orders={orders} loading={isLoading} />
       <Pagination
         currentPage={query.offset}
         totalPages={Math.ceil(rowCount / query.limit)}

@@ -1,21 +1,19 @@
 import { useRouter } from 'next/navigation'
-import { useAppDispatch } from '@/redux/redux-hooks'
-import { deleteProduct } from '@/redux/slices/productSlice'
 import type { GetProductI } from '@/types/api-payload-types'
 import type { ColumnI } from '@/types/table-props'
 import useModal from '@/hooks/use-modal'
+import { useDeleteProduct } from '@/hooks/useProductQuery'
 import ConfirmDeleteDialog from '@/components/dialogs/confirmDeleteDialog'
 import ProductDialog from '@/components/dialogs/productDialog'
 import { Table } from '@/components/table'
 
 interface IProps {
   products: GetProductI[]
-  getData: () => void
   loading?: boolean
 }
 
-const ProductListView = ({ products, getData, loading = false }: IProps) => {
-  const dispatch = useAppDispatch()
+const ProductListView = ({ products, loading = false }: IProps) => {
+  const { mutate: deleteProduct } = useDeleteProduct()
   const router = useRouter()
   const productDialog = useModal()
   const isDelete = useModal()
@@ -23,9 +21,10 @@ const ProductListView = ({ products, getData, loading = false }: IProps) => {
   const handle = {
     confirmDelete: () => {
       const { selectedRow } = isDelete
-      dispatch(deleteProduct(selectedRow.id)).then(() => {
-        isDelete.onClose()
-        getData()
+      deleteProduct(selectedRow.id, {
+        onSuccess: () => {
+          isDelete.onClose()
+        }
       })
     }
   }
@@ -83,17 +82,8 @@ const ProductListView = ({ products, getData, loading = false }: IProps) => {
         onDelete={item => isDelete.onOpen({ id: item._id })}
         loading={loading}
       />
-      {productDialog.isOpen && (
-        <ProductDialog
-          open={productDialog.isOpen}
-          setOpen={productDialog.onClose}
-          data={productDialog.selectedRow}
-          getData={getData}
-        />
-      )}
-      {isDelete.isOpen && (
-        <ConfirmDeleteDialog open={isDelete.isOpen} onClose={isDelete.onClose} onDelete={handle.confirmDelete} />
-      )}
+      <ProductDialog open={productDialog.isOpen} setOpen={productDialog.onClose} data={productDialog.selectedRow} />
+      <ConfirmDeleteDialog open={isDelete.isOpen} onClose={isDelete.onClose} onDelete={handle.confirmDelete} />
     </>
   )
 }

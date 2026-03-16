@@ -3,42 +3,41 @@ import type { AddReviewI } from '@/types/api-payload-types'
 import type { ApiErrorI, ApiSuccessI } from './handle-response'
 import { handleApiErr, handleApiRes } from './handle-response'
 
-const getAll = (id: string): Promise<ApiSuccessI | ApiErrorI> => {
-  return new Promise((resolve, reject) => {
-    axiosInstance
-      .get(`/review/${id}`)
-      .then(res => resolve(handleApiRes(res)))
-      .catch(err => reject(handleApiErr(err)))
-  })
+const getAll = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
+  try {
+    const res = await axiosInstance.get(`/review/${id}`)
+    return handleApiRes(res)
+  } catch (err) {
+    return handleApiErr(err as any)
+  }
 }
 
-const add = (ORpayload: AddReviewI): Promise<ApiSuccessI | ApiErrorI> => {
-  return new Promise((resolve, reject) => {
+const add = async (ORpayload: AddReviewI): Promise<ApiSuccessI | ApiErrorI> => {
+  try {
     const { id, payload } = ORpayload
-
-    axiosInstance
-      .post(`/review/${id}`, payload)
-      .then(res => resolve(handleApiRes(res)))
-      .catch(err => reject(handleApiErr(err)))
-  })
+    const res = await axiosInstance.post(`/review/${id}`, payload)
+    return handleApiRes(res)
+  } catch (err) {
+    return handleApiErr(err as any)
+  }
 }
 
-const upvote = (id: string): Promise<ApiSuccessI | ApiErrorI> => {
-  return new Promise((resolve, reject) => {
-    axiosInstance
-      .put(`/review/upvote/${id}`)
-      .then(res => resolve(handleApiRes(res)))
-      .catch(err => reject(handleApiErr(err)))
-  })
+const upvote = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
+  try {
+    const res = await axiosInstance.put(`/review/upvote/${id}`)
+    return handleApiRes(res)
+  } catch (err) {
+    return handleApiErr(err as any)
+  }
 }
 
-const abuse = (id: string): Promise<ApiSuccessI | ApiErrorI> => {
-  return new Promise((resolve, reject) => {
-    axiosInstance
-      .put(`/review/abuse/${id}`)
-      .then(res => resolve(handleApiRes(res)))
-      .catch(err => reject(handleApiErr(err)))
-  })
+const abuse = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
+  try {
+    const res = await axiosInstance.put(`/review/abuse/${id}`)
+    return handleApiRes(res)
+  } catch (err) {
+    return handleApiErr(err as any)
+  }
 }
 
 const reviewService = {

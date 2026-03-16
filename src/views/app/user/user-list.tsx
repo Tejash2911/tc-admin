@@ -1,20 +1,18 @@
 import { useRouter } from 'next/navigation'
-import { useAppDispatch } from '@/redux/redux-hooks'
-import { deleteUser } from '@/redux/slices/userSlice'
 import type { GetUsersI } from '@/types/api-payload-types'
 import type { ColumnI } from '@/types/table-props'
 import useModal from '@/hooks/use-modal'
+import { useDeleteUser } from '@/hooks/useUserQuery'
 import ConfirmDeleteDialog from '@/components/dialogs/confirmDeleteDialog'
 import { Table } from '@/components/table'
 
 interface IProps {
   users: GetUsersI[]
-  getData: () => void
   loading?: boolean
 }
 
-const UserListView = ({ users, getData, loading = false }: IProps) => {
-  const dispatch = useAppDispatch()
+const UserListView = ({ users, loading = false }: IProps) => {
+  const { mutate: deleteUser } = useDeleteUser()
   const router = useRouter()
 
   const isDelete = useModal()
@@ -22,9 +20,10 @@ const UserListView = ({ users, getData, loading = false }: IProps) => {
   const handle = {
     confirmDelete: () => {
       const { selectedRow } = isDelete
-      dispatch(deleteUser(selectedRow.id)).then(() => {
-        isDelete.onClose()
-        getData()
+      deleteUser(selectedRow.id, {
+        onSuccess: () => {
+          isDelete.onClose()
+        }
       })
     }
   }
@@ -85,9 +84,7 @@ const UserListView = ({ users, getData, loading = false }: IProps) => {
         onDelete={item => isDelete.onOpen({ id: item._id })}
         loading={loading}
       />
-      {isDelete.isOpen && (
-        <ConfirmDeleteDialog open={isDelete.isOpen} onClose={isDelete.onClose} onDelete={handle.confirmDelete} />
-      )}
+      <ConfirmDeleteDialog open={isDelete.isOpen} onClose={isDelete.onClose} onDelete={handle.confirmDelete} />
     </>
   )
 }

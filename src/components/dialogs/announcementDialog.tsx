@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useAppDispatch } from '@/redux/redux-hooks'
-import { addAnnouncement, updateAnnouncement } from '@/redux/slices/announcementSlice'
 import type { AddAnnouncementI } from '@/types/api-payload-types'
+import { useAddAnnouncement, useUpdateAnnouncement } from '@/hooks/useAnnouncementQuery'
 import { Button } from '../button'
 import { Select, Textarea } from '../input'
 import Modal from '../modal'
@@ -10,11 +9,11 @@ interface IProps {
   open: boolean
   setOpen: (open: boolean) => void
   data: any
-  getData: () => void
 }
 
-const AnnouncementDialog = ({ open, setOpen, data, getData }: IProps) => {
-  const dispatch = useAppDispatch()
+const AnnouncementDialog = ({ open, setOpen, data }: IProps) => {
+  const { mutate: addAnnouncement } = useAddAnnouncement()
+  const { mutate: updateAnnouncement } = useUpdateAnnouncement()
 
   const [formData, setFormData] = useState<AddAnnouncementI>({
     title: '',
@@ -39,19 +38,15 @@ const AnnouncementDialog = ({ open, setOpen, data, getData }: IProps) => {
         [name]: name === 'active' ? value === 'true' : value
       }))
     },
-    onSubmit: async (e: React.FormEvent) => {
+    onSubmit: (e: React.FormEvent) => {
       e.preventDefault()
 
       if (data.isEdit) {
-        dispatch(updateAnnouncement({ payload: formData, id: data._id })).then(() => {
-          handle.handleClose()
-          getData()
-        })
+        updateAnnouncement({ payload: formData, id: data._id })
+        handle.handleClose()
       } else {
-        dispatch(addAnnouncement(formData)).then(() => {
-          handle.handleClose()
-          getData()
-        })
+        addAnnouncement(formData)
+        handle.handleClose()
       }
     },
     handleClose: () => {

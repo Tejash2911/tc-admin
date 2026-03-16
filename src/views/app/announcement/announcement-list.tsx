@@ -1,29 +1,28 @@
-import { useAppDispatch } from '@/redux/redux-hooks'
-import { deleteAnnouncement } from '@/redux/slices/announcementSlice'
 import type { GetAnnouncementsI } from '@/types/api-payload-types'
 import type { ColumnI } from '@/types/table-props'
 import useModal from '@/hooks/use-modal'
+import { useDeleteAnnouncement } from '@/hooks/useAnnouncementQuery'
 import AnnouncementDialog from '@/components/dialogs/announcementDialog'
 import ConfirmDeleteDialog from '@/components/dialogs/confirmDeleteDialog'
 import { Table } from '@/components/table'
 
 interface IProps {
-  announcements: GetAnnouncementsI[]
-  getData: () => void
+  announcements?: GetAnnouncementsI[]
   loading?: boolean
 }
 
-const AnnouncementListView = ({ announcements, getData, loading = false }: IProps) => {
-  const dispatch = useAppDispatch()
+const AnnouncementListView = ({ announcements, loading = false }: IProps) => {
+  const { mutate: deleteAnnouncement } = useDeleteAnnouncement()
   const announcementDialog = useModal()
   const isDelete = useModal()
 
   const handle = {
     confirmDelete: () => {
       const { selectedRow } = isDelete
-      dispatch(deleteAnnouncement(selectedRow.id)).then(() => {
-        isDelete.onClose()
-        getData()
+      deleteAnnouncement(selectedRow.id, {
+        onSuccess: () => {
+          isDelete.onClose()
+        }
       })
     }
   }
@@ -72,17 +71,12 @@ const AnnouncementListView = ({ announcements, getData, loading = false }: IProp
           loading={loading}
         />
       )}
-      {announcementDialog.isOpen && (
-        <AnnouncementDialog
-          open={announcementDialog.isOpen}
-          setOpen={announcementDialog.onClose}
-          data={announcementDialog.selectedRow}
-          getData={getData}
-        />
-      )}
-      {isDelete.isOpen && (
-        <ConfirmDeleteDialog open={isDelete.isOpen} onClose={isDelete.onClose} onDelete={handle.confirmDelete} />
-      )}
+      <AnnouncementDialog
+        open={announcementDialog.isOpen}
+        setOpen={announcementDialog.onClose}
+        data={announcementDialog.selectedRow}
+      />
+      <ConfirmDeleteDialog open={isDelete.isOpen} onClose={isDelete.onClose} onDelete={handle.confirmDelete} />
     </>
   )
 }

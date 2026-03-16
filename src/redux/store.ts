@@ -1,23 +1,9 @@
 import type { Action, ThunkAction } from '@reduxjs/toolkit'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import analyticsSlice from './slices/analyticsSlice'
-import announcementSlice from './slices/announcementSlice'
-import authSlice from './slices/authSlice'
-import errorSlice from './slices/errorSlice'
-import orderSlice from './slices/orderSlice'
-import productSlice from './slices/productSlice'
-import reviewSlice from './slices/reviewSlice'
-import userSlice from './slices/userSlice'
+import messageSlice from './slices/messageSlice'
 
 const appReducer = combineReducers({
-  auth: authSlice,
-  error: errorSlice,
-  analytics: analyticsSlice,
-  announcement: announcementSlice,
-  user: userSlice,
-  product: productSlice,
-  order: orderSlice,
-  review: reviewSlice
+  message: messageSlice
 })
 
 // Handle the reset on logout by returning undefined for the state

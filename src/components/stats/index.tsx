@@ -1,17 +1,11 @@
-import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
-import { getOrderAnalytics, getOrderPriceAnalytics } from '@/redux/slices/analyticsSlice'
 import { Icon } from '@iconify/react'
+import { useOrderAnalytics, useOrderPriceAnalytics } from '@/hooks/useAnalyticsQuery'
 import { PriceStatCard } from './PriceStatCard'
 import { StatCard } from './StatCard'
 
 const Stats = () => {
-  const { orderStats, orderPriceStats } = useAppSelector(({ analytics }) => analytics)
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    Promise.all([dispatch(getOrderAnalytics()), dispatch(getOrderPriceAnalytics())])
-  }, [])
+  const { data: orderStats } = useOrderAnalytics()
+  const { data: orderPriceStats } = useOrderPriceAnalytics()
 
   return (
     <div className='flex flex-col gap-8'>

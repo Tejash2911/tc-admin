@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
-import { errorActions } from '@/redux/slices/errorSlice'
+import { messageActions } from '@/redux/slices/messageSlice'
 
 const Message = () => {
   const dispatch = useAppDispatch()
-  const { id, message } = useAppSelector(({ error }) => error)
+  const { id, message } = useAppSelector(({ message }) => message)
   const [isShow, setIsShow] = useState<boolean>(false)
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const Message = () => {
       setIsShow(true)
 
       const timeout = setTimeout(() => {
-        dispatch(errorActions.clearError())
+        dispatch(messageActions.clearMessage())
         setIsShow(false)
       }, 3000)
 

@@ -3,10 +3,9 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
-import { deleteUser, getUserById, updateUserById, userActions } from '@/redux/slices/userSlice'
 import type { AddUserI } from '@/types/api-payload-types'
 import useModal from '@/hooks/use-modal'
+import { useDeleteUser, useUpdateUser, useUserById } from '@/hooks/useUserQuery'
 import { Button } from '@/components/button'
 import ContentLayout from '@/components/content-layout'
 import ConfirmDeleteDialog from '@/components/dialogs/confirmDeleteDialog'
@@ -18,8 +17,9 @@ interface IProps {
 }
 
 const UserDetailsPage = ({ id }: IProps) => {
-  const { user, userNotFound } = useAppSelector(({ user }) => user)
-  const dispatch = useAppDispatch()
+  const { data: user, isLoading, error } = useUserById(id)
+  const { mutate: updateUser } = useUpdateUser()
+  const { mutate: deleteUser } = useDeleteUser()
   const isDelete = useModal()
   const router = useRouter()
 
@@ -30,15 +30,6 @@ const UserDetailsPage = ({ id }: IProps) => {
     number: '',
     isAdmin: false
   })
-
-  useEffect(() => {
-    if (id) {
-      dispatch(getUserById(id))
-    }
-    return () => {
-      dispatch(userActions.resetUser())
-    }
-  }, [id])
 
   useEffect(() => {
     if (user) {
@@ -62,18 +53,35 @@ const UserDetailsPage = ({ id }: IProps) => {
     },
     onSubmit: (e: React.FormEvent) => {
       e.preventDefault()
-      dispatch(updateUserById({ id, payload: formData })).then(() => router.push('/user'))
+      updateUser(
+        { id, payload: formData },
+        {
+          onSuccess: () => router.push('/user')
+        }
+      )
     },
     confirmDelete: () => {
       const { selectedRow } = isDelete
-      dispatch(deleteUser(selectedRow.id)).then(() => {
-        isDelete.onClose()
-        router.push('/user')
+      deleteUser(selectedRow.id, {
+        onSuccess: () => {
+          isDelete.onClose()
+          router.push('/user')
+        }
       })
     }
   }
 
-  if (userNotFound) {
+  if (isLoading) {
+    return (
+      <ContentLayout title='User Details'>
+        <div className='flex items-center justify-center'>
+          <div className='text-gray-500'>Loading user details...</div>
+        </div>
+      </ContentLayout>
+    )
+  }
+
+  if (error || !user) {
     return <NotFound message='User Not Found' description='The user you are looking for does not exist.' />
   }
 
@@ -160,9 +168,7 @@ const UserDetailsPage = ({ id }: IProps) => {
           </div>
         </div>
       )}
-      {isDelete.isOpen && (
-        <ConfirmDeleteDialog open={isDelete.isOpen} onClose={isDelete.onClose} onDelete={handle.confirmDelete} />
-      )}
+      <ConfirmDeleteDialog open={isDelete.isOpen} onClose={isDelete.onClose} onDelete={handle.confirmDelete} />
     </ContentLayout>
   )
 }

@@ -2,18 +2,15 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
-import { logout } from '@/redux/slices/authSlice'
+import { useLogout } from '@/hooks/useAuthQuery'
 
 const LogoutView = () => {
-  const dispatch = useAppDispatch()
-  const { loading } = useAppSelector(({ auth }) => auth)
+  const { mutate: logout, isPending: loading } = useLogout()
   const router = useRouter()
 
   const handleSignOut = () => {
-    Promise.all([dispatch({ type: 'USER_LOGOUT' }), dispatch(logout())])
-      .then(() => router.push('/login'))
-      .catch(error => console.error(error))
+    logout()
+    router.push('/login')
   }
 
   useEffect(() => {

@@ -1,10 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks'
-import { getAllProducts } from '@/redux/slices/productSlice'
-import useDebounce from '@/hooks/use-debounce'
 import useModal from '@/hooks/use-modal'
+import { useAllProducts } from '@/hooks/useProductQuery'
 import { useQuery } from '@/hooks/useQuery'
 import { Button } from '@/components/button'
 import ContentLayout from '@/components/content-layout'
@@ -14,20 +11,14 @@ import Pagination from '@/components/pagination/Pagination'
 import ProductListView from './product-list'
 
 const ProductView = () => {
-  const { products, rowCount, loading } = useAppSelector(({ product }) => product)
-  const dispatch = useAppDispatch()
   const productDialog = useModal()
   const { query, updateQuery } = useQuery({})
-  const debouncedSearch = useDebounce(query.search, 1000)
 
-  useEffect(() => {
-    handle.getAllProducts()
-  }, [debouncedSearch, query.sort, query.category, query.offset])
+  const { data: productsData, isLoading } = useAllProducts(query)
+  const products = productsData?.list || []
+  const rowCount = productsData?.rowCount || 0
 
   const handle = {
-    getAllProducts: () => {
-      dispatch(getAllProducts(query))
-    },
     handleSearch: async (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, { type }: { type: string }) => {
       if (type === 'cat') updateQuery({ category: e.target.value })
       if (type === 'sort') updateQuery({ sort: e.target.value })
@@ -66,7 +57,7 @@ const ProductView = () => {
         />
         <Button onClick={() => productDialog.onOpen({ isEdit: false })}>Add Product</Button>
       </div>
-      <ProductListView products={products} getData={handle.getAllProducts} loading={loading} />
+      <ProductListView products={products} loading={isLoading} />
       <Pagination
         currentPage={query.offset}
         totalPages={Math.ceil(rowCount / query.limit)}
@@ -76,14 +67,7 @@ const ProductView = () => {
         hasNextPage={query.offset < Math.ceil(rowCount / query.limit)}
         hasPreviousPage={query.offset > 1}
       />
-      {productDialog.isOpen && (
-        <ProductDialog
-          open={productDialog.isOpen}
-          setOpen={productDialog.onClose}
-          data={productDialog.selectedRow}
-          getData={handle.getAllProducts}
-        />
-      )}
+      <ProductDialog open={productDialog.isOpen} setOpen={productDialog.onClose} data={productDialog.selectedRow} />
     </ContentLayout>
   )
 }
