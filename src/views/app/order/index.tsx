@@ -11,7 +11,7 @@ import OrderListView from './order-list'
 const OrderView = () => {
   const { query, updateQuery } = useQuery({})
 
-  const { data: ordersData, isLoading } = useAllOrders(query)
+  const { data: ordersData, isPending } = useAllOrders(query)
   const orders = ordersData?.list || []
   const rowCount = ordersData?.rowCount || 0
 
@@ -55,7 +55,7 @@ const OrderView = () => {
         />
         <Button type='submit'>Search</Button>
       </form>
-      <OrderListView orders={orders} loading={isLoading} />
+      <OrderListView orders={orders} loading={isPending} />
       <Pagination
         currentPage={query.offset}
         totalPages={Math.ceil(rowCount / query.limit)}

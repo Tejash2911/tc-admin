@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import axios from 'axios'
-import getAccessToken from '../auth'
+import { getAccessToken } from '../auth'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 

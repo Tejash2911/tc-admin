@@ -10,7 +10,7 @@ const getAll = async (payload: GetDataI): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.get('/product/all', { params: nParams })
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -19,7 +19,7 @@ const getById = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.get(`/product/info/${id}`)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -28,7 +28,7 @@ const add = async (payload: AddProductI): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.post('/product', payload)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -38,7 +38,7 @@ const update = async (ORpayload: UpdateProductI): Promise<ApiSuccessI | ApiError
     const res = await axiosInstance.put(`/product/${id}`, payload)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -47,7 +47,7 @@ const deleteById = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.delete(`/product/${id}`)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 

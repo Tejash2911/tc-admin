@@ -14,7 +14,7 @@ const ProductView = () => {
   const productDialog = useModal()
   const { query, updateQuery } = useQuery({})
 
-  const { data: productsData, isLoading } = useAllProducts(query)
+  const { data: productsData, isPending } = useAllProducts(query)
   const products = productsData?.list || []
   const rowCount = productsData?.rowCount || 0
 
@@ -57,7 +57,7 @@ const ProductView = () => {
         />
         <Button onClick={() => productDialog.onOpen({ isEdit: false })}>Add Product</Button>
       </div>
-      <ProductListView products={products} loading={isLoading} />
+      <ProductListView products={products} loading={isPending} />
       <Pagination
         currentPage={query.offset}
         totalPages={Math.ceil(rowCount / query.limit)}

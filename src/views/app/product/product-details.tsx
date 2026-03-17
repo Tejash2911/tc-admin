@@ -11,9 +11,9 @@ interface IProps {
 }
 
 const ProductDetails = ({ id }: IProps) => {
-  const { data: product, isLoading, error } = useProductById(id)
+  const { data: product, isPending, error } = useProductById(id)
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <ContentLayout title='Product Details'>
         <div className='mt-6 flex items-center justify-center'>

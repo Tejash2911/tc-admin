@@ -78,7 +78,7 @@ const getCell = (
   if (col.type === 'image') {
     return (
       <td key={col.key} className='px-4 py-3'>
-        <Image src={value} height={100} width={100} className='h-8 w-8 rounded-full object-cover' alt='avatar' />
+        <Image src={value} height={100} width={100} className='h-6 w-6 rounded-full object-cover' alt='avatar' />
       </td>
     )
   }
@@ -162,7 +162,7 @@ export const Table = ({
               <tr key={index} className='animate-pulse'>
                 {columns.map((col, colIndex) => (
                   <td key={colIndex} className='px-4 py-3'>
-                    <div className='h-8 w-full rounded bg-gray-200'></div>
+                    <div className='h-6 w-full rounded bg-gray-200'></div>
                   </td>
                 ))}
               </tr>

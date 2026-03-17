@@ -5,7 +5,7 @@ interface IProps {
 }
 
 const ReviewComponent = ({ productId }: IProps) => {
-  const { data: reviewsData, isLoading } = useReviewsByProductId(productId)
+  const { data: reviewsData, isPending } = useReviewsByProductId(productId)
   const reviews = reviewsData?.data || []
 
   return (
@@ -17,7 +17,7 @@ const ReviewComponent = ({ productId }: IProps) => {
 
       {/* Reviews List */}
       <div className='space-y-4'>
-        {isLoading ? (
+        {isPending ? (
           <div className='rounded-lg border border-gray-300 bg-gray-50 p-3 text-center text-sm text-gray-600'>
             Loading reviews...
           </div>

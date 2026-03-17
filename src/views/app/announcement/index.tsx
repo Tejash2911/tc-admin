@@ -15,7 +15,7 @@ const AnnouncementView = () => {
   const announcementDialog = useModal()
   const { query, updateQuery } = useQuery({})
 
-  const { data: announcementsData, isLoading } = useAllAnnouncements(query)
+  const { data: announcementsData, isPending } = useAllAnnouncements(query)
   const announcements = announcementsData?.list || []
   const rowCount = announcementsData?.rowCount || 0
   const { mutate: disableAllAnnouncements } = useDisableAnnouncements()
@@ -62,7 +62,7 @@ const AnnouncementView = () => {
           </Button>
         </div>
       </div>
-      <AnnouncementListView announcements={announcements} loading={isLoading} />
+      <AnnouncementListView announcements={announcements} loading={isPending} />
       <Pagination
         currentPage={query.offset}
         totalPages={Math.ceil(rowCount / query.limit)}

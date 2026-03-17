@@ -8,7 +8,7 @@ const getAll = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.get(`/review/${id}`)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -18,7 +18,7 @@ const add = async (ORpayload: AddReviewI): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.post(`/review/${id}`, payload)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -27,7 +27,7 @@ const upvote = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.put(`/review/upvote/${id}`)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -36,7 +36,7 @@ const abuse = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.put(`/review/abuse/${id}`)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 

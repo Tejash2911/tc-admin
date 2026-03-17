@@ -39,7 +39,6 @@ export const useAuthUser = () => {
     queryKey: ['currentUser'],
     queryFn: getCurrentUser,
     staleTime: Infinity,
-    initialData: getCurrentUser(),
     enabled: typeof window !== 'undefined'
   })
 }

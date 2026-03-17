@@ -17,7 +17,7 @@ interface IProps {
 }
 
 const UserDetailsPage = ({ id }: IProps) => {
-  const { data: user, isLoading, error } = useUserById(id)
+  const { data: user, isPending, error } = useUserById(id)
   const { mutate: updateUser } = useUpdateUser()
   const { mutate: deleteUser } = useDeleteUser()
   const isDelete = useModal()
@@ -71,7 +71,7 @@ const UserDetailsPage = ({ id }: IProps) => {
     }
   }
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <ContentLayout title='User Details'>
         <div className='flex items-center justify-center'>

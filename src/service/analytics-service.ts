@@ -7,7 +7,7 @@ const getTopCategories = async (): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.get('/analytics/top-cat')
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -16,7 +16,7 @@ const getOrderAnalytics = async (): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.get('/analytics/order')
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -25,7 +25,7 @@ const getOrderPriceAnalytics = async (): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.get('/analytics/order-price')
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -34,7 +34,7 @@ const getPopularSizeColor = async (): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.get('/analytics/popular-size-color')
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -43,7 +43,7 @@ const getTopProducts = async (payload: { for: string }): Promise<ApiSuccessI | A
     const res = await axiosInstance.get('/analytics/top-products', { params: payload })
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 

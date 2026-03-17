@@ -9,7 +9,7 @@ interface IProps {
   id: string
 }
 const Invoice = ({ id }: IProps) => {
-  const { data: order, isLoading, error } = useOrderById(id)
+  const { data: order, isPending, error } = useOrderById(id)
 
   const handle = {
     handlePrint: () => {
@@ -30,7 +30,7 @@ const Invoice = ({ id }: IProps) => {
     delivered: 'bg-blue-100 text-blue-700'
   }
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <ContentLayout title='Invoice'>
         <div className='mt-6 flex items-center justify-center'>

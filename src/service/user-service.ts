@@ -10,7 +10,7 @@ const getAll = async (payload: GetDataI): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.get('/user', { params: nParams })
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -19,7 +19,7 @@ const getById = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.get(`/user/${id}`)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -29,7 +29,7 @@ const update = async (ORpayload: UpdateUserI): Promise<ApiSuccessI | ApiErrorI> 
     const res = await axiosInstance.put(`/user/${id}`, payload)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -38,7 +38,7 @@ const deleteById = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.delete(`/user/${id}`)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 

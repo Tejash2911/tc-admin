@@ -10,7 +10,7 @@ const getAll = async (payload: GetDataI): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.get('/order/all', { params: nParams })
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -19,7 +19,7 @@ const getById = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.get(`/order/info/${id}`)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -28,7 +28,7 @@ const add = async (payload: any): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.post('/order', payload)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -38,7 +38,7 @@ const update = async (ORpayload: any): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.put(`/order/${id}`, payload)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -47,7 +47,7 @@ const deleteById = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.delete(`/order/${id}`)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -56,7 +56,7 @@ const getByUserId = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.get(`/order/find/${id}`)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -66,7 +66,7 @@ const changeOrderStatus = async (OrPayload: any): Promise<ApiSuccessI | ApiError
     const res = await axiosInstance.put(`/order/status/${id}`, payload)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 

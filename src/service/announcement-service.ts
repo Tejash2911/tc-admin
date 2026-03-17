@@ -10,7 +10,7 @@ const getAll = async (payload: GetDataI): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.get('/announcement/all', { params: nParams })
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -19,7 +19,7 @@ const getById = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.get(`/announcement/${id}`)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -28,7 +28,7 @@ const add = async (payload: AddAnnouncementI): Promise<ApiSuccessI | ApiErrorI> 
     const res = await axiosInstance.post('/announcement', payload)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -38,7 +38,7 @@ const update = async (ORpayload: UpdateAnnouncementI): Promise<ApiSuccessI | Api
     const res = await axiosInstance.put(`/announcement/${id}`, payload)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -47,7 +47,7 @@ const deleteById = async (id: string): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.delete(`/announcement/${id}`)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -56,7 +56,7 @@ const disableAll = async (): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.delete(`/announcement/active`)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -81,7 +81,7 @@ const bulkImport = async (file: File): Promise<any> => {
     })
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 

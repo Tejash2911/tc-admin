@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
@@ -31,12 +30,7 @@ const NavItem = ({ href, icon, label }: INavItem) => {
 const Navbar = () => {
   const { data: currentUser } = useAuthUser()
   const { mutate: logout } = useLogout()
-  const [isMounted, setIsMounted] = useState<boolean>(false)
   const router = useRouter()
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
 
   const handle = {
     onLogout: () => {
@@ -63,7 +57,7 @@ const Navbar = () => {
           </nav>
         </div>
         <div className='flex items-center gap-4'>
-          {isMounted && currentUser && (
+          {currentUser && (
             <div className='flex items-center gap-2'>
               <Image src={currentUser?.avatar} width={100} height={100} alt='avatar' className='h-8 w-8 rounded-full' />
               <button

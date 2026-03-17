@@ -35,6 +35,7 @@ const LoginV2 = () => {
               name='emailField'
               type='email'
               placeholder='Email'
+              required
               onChange={e => setEmail(e.target.value)}
             />
           </div>
@@ -45,6 +46,7 @@ const LoginV2 = () => {
               type='password'
               placeholder='Password'
               onChange={e => setPassword(e.target.value)}
+              required
               autoComplete='off'
             />
           </div>
@@ -56,7 +58,7 @@ const LoginV2 = () => {
           <button
             type='submit'
             className='focus:shadow-outline rounded-lg bg-black px-4 py-2 text-white focus:outline-none disabled:bg-gray-500'
-            // disabled={loading}
+            disabled={loading}
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>

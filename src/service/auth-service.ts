@@ -8,7 +8,7 @@ const login = async (payload: LoginI): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.post('/auth/login', payload)
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
@@ -17,7 +17,7 @@ const logout = async (): Promise<ApiSuccessI | ApiErrorI> => {
     const res = await axiosInstance.post('/auth/logout')
     return handleApiRes(res)
   } catch (err) {
-    return handleApiErr(err as any)
+    throw handleApiErr(err as any)
   }
 }
 
