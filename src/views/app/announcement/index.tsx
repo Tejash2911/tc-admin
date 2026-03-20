@@ -8,7 +8,7 @@ import { Button } from '@/components/button'
 import ContentLayout from '@/components/content-layout'
 import AnnouncementDialog from '@/components/dialogs/announcementDialog'
 import { Input } from '@/components/input'
-import Pagination from '@/components/pagination/Pagination'
+import Pagination from '@/components/pagination'
 import AnnouncementListView from './announcement-list'
 
 const AnnouncementView = () => {

@@ -9,7 +9,7 @@ interface IProps {
   id: string
 }
 const Invoice = ({ id }: IProps) => {
-  const { data: order, isPending, error } = useOrderById(id)
+  const { data: order, isPending, isError } = useOrderById(id)
 
   const handle = {
     handlePrint: () => {
@@ -40,7 +40,7 @@ const Invoice = ({ id }: IProps) => {
     )
   }
 
-  if (error || !order) {
+  if (isError) {
     return <NotFound message='Order Not Found' description='The order you are looking for does not exist.' />
   }
 

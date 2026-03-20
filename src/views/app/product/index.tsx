@@ -7,7 +7,7 @@ import { Button } from '@/components/button'
 import ContentLayout from '@/components/content-layout'
 import ProductDialog from '@/components/dialogs/productDialog'
 import { Input, Select } from '@/components/input'
-import Pagination from '@/components/pagination/Pagination'
+import Pagination from '@/components/pagination'
 import ProductListView from './product-list'
 
 const ProductView = () => {

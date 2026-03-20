@@ -1,21 +1,9 @@
-import { useEffect, useState } from 'react'
-
 interface IProps {
   message?: string
   description?: string
 }
 
 const NotFound = ({ message = 'Invalid ID', description = 'The ID you are looking for does not exist.' }: IProps) => {
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  if (!isMounted) {
-    return null
-  }
-
   return (
     <div className='flex min-h-[calc(100vh-50px)] flex-col items-center justify-center p-8'>
       <div className='text-center'>

@@ -17,7 +17,7 @@ interface IProps {
 }
 
 const UserDetailsPage = ({ id }: IProps) => {
-  const { data: user, isPending, error } = useUserById(id)
+  const { data: user, isPending, isError } = useUserById(id)
   const { mutate: updateUser } = useUpdateUser()
   const { mutate: deleteUser } = useDeleteUser()
   const isDelete = useModal()
@@ -81,7 +81,7 @@ const UserDetailsPage = ({ id }: IProps) => {
     )
   }
 
-  if (error || !user) {
+  if (isError) {
     return <NotFound message='User Not Found' description='The user you are looking for does not exist.' />
   }
 

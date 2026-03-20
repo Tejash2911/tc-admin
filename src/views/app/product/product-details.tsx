@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const ProductDetails = ({ id }: IProps) => {
-  const { data: product, isPending, error } = useProductById(id)
+  const { data: product, isPending, isError } = useProductById(id)
 
   if (isPending) {
     return (
@@ -23,7 +23,7 @@ const ProductDetails = ({ id }: IProps) => {
     )
   }
 
-  if (error || !product) {
+  if (isError) {
     return <NotFound message='Product Not Found' description='The product you are looking for does not exist.' />
   }
 

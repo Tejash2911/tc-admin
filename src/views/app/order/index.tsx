@@ -5,7 +5,7 @@ import { useQuery } from '@/hooks/useQuery'
 import { Button } from '@/components/button'
 import ContentLayout from '@/components/content-layout'
 import { Input, Select } from '@/components/input'
-import Pagination from '@/components/pagination/Pagination'
+import Pagination from '@/components/pagination'
 import OrderListView from './order-list'
 
 const OrderView = () => {

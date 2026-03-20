@@ -4,7 +4,7 @@ import { useQuery } from '@/hooks/useQuery'
 import { useAllUsers } from '@/hooks/useUserQuery'
 import ContentLayout from '@/components/content-layout'
 import { Input } from '@/components/input'
-import Pagination from '@/components/pagination/Pagination'
+import Pagination from '@/components/pagination'
 import UserListView from './user-list'
 
 const UsersView = () => {
